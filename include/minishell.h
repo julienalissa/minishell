@@ -18,9 +18,14 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include "struct.h"
 
 // void	*setup_env(char **env, t_env *envp);
+t_token	*ft_lstlast_token(t_token *lst);
+void	ft_lstadd_back_token(t_token **lst, t_token *new);
+t_token	*ft_lstnew_token(char *tmp);
+void define_token(t_token *node);
+void	ft_lstclear_token(t_token **lst);
 
 #endif

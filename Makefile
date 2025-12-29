@@ -22,7 +22,7 @@ OBJ_DIR = object
 SRC_DIR = src
 
 # Fichiers .c
-SRCS = main.c
+SRCS = main.c chainlist_token.c
 
 # Chemins complets vers les fichiers source
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRCS))
@@ -42,7 +42,7 @@ RL_PATH = $(shell brew --prefix readline 2>/dev/null || echo /usr)
 
 # Bibliothèques personnelles
 LIBRARY_PATH = -L$(LIBFT) -L$(RL_PATH)/lib
-LIBRARIES = -lreadline -lreadline -lhistory
+LIBRARIES = -lft -lreadline -lhistory
 
 # Custom
 COMPILE_MSG = @printf "."
