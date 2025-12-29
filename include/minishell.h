@@ -21,6 +21,6 @@
 # include "libft/libft.h"
 # include "struct.h"
 
-void	*setup_env(char **env, t_env *envp);
+// void	*setup_env(char **env, t_env *envp);
 
 #endif

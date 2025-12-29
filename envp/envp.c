@@ -12,18 +12,18 @@
 
 #include "../include/minishell.h"
 
-void	*setup_env(char **env, t_env *envp)
-{
-	int	i;
-	int	j;
+// void	*setup_env(char **env, t_env *envp)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j])
-		{
-			ft_lstnew()
-		}
-	}
-}
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		j = 0;
+// 		while (env[i][j])
+// 		{
+// 			ft_lstnew()
+// 		}
+// 	}
+// }

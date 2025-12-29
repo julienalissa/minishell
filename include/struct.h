@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-typedef struct s_env
-{
-	char	*key;
-	char	*val;
-	t_env	*next;
-}			t_env;
+// typedef struct s_env
+// {
+// 	char	*key;
+// 	char	*val;
+// 	t_env	*next;
+// }			t_env;
 
-typedef struct s_data
-{
-	t_env	env;
-}			t_data;
+// typedef struct s_data
+// {
+// 	t_env	env;
+// }			t_data;
 

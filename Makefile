@@ -22,7 +22,7 @@ OBJ_DIR = object
 SRC_DIR = src
 
 # Fichiers .c
-SRCS = test.c
+SRCS = main.c
 
 # Chemins complets vers les fichiers source
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRCS))
