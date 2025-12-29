@@ -1,4 +1,0 @@
-Minishell
-
-whitespace = "\t\r\n\v"
-symbols = "<|>&;()&&||"
