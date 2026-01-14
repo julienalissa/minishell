@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/29 11:36:48 by ludebarn          #+#    #+#             */
-/*   Updated: 2025/12/29 11:45:51 by ludebarn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 typedef enum e_token_type
@@ -26,26 +14,34 @@ typedef enum e_token_type
 	TOKEN_PARENTHESIS_OUT //9
 } t_token_type;
 
+typedef enum e_states
+{
+	NORMAL,
+	QUOTES,
+	DQUOTES
+}	t_states;
+
 typedef struct s_token
 {
-	t_token_type token_type;
-	char	*value;
-	struct s_token *next;
-}t_token;
+	t_token_type	token_type;
+	char			*value;
+	t_states		states;
+	struct			s_token *next;
+}					t_token;
 
-// typedef struct s_env
-// {
-// 	char	*key;
-// 	char	*val;
-// 	t_env	*next;
-// }			t_env;
+typedef struct s_env
+{
+	char			*key;
+	char			*val;
+	struct	s_env	*next;
+}					t_env;
 
 typedef struct s_data
 {
-	int	i;
-	int	argc;
-	char **argv;
-	char **env;
-	t_token *token;
+	int			i;
+	char		**envp;
+	t_states	flag_states;
+	t_token		*token;
+	t_env		*env;
 }	t_data;
 

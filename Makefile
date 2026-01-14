@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+         #
+#    By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/29 11:06:18 by ludebarn          #+#    #+#              #
-#    Updated: 2025/12/29 11:27:09 by ludebarn         ###   ########.fr        #
+#    Updated: 2026/01/10 16:57:28 by lucasdebarn      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,18 +21,15 @@ LIBFT = libft
 OBJ_DIR = object
 SRC_DIR = src
 
-# Fichiers .c
-SRCS = main.c chainlist_token.c
-
 # Chemins complets vers les fichiers source
-SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRCS))
+SRC_FILES = $(shell find $(SRC_DIR) -type f -name "*.c")
 
 # Chemins vers les fichiers objets correspondants
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Configurations de bases
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -g
 
 # Chemins d'inclusion communs
 INCLUDES = -I . -I $(LIBFT)/
@@ -42,7 +39,7 @@ RL_PATH = $(shell brew --prefix readline 2>/dev/null || echo /usr)
 
 # Bibliothèques personnelles
 LIBRARY_PATH = -L$(LIBFT) -L$(RL_PATH)/lib
-LIBRARIES = -lft -lreadline -lhistory
+LIBRARIES = -lft -lreadline
 
 # Custom
 COMPILE_MSG = @printf "."
