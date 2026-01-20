@@ -15,13 +15,13 @@ t_env	*lstnew_env(char *key, char *value);
 void	lstadd_back_env(t_env **lst, t_env *new);
 void	lstdel_env(t_env *env);
 void	lstclear_env(t_data **data);
-
+void	lst_clear_env(t_env **lst);
 // Tokenization
 void		creat_token(char *line, t_data *data);
 void		lstadd_back_token(t_token **lst, t_token *new);
-t_token		*lstnew_token(char *tmp, t_data *data);
+t_token		*lstnew_token(char *tmp, t_states state);
 void		lstdel_token(t_token *token);
-void		lstclear_token(t_data **data);
+void		lstclear_token(t_token **lst);
 
 // Utils
 void	ft_error(char *errorname);

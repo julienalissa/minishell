@@ -16,9 +16,9 @@ typedef enum e_token_type
 
 typedef enum e_states
 {
-	NORMAL,
-	QUOTES,
-	DQUOTES
+	NORMAL, //0
+	QUOTES, //1
+	DQUOTES //2
 }	t_states;
 
 typedef struct s_token
@@ -31,8 +31,8 @@ typedef struct s_token
 
 typedef struct s_env
 {
-	char			*key;
-	char			*val;
+	char			*key; //everything befor =
+	char			*val; // everything after =
 	struct	s_env	*next;
 }					t_env;
 
@@ -40,7 +40,6 @@ typedef struct s_data
 {
 	int			i;
 	char		**envp;
-	t_states	flag_states;
 	t_token		*token;
 	t_env		*env;
 }	t_data;

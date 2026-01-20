@@ -1,17 +1,18 @@
 #include "../../include/minishell.h"
 
-void	lstclear_token(t_data **data)
+void	lstclear_token(t_token **lst)
 {
 	t_token	*temp;
 
-	if (!(*data)->token)
-		return ;
-	while ((*data)->token)
+	if (!lst || !*lst)
+		return;
+	while (*lst)
 	{
-		temp = (*data)->token->next;
-		lstdel_token((*data)->token);
-		(*data)->token = temp;
+		temp = (*lst)->next;
+		lstdel_token(*lst);
+		*lst = temp;
 	}
+	*lst = NULL;
 }
 
 void	lstdel_token(t_token *token)

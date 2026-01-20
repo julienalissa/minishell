@@ -60,7 +60,9 @@ void	lstdel_env(t_env *env)
 {
 	if (!env)
 		return ;
-	free(env->key);
-	free(env->val);
+	if (env->key)
+		free(env->key);
+	if (env->val)
+		free(env->val);
 	free (env);
 }

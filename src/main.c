@@ -15,21 +15,24 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_data data;
+	char	*line;
 
 	(void)argc,
 	(void)argv;
-	char	*line;
-
 	set_data(&data, env);
 	creat_env(&data);
-	line = readline("minishell > ");
-	creat_token(line, &data);
-	// while(1)
-	// {
-	// 	data.env = data.env->next;
-	// 	printf("Key = %s\nValue = %s\n", data.env->key, data.env->val);
-	// 	if (data.env->next == NULL)
-	// 		break;
-	// }
+	while(1)
+	{
+		line = readline("minishell > ");
+		if (!line)
+			break;
+		if (line && *line)
+		{
+			creat_token(line, &data);
+			lstclear_token(&data.token);
+		}
+		free(line);
+	}
+	lst_clear_env(&data.env);
 	return (0);
 }
