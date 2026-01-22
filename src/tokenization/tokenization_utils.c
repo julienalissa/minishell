@@ -1,7 +1,6 @@
 #include "../include/minishell.h"
 
 void	define_token(t_token *node);
-t_token	*lstlast_token(t_token *lst);
 
 t_token	*lstnew_token(char *tmp, t_states state)
 {

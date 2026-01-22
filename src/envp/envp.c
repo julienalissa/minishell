@@ -2,7 +2,6 @@
 
 char	*define_key(char *env);
 char	*define_value(char *env);
-void	creat_env(t_data *data);
 
 void	creat_env(t_data *data)
 {
@@ -14,14 +13,14 @@ void	creat_env(t_data *data)
 	i = 0;
 	while (data->envp[i])
 	{
-		key = define_key(data->envp[i]); //take everything befor =
-		value = define_value(data->envp[i]); // take everything after =
+		key = define_key(data->envp[i]);
+		value = define_value(data->envp[i]);
 		env_tmp = lstnew_env(key, value);
 		if (!env_tmp)
 		{
 			free(value);
 			free(key);
-			lstclear_env(&data);
+			lstclear_env(data);
 		}
 		lstadd_back_env(&data->env, env_tmp);
 		i++;
@@ -49,13 +48,13 @@ char	*define_value(char *env)
 	int				i;
 
 	i = 0;
-	while (env[i] && env[i] != '=')
+	while (env[i] != '=')
 		i++;
-	if (!env[i])
-		return (NULL);
 	start = i + 1;
-	value = ft_substr(env, start, ft_strlen(env + start));
-	if (!value)
+	while(env[i++]);
+	value = ft_substr(env, start, i);
+	if(!value)
 		return (NULL);
-	return (value);
+	return(value);
 }
+

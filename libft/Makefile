@@ -64,10 +64,7 @@ SRCS = \
 	with_fd/ft_putchar_fd.c \
 	with_fd/ft_putendl_fd.c \
 	with_fd/ft_putnbr_fd.c \
-	with_fd/ft_putstr_fd.c
-
-# Bonus (lst)
-BONUS_SRCS = \
+	with_fd/ft_putstr_fd.c \
 	lst/ft_lstadd_back_bonus.c \
 	lst/ft_lstadd_front_bonus.c \
 	lst/ft_lstclear_bonus.c \
@@ -80,7 +77,6 @@ BONUS_SRCS = \
 
 # Objets correspondants (mappage .c -> object/dir/file.o)
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
-OBJS_BONUS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(BONUS_SRCS))
 
 # Règles
 .PHONY: all bonus clean fclean re
@@ -89,9 +85,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(AR) $@ $^
-
-bonus: $(OBJS) $(OBJS_BONUS)
-	@$(AR) $(NAME) $^
 
 # Règle générique : object/dir/file.o <- dir/file.c
 $(OBJ_DIR)/%.o: %.c

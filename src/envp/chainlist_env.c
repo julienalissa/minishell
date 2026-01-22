@@ -42,17 +42,17 @@ t_env	*lstlast_env(t_env *lst)
 	return (lst);
 }
 
-void	lstclear_env(t_data **data)
+void	lstclear_env(t_data *data)
 {
 	t_env	*temp;
 
-	if (!(*data)->env)
+	if (!data->env)
 		return ;
-	while ((*data)->env)
+	while (data->env)
 	{
-		temp = (*data)->env->next;
-		lstdel_env((*data)->env);
-		(*data)->env = temp;
+		temp = data->env->next;
+		lstdel_env(data->env);
+		data->env = temp;
 	}
 }
 

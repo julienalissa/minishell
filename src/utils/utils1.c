@@ -6,3 +6,9 @@ void	set_data(t_data *data, char **env)
 	data->envp = env;
 }
 
+void	ft_error(char *errorname)
+{
+	perror(errorname);
+	exit (EXIT_FAILURE);
+}
+

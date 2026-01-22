@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data data;
+	t_data	data;
+	t_ast	*ast;
 	char	*line;
 
 	(void)argc,
@@ -29,10 +30,11 @@ int	main(int argc, char **argv, char **env)
 		if (line && *line)
 		{
 			creat_token(line, &data);
+			ast = build_ast(data.token, &data);
 			lstclear_token(&data.token);
 		}
 		free(line);
 	}
-	lst_clear_env(&data.env);
+	lstclear_env(&data);
 	return (0);
 }
