@@ -37,6 +37,8 @@ void	node_left(t_token *token, t_token *pivot)
 {
 	t_token *temp;
 
+	if (!token)
+		return ;
 	temp = token;
 	while(temp && temp->next != pivot)
 		temp = temp->next;

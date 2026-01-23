@@ -29,7 +29,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Configurations de bases
 CC = gcc
-CFLAGS = -g3 -fsanitize=address
+CFLAGS = -g
 
 # Chemins d'inclusion communs
 INCLUDES = -I . -I $(LIBFT)/
