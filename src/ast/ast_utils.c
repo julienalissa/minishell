@@ -1,6 +1,5 @@
 #include "../../include/minishell.h"
 
-t_token	*find_pivot(t_token *temp);
 int	parantheses_counter(t_token	*temp);
 
 t_token	*find_lowest_prio(t_token *token)
@@ -16,26 +15,19 @@ t_token	*find_lowest_prio(t_token *token)
 	{
 		parantheses_count += parantheses_counter(temp);
 		if (parantheses_count == 0)
-			pivot = find_pivot(temp);
+		{
+			if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
+				pivot = temp;
+			else if (temp->token_type == TOKEN_PIPE)
+			{
+				if (!pivot || (temp->token_type != TOKEN_AND && temp->token_type != TOKEN_OR))
+					pivot = temp;
+			}
+		}
 		temp = temp->next;
 	}
 	if (parantheses_count != 0)
 		ft_error("Error: Paranthesis impaire\n"); // Penser à free
-	return(pivot);
-}
-
-t_token	*find_pivot(t_token *temp)
-{
-	t_token *pivot;
-
-	pivot = NULL;
-	if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
-		pivot = temp;
-	else if (temp->token_type == TOKEN_PIPE)
-	{
-		if (!pivot || (temp->token_type != TOKEN_AND && temp->token_type != TOKEN_OR))
-			pivot = temp;
-	}
 	return(pivot);
 }
 

@@ -2,6 +2,7 @@
 
 t_token	*trim_paranthesis(t_token	*token);
 void	node_left(t_token *token, t_token *pivot);
+void	free_pivot(t_token *pivot);
 
 t_ast	*build_ast(t_token *token, t_data *data)
 {
@@ -27,7 +28,10 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	}
 	right_start = pivot->next;
 	node_left(token, pivot);
-	free(pivot);
+	node = malloc(sizeof(t_ast));
+	ft_bzero(node, sizeof(t_ast));
+	creat_operator(pivot, &node);
+	free_pivot(pivot);
 	node->left = build_ast(token, data);
 	node->right = build_ast(right_start, data);
 	return (node);
@@ -68,4 +72,13 @@ t_token	*trim_paranthesis(t_token *token)
 	}
 	lstdel_token(last);
 	return(start);
+}
+
+void	free_pivot(t_token *pivot)
+{
+	if (!pivot)
+		return ;
+	if (pivot->value)
+		free(pivot->value);
+	free(pivot);
 }

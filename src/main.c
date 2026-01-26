@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			creat_token(line, &data);
 			ast = build_ast(data.token, &data);
+			print_tree_visual(ast, 0, ' ');
 			lstclear_token(&data.token);
 		}
 		free(line);
