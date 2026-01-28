@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "ast.h"
 
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst);
 void	creat_cmd_node(t_list *args_lst, t_ast **node);
@@ -40,7 +40,6 @@ t_ast	*creat_node(t_token	*token, t_data *data)
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 {
 	t_list	*lst;
-
 	if ((*args_lst) == NULL)
 	{
 		(*args_lst) = malloc(sizeof(t_list));

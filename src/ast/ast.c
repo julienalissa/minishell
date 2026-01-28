@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "ast.h"
 
 t_token	*trim_paranthesis(t_token	*token);
 void	node_left(t_token *token, t_token *pivot);
@@ -57,7 +57,7 @@ t_token	*trim_paranthesis(t_token *token)
 
 	last = lstlast_token(token);
 	if (!token || (token->token_type != TOKEN_PARENTHESIS_IN && last->token_type != TOKEN_PARENTHESIS_OUT))
-		return (token);
+		return (token); // a check
 	start = token->next;
 	lstdel_token(token);
 	temp = start;

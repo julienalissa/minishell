@@ -10,6 +10,8 @@
 # include "struct.h"
 # include "../libft/libft.h"
 # include "../src/ast/ast.h"
+# include "../src/execution/exec.h"
+
 
 
 
@@ -32,6 +34,6 @@ t_token	*lstlast_token(t_token *lst);
 
 // Utils
 void	ft_error(char *errorname);
-void	set_data(t_data *data, char **env);
+void	set_data(t_data *data, char **env, t_ast *node, t_exec *exec);
 
 #endif

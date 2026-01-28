@@ -1,3 +1,6 @@
+#ifndef AST_H
+# define AST_H
+
 #include "../../include/minishell.h"
 
 typedef enum e_op_type
@@ -51,3 +54,5 @@ t_redir	*last_redir(t_redir *lst);
 // To delet
 void print_node_content(t_ast *node);
 void print_tree_visual(t_ast *node, int space, char branch);
+
+#endif
