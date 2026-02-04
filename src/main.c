@@ -20,7 +20,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc,
 	(void)argv;
-	set_data(&data, env, node);
+	node = calloc(0, sizeof(t_ast));
+	set_data(&data, env);
 	creat_env(&data);
 	while(1)
 	{
@@ -34,13 +35,11 @@ int	main(int argc, char **argv, char **env)
 			setup_exec(node, &data);
 			// print_tree_visual(node, 0, ' ');
 		}
-		free_node(node);
-		lstclear_token(&data.token);
-		data.token = NULL;
-		node = NULL;
+		add_history(line);
 		free(line);
 		line = NULL;
 	}
 	lstclear_env(&data);
+	rl_clear_history();
 	return (0);
 }

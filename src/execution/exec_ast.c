@@ -1,10 +1,7 @@
 #include "../../include/minishell.h"
 
-// TODO exec_cmd a finir , ensuite regarder avec prompt simple CMD | CMD
-// Regarde le fonctionnement pour les heredocs et les appends
-
-void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
-int		command_count(t_ast *node);
+static void		exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
+static int		command_count(t_ast *node);
 
 void	setup_exec(t_ast *node, t_data *data)
 {
@@ -20,6 +17,10 @@ void	setup_exec(t_ast *node, t_data *data)
 	exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
 	wait_all_process(data);
 	free(data->exec->pids);
+	free_node(node);
+	lstclear_token(&data->token);
+	data->token = NULL;
+	node = NULL;
 }
 void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
@@ -28,6 +29,13 @@ void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 	i = data->exec->nb_cmds;
 	if (!node)
 		return ;
+	// if (node->redir)
+	// {
+	// 	if (node->redir->redir_type == NODE_HEREDOC)
+	// 		exec_hd(node, data, fd_in, fd_out);
+	// 	else if (node->redir->redir_type == NODE_APPEND)
+	// 		exec_append(node, data, fd_in, fd_out);
+	// }
 	if (node->op_type == NODE_PIPE)
 		exec_pipe(node, data, fd_in, fd_out);
 	else if (node->op_type == NODE_AND)
@@ -43,23 +51,23 @@ void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 	data->exec->nb_cmds++;
 }
 
-void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
+static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
 	char	*path;
 	define_redir(node, fd_in, fd_out);
-	if ((path = find_path(node, data)) == NULL) // OK
-		return(ft_error("Error: PATH NO FOUND\n")); // A check
+	if ((path = find_path(node, data)) == NULL)
+		return(ft_error("Error: PATH NO FOUND\n"));
 	if ((execve (path, node->args, data->envp)) < 0)
 	{
 		free(path);
 		ft_freetab(node->args);
 		if (node->redir)
 			free(node->redir->file);
-		ft_error("Error: Execve failled"); // A check
+		ft_error("Error: Execve failled");
 	}
 }
 
-int	command_count(t_ast *node)
+static int	command_count(t_ast *node)
 {
 	if (!node)
 		return (0);

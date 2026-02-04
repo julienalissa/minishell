@@ -27,7 +27,7 @@ t_token	*lstlast_token(t_token *lst);
 // Utils
 void	ft_error(char *errorname);
 void	ft_freetab(char **tab);
-void	set_data(t_data *data, char **env, t_ast *node);
+void	set_data(t_data *data, char **env);
 void	free_node(t_ast *node);
 
 #endif

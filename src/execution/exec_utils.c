@@ -1,7 +1,6 @@
 #include "../../include/minishell.h"
 
-char	*ft_strjoin_path(char const *s1, char const *s2);
-
+static char	*ft_strjoin_path(char const *s1, char const *s2);
 
 void	wait_all_process(t_data *data)
 {
@@ -58,7 +57,7 @@ char *find_path(t_ast *node, t_data *data)
 	return (NULL);
 }
 
-char	*ft_strjoin_path(char const *s1, char const *s2)
+static char	*ft_strjoin_path(char const *s1, char const *s2)
 {
 	char	*newstr;
 	size_t	len1;

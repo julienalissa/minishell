@@ -1,8 +1,8 @@
 #include "../../include/minishell.h"
 
-t_token	*trim_paranthesis(t_token	*token);
-void	node_left(t_token *token, t_token *pivot);
-void	free_pivot(t_token *pivot);
+static t_token	*trim_paranthesis(t_token	*token);
+static void	node_left(t_token *token, t_token *pivot);
+static void	free_pivot(t_token *pivot);
 
 t_ast	*build_ast(t_token *token, t_data *data)
 {
@@ -37,7 +37,7 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	return (node);
 }
 
-void	node_left(t_token *token, t_token *pivot)
+static void	node_left(t_token *token, t_token *pivot)
 {
 	t_token *temp;
 
@@ -49,7 +49,7 @@ void	node_left(t_token *token, t_token *pivot)
 	temp->next = NULL;
 }
 
-t_token	*trim_paranthesis(t_token *token)
+static t_token	*trim_paranthesis(t_token *token)
 {
 	t_token	*start;
 	t_token	*last;
@@ -74,7 +74,7 @@ t_token	*trim_paranthesis(t_token *token)
 	return(start);
 }
 
-void	free_pivot(t_token *pivot)
+static void	free_pivot(t_token *pivot)
 {
 	if (!pivot)
 		return ;

@@ -8,6 +8,8 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_ast	t_ast;
 typedef struct s_token	t_token;

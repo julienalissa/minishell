@@ -1,13 +1,12 @@
 #include "../../include/minishell.h"
 
-void	set_data(t_data *data, char **env, t_ast *node)
+void	set_data(t_data *data, char **env)
 {
 	ft_bzero(data, sizeof(t_data));
 	data->exec = malloc(sizeof(t_exec));
 	if (!data->exec)
 		ft_error("Error : Malloc of exec\n");
 	ft_bzero(data->exec, sizeof(t_exec));
-	ft_bzero(node, sizeof(t_ast));
 	data->envp = env;
 }
 
