@@ -1,40 +1,7 @@
 #ifndef AST_H
 # define AST_H
 
-#include "../../include/minishell.h"
-
-typedef enum e_op_type
-{
-	NODE_CMD,
-	NODE_PIPE,
-	NODE_AND,
-	NODE_OR
-}	t_op_type;
-
-typedef enum e_redir_type
-{
-	NODE_REDIR_IN,
-	NODE_REDIR_OUT,
-	NODE_APPEND,
-	NODE_HEREDOC
-}	t_redir_type;
-
-typedef struct s_redir
-{
-	char			*file;
-	t_redir_type	redir_type;
-	struct	s_redir	*next;
-}					t_redir;
-
-typedef struct s_ast
-{
-	char			**args;
-	t_op_type		op_type;
-	t_redir			*redir;
-	struct	s_ast	*left;
-	struct	s_ast	*right;
-
-}					t_ast;
+#include "../../include/struct.h"
 
 t_ast	*build_ast(t_token *token, t_data *data);
 t_ast	*creat_node(t_token	*token, t_data *data);

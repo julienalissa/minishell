@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "../../include/minishell.h"
 
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst);
 void	creat_cmd_node(t_list *args_lst, t_ast **node);

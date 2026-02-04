@@ -1,18 +1,10 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <dirent.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include "struct.h"
 # include "../libft/libft.h"
 # include "../src/ast/ast.h"
 # include "../src/execution/exec.h"
-
-
 
 
 // Environnement
@@ -34,6 +26,8 @@ t_token	*lstlast_token(t_token *lst);
 
 // Utils
 void	ft_error(char *errorname);
-void	set_data(t_data *data, char **env, t_ast *node, t_exec *exec);
+void	ft_freetab(char **tab);
+void	set_data(t_data *data, char **env, t_ast *node);
+void	free_node(t_ast *node);
 
 #endif

@@ -1,43 +1,86 @@
-#include "exec.h"
+#include "../../include/minishell.h"
 
-int	wait_process(t_exec *exec)
+char	*ft_strjoin_path(char const *s1, char const *s2);
+
+
+void	wait_all_process(t_data *data)
+{
+	int	status;
+
+	while ((waitpid(-1, &status, 0)) > 0)
+	{
+		if (WIFEXITED(status))
+			data->exec->ret_status = WEXITSTATUS(status);
+	}
+}
+
+int	wait_process(t_data *data)
 {
 	int	status;
 	int	ret_status;
 
-	waitpid(exec->pids[exec->nb_cmds], status, 0);
+	waitpid(data->exec->pids[data->exec->nb_cmds - 1], &status, 0);
 	if (WIFEXITED(status))
 		ret_status = WEXITSTATUS(status);
 	return(ret_status);
 }
 
-void	define_redir(t_ast *node, int fd_in, int fd_out)
+void	dup_and_close(int std_target, int fd)
 {
-	int	redir;
-
-	redir = 0;
-	if (node->redir == NULL)
-	{
-		dup_and_close(0, fd_in);
-		dup_and_close(1, fd_out);
-	}
-	else if (node->redir->redir_type == NODE_REDIR_IN)
-	{
-		redir = open(node->redir->file);
-		dup_and_close(0, redir);
-		dup_and_close(1, fd_out);
-	}
-	else if (node->redir->redir_type == NODE_REDIR_OUT)
-	{
-		redir = open(node->redir->file);
-		dup_and_close(0, fd_in);
-		dup_and_close(1, redir);
-	}
-}
-void	dup_and_close(int old_fd, int new_fd)
-{
-	if (dup2(old_fd, new_fd) < 0)
-		return;
-	close(old_fd);
+	if (std_target == fd)
+		return ;
+	if (dup2(fd, std_target) < 0)
+		ft_error("Error: dup2 failed\n");
+	close(fd);
 }
 
+char *find_path(t_ast *node, t_data *data)
+{
+	int		i;
+	char	*ret;
+	t_env	*temp;
+	char	**path;
+
+	temp = data->env;
+	i = 0;
+	while((ft_strncmp(temp->key, "PATH", ft_strlen("PATH"))) != 0)
+		temp = temp->next;
+	path = ft_split(temp->val, ':');
+	while (path[i])
+	{
+		ret = ft_strjoin_path(path[i], node->args[0]);
+		if (access(ret, F_OK | X_OK) == 0)
+			return(ft_freetab(path), ret);
+		else
+			free(ret);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*ft_strjoin_path(char const *s1, char const *s2)
+{
+	char	*newstr;
+	size_t	len1;
+	size_t	len2;
+
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (ft_strdup(s2));
+	else if (!s2)
+		return (ft_strdup(s1));
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	newstr = malloc(sizeof(char) * (len1 + len2 + 2));
+	if (!newstr)
+		return (NULL);
+	ft_strlcpy(newstr, s1, len1 + 1);
+	if (newstr[len1 - 1] != '/')
+	{
+		newstr[len1++] = '/';
+		newstr[len1 + 1] = '\0';
+	}
+	ft_strlcpy(newstr + len1, s2, (len2 + 1));
+	return (newstr);
+}

@@ -16,12 +16,11 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 	t_ast	*node;
-	t_exec	*exec;
 	char	*line;
 
 	(void)argc,
 	(void)argv;
-	set_data(&data, env, node, exec);
+	set_data(&data, env, node);
 	creat_env(&data);
 	while(1)
 	{
@@ -32,11 +31,15 @@ int	main(int argc, char **argv, char **env)
 		{
 			creat_token(line, &data);
 			node = build_ast(data.token, &data);
-			// exec_ast(node, exec, 0, 1);
-			print_tree_visual(node, 0, ' ');
-			// lstclear_token(&data.token);
+			setup_exec(node, &data);
+			// print_tree_visual(node, 0, ' ');
 		}
+		free_node(node);
+		lstclear_token(&data.token);
+		data.token = NULL;
+		node = NULL;
 		free(line);
+		line = NULL;
 	}
 	lstclear_env(&data);
 	return (0);

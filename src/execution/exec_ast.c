@@ -2,57 +2,70 @@
 
 // TODO exec_cmd a finir , ensuite regarder avec prompt simple CMD | CMD
 // Regarde le fonctionnement pour les heredocs et les appends
-void	exec_ast(t_ast *node, t_exec *exec, int fd_in, int fd_out)
+
+void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
+int		command_count(t_ast *node);
+
+void	setup_exec(t_ast *node, t_data *data)
 {
+	int total_cmds;
+
+	total_cmds = command_count(node);
+	// printf ("%d\n", total_cmds);
+	// exit (1);
+	data->exec->pids = malloc(sizeof(pid_t) * total_cmds);
+	if (!data->exec->pids)
+		return ;
+	data->exec->nb_cmds = 0;
+	exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
+	wait_all_process(data);
+	free(data->exec->pids);
+}
+void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
+{
+	int i;
+
+	i = data->exec->nb_cmds;
 	if (!node)
 		return ;
 	if (node->op_type == NODE_PIPE)
-		exec_pipe(node, exec, fd_in, fd_out);
+		exec_pipe(node, data, fd_in, fd_out);
 	else if (node->op_type == NODE_AND)
-		exec_and(node, exec, fd_in, fd_out);
+		exec_and(node, data, fd_in, fd_out);
 	else if (node->op_type == NODE_OR)
-		exec_or(node, exec, fd_in, fd_out);
+		exec_or(node, data, fd_in, fd_out);
 	else if (node->op_type == NODE_CMD)
 	{
-		exec->pids[exec->nb_cmds] = fork() ;
-		if ((exec->pids[exec->nb_cmds]) == 0)
-			exec_cmd(node, exec, fd_in, fd_out);
-		exec->nb_cmds++;
+		data->exec->pids[i] = fork();
+		if ((data->exec->pids[i]) == 0)
+			exec_cmd(node, data, fd_in, fd_out);
 	}
+	data->exec->nb_cmds++;
 }
 
-void	exec_cmd(t_ast *node, t_exec *exec, int fd_in, int fd_out)
+void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
 	char	*path;
 	define_redir(node, fd_in, fd_out);
-	path = get_path(node);
-}
-
-void	exec_pipe(t_ast *node, t_exec *exec, int fd_in, int fd_out)
-{
-	int	pipefd[2];
-
-	pipe(pipefd);
-	exec_ast(node->left, exec, fd_in, pipefd[1]);
-	close (pipefd[1]);
-	if ((exec->ret_status = wait_process(exec)) == 0);
+	if ((path = find_path(node, data)) == NULL) // OK
+		return(ft_error("Error: PATH NO FOUND\n")); // A check
+	if ((execve (path, node->args, data->envp)) < 0)
 	{
-		exec_ast(node->right, exec, pipefd[0], fd_out);
-		close (pipefd[0]);
+		free(path);
+		ft_freetab(node->args);
+		if (node->redir)
+			free(node->redir->file);
+		ft_error("Error: Execve failled"); // A check
 	}
 }
 
-void	exec_and(t_ast *node, t_exec *exec, int fd_in, int fd_out)
+int	command_count(t_ast *node)
 {
-	exec_ast(node->left, exec, fd_in, fd_out);
-	if ((exec->ret_status = (wait_process(exec))) == 0)
-		exec_ast(node->right, exec, fd_in, fd_out);
+	if (!node)
+		return (0);
+	if (node->op_type == NODE_CMD)
+		return (1);
+	return (command_count(node->left) + command_count(node->right));
 }
 
-void	exec_or(t_ast *node, t_exec *exec, int fd_in, int fd_out)
-{
-	exec_ast(node->left, exec, fd_in, fd_out);
-	if ((exec->ret_status = (wait_process(exec))) != 0)
-		exec_ast(node->right, exec, fd_in, fd_out);
-}
 

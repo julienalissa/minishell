@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "../../include/minishell.h"
 
 void	expand_dollar(char *name, t_list **lst, t_data *data)
 {

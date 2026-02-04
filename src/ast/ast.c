@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "../../include/minishell.h"
 
 t_token	*trim_paranthesis(t_token	*token);
 void	node_left(t_token *token, t_token *pivot);

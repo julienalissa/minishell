@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "../../include/minishell.h"
 
 // POUR AFFICHER L'ARBRE DANS LE TERMINAL (FAIT AVEC IA MAIS POUR AVOIR UN RENDU VISUEL )
 

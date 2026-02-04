@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "../../include/minishell.h"
 
 void	creat_redir(t_token	*temp_redir, t_ast **node, t_token *temp_file)
 {

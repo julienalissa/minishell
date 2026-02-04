@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "../../include/minishell.h"
 
 int	parantheses_counter(t_token	*temp);
 
