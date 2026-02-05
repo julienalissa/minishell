@@ -40,6 +40,6 @@ int	main(int argc, char **argv, char **env)
 		line = NULL;
 	}
 	lstclear_env(&data);
-	rl_clear_history();
+	// rl_clear_history();
 	return (0);
 }

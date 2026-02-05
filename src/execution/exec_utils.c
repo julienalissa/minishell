@@ -6,6 +6,8 @@ void	wait_all_process(t_data *data)
 {
 	int	status;
 
+	status = 0;
+
 	while ((waitpid(-1, &status, 0)) > 0)
 	{
 		if (WIFEXITED(status))
@@ -18,6 +20,8 @@ int	wait_process(t_data *data)
 	int	status;
 	int	ret_status;
 
+	status = 0;
+	ret_status = 0;
 	waitpid(data->exec->pids[data->exec->nb_cmds - 1], &status, 0);
 	if (WIFEXITED(status))
 		ret_status = WEXITSTATUS(status);
