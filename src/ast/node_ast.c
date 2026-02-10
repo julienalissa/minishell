@@ -44,7 +44,10 @@ void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 	if ((*args_lst) == NULL)
 	{
 		(*args_lst) = malloc(sizeof(t_list));
-		if(ft_strchr(token->value, '*') && token->states == NORMAL)
+		if (!(*args_lst))
+			return ;
+		(*args_lst)->next = NULL;
+		if (ft_strchr(token->value, '*') && token->states == NORMAL)
 			expand_asterisk(token->value, args_lst);
 		else if (token->states != QUOTES && ft_strchr(token->value, '$'))
 			expand_dollar(token->value, args_lst, data);
@@ -54,9 +57,10 @@ void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 	else
 	{
 		lst = malloc(sizeof(t_list));
-		if(!lst)
+		if (!lst)
 			return ;
-		if(ft_strchr(token->value, '*') && token->states == NORMAL)
+		lst->next = NULL;
+		if (ft_strchr(token->value, '*') && token->states == NORMAL)
 			expand_asterisk(token->value, &lst);
 		else if (token->states != QUOTES && ft_strchr(token->value, '$'))
 			expand_dollar(token->value, &lst, data);
@@ -72,22 +76,27 @@ void	creat_cmd_node(t_list *args_lst, t_ast **node)
 	int	size;
 	int	i;
 
-	if(!args_lst)
-		return;
 	i = 0;
 	temp = args_lst;
-	size = ft_lstsize(temp);
-	(*node)->args = malloc(sizeof(char *) * size + 1);
-	while(temp)
+	if (args_lst)
 	{
-		(*node)->args[i] = ft_strdup((char *)temp->content);
-		i++;
-		temp = temp->next;
+		size = ft_lstsize(temp);
+		(*node)->args = malloc(sizeof(char *) * (size + 1));
+		while (temp)
+		{
+			(*node)->args[i] = ft_strdup((char *)temp->content);
+			i++;
+			temp = temp->next;
+		}
+		(*node)->args[i] = NULL;
 	}
-	(*node)->args[i] = NULL;
+	else
+	{
+		(*node)->args = malloc(sizeof(char *));
+		(*node)->args[0] = NULL;
+	}
 	(*node)->left = NULL;
 	(*node)->right = NULL;
-	// ft_lstclear args_lst
 }
 
 void	creat_operator(t_token *temp, t_ast **node)

@@ -36,6 +36,12 @@ typedef struct s_env
 	struct	s_env	*next;
 }					t_env;
 
+typedef struct s_exec
+{
+	pid_t			*pids;
+	int				nb_cmds;
+	int				ret_status;
+}					t_exec;
 
 typedef struct s_data
 {
@@ -44,5 +50,6 @@ typedef struct s_data
 	t_states	flag_states;
 	t_token		*token;
 	t_env		*env;
+	t_exec		*exec;
 }	t_data;
 

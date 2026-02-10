@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 int	cd(char **args,t_data *data)
 {

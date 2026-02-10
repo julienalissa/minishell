@@ -61,6 +61,7 @@ SRCS = \
 	str/ft_strrchr.c \
 	str/ft_strtrim.c \
 	str/ft_substr.c \
+	str/ft_strcmp.c \
 	with_fd/ft_putchar_fd.c \
 	with_fd/ft_putendl_fd.c \
 	with_fd/ft_putnbr_fd.c \
@@ -73,7 +74,9 @@ SRCS = \
 	lst/ft_lstlast_bonus.c \
 	lst/ft_lstmap_bonus.c \
 	lst/ft_lstnew_bonus.c \
-	lst/ft_lstsize_bonus.c
+	lst/ft_lstsize_bonus.c\
+	with_fd/ft_error.c \
+	with_fd/ft_split_clear.c
 
 # Objets correspondants (mappage .c -> object/dir/file.o)
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))

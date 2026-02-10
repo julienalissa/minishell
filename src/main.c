@@ -18,20 +18,30 @@ int	main(int argc, char **argv, char **env)
 	t_ast	*ast;
 	char	*line;
 
-	(void)argc,
+	(void)argc;
 	(void)argv;
 	set_data(&data, env);
 	creat_env(&data);
-	while(1)
+	signals();
+	while (1)
 	{
 		line = readline("minishell > ");
+		if (g_signal_received)
+		{
+			g_signal_received = 0;
+			free(line);
+			continue;
+		}
 		if (!line)
-			break;
+		{
+			write(1, "exit\n", 5);
+			break ;
+		}
 		if (line && *line)
 		{
 			creat_token(line, &data);
 			ast = build_ast(data.token, &data);
-			print_tree_visual(ast, 0, ' ');
+			setup_exec(ast, &data);
 			lstclear_token(&data.token);
 		}
 		free(line);

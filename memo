@@ -1,0 +1,25 @@
+control c
+
+Pas d’enfant (au prompt)	- Affiche ^C
+- Nouvelle ligne
+- Re-affiche le prompt (readline)
+Avec enfant (commande lancée)	- Tue l’enfant
+- Parent reste vivant
+- Optionnel : peut afficher un message de retour ou code de sortie
+Dans le child (avant execve)	- Remettre les signaux à par défaut (SIG_DFL)
+- Sinon la commande ne mourra pas quand Ctrl+C est appuyé
+
+
+control \
+Pas d’enfant (au prompt)	- Ignorer
+- Rien n’est affiché ni tué
+Avec enfant (commande lancée)	- Comportement par défaut : l’enfant meurt
+- Affiche le message "Quit (core dumped)"
+- Parent reste vivant
+Dans le child (avant execve)	- Remettre les signaux à par défaut (SIG_DFL)
+- Comme pour Ctrl+C, mais effet visuel différent
+
+
+handler
+mask
+flags

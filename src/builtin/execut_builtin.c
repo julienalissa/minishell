@@ -16,7 +16,7 @@ int execut_builtin(t_ast *node, t_data *data)
 		return (unset(node->args, data));
 	else if (ft_strcmp(node->args[0], "env") == 0)
 		return (env(data));
-	else if (ft_strcmp(node->args[0], "ext_42") == 0)
+	else if (ft_strcmp(node->args[0], "exit") == 0)
 		return (exit_42(node->args));
 	return (1);
 }
