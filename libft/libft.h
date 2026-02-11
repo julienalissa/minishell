@@ -19,6 +19,10 @@
 # include <unistd.h>
 # include <stdint.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 typedef struct s_list
 {
 	void			*content;
@@ -107,5 +111,9 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 // Utilitaire
 void	ft_error(char *msg);
 void	ft_split_clear(char **split);
+
+// GNL
+
+char	*get_next_line(int fd);
 
 #endif

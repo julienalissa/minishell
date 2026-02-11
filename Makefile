@@ -29,7 +29,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Configurations de bases
 CC = gcc
-CFLAGS = -g
+CFLAGS = -g -Wall -Wextra -Werror
 
 # Chemins d'inclusion communs
 INCLUDES = -I . -I $(LIBFT)/
@@ -73,6 +73,10 @@ fclean: clean
 	@rm -f $(NAME)
 	@make -C $(LIBFT) fclean
 	@echo "✅ Nettoyage complet terminé !"
+
+# Règle pour tester les leaks rapidement
+leaks: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
 # Recompilation complète
 re: fclean all

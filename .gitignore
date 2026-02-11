@@ -1,0 +1,10 @@
+.DS_Store
+*.o
+*.a
+minishell
+object/
+libft/object
+.hd_tmp
+tmp/
+Dockerfile
+minishell-linux

@@ -42,7 +42,6 @@ int	main(int argc, char **argv, char **env)
 			creat_token(line, &data);
 			ast = build_ast(data.token, &data);
 			setup_exec(ast, &data);
-			lstclear_token(&data.token);
 		}
 		free(line);
 	}

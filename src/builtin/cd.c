@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	cd(char **args,t_data *data)
+int	cd(char **args)
 {
 	char	*path;
 	int		ret;

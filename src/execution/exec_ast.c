@@ -15,6 +15,7 @@ void	setup_exec(t_ast *node, t_data *data)
 	exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
 	wait_all_process(data);
 	free(data->exec->pids);
+	free_node(node);
 	lstclear_token(&data->token);
 	data->token = NULL;
 	node = NULL;
@@ -22,9 +23,6 @@ void	setup_exec(t_ast *node, t_data *data)
 
 void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
-	int i;
-
-	i = data->exec->nb_cmds;
 	if (!node)
 		return ;
 	if (node->op_type == NODE_PIPE)
@@ -42,8 +40,8 @@ void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 		}
 		else
 		{
-			data->exec->pids[i] = fork();
-			if ((data->exec->pids[i]) == 0)
+			data->exec->pids[data->exec->nb_cmds] = fork();
+			if ((data->exec->pids[data->exec->nb_cmds]) == 0)
 				exec_cmd(node, data, fd_in, fd_out);
 			data->exec->nb_cmds++;
 		}
@@ -58,7 +56,7 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	signal(SIGQUIT, SIG_DFL);
 	define_redir(node, fd_in, fd_out);
 	if ((path = find_path(node, data)) == NULL)
-		return(ft_error("Error: PATH NO FOUND\n"));
+		return(ft_error("Error: command not found\n"));
 	if ((execve (path, node->args, data->envp)) < 0)
 	{
 		free(path);

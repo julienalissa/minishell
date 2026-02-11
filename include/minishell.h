@@ -47,20 +47,18 @@ t_token	*lstlast_token(t_token *lst);
 
 // Builtins
 int		echo(char **args);
-int		cd(char **args, t_data *data);
+int		cd(char **args);
 int		pwd(void);
-int	export(char **args, t_data *data);
+int		export(char **args, t_data *data);
 int		unset(char **args, t_data *data);
 int		env(t_data *data);
-int		exit_42(char **args);
-
-// Execution
-
-void ft_free_str(char **str);
+int		exit_42(t_ast *node, t_data *data);
 
 // Utilitaires
 void	ft_error(char *msg);
 void	ft_split_clear(char **split);
+void	free_node(t_ast *node);
+void	ft_freetab(char **tab);
 
 int	is_builtin(char *cmd);
 int	execut_builtin(t_ast *node, t_data *data);

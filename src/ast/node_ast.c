@@ -95,6 +95,7 @@ void	creat_cmd_node(t_list *args_lst, t_ast **node)
 		(*node)->args = malloc(sizeof(char *));
 		(*node)->args[0] = NULL;
 	}
+	ft_lstclear(&args_lst, free);
 	(*node)->left = NULL;
 	(*node)->right = NULL;
 }
