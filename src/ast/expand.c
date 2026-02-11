@@ -7,9 +7,14 @@ void	expand_dollar(char *name, t_list **lst, t_data *data)
 
 	env_temp = data->env;
 	len = ft_strlen(name);
+	if (name[1] == '?')
+	{
+		(*lst)->content = ft_itoa(data->last_exit_code);
+		return ;
+	}
 	while(env_temp)
 	{
-		if (ft_strncmp(env_temp->key, name + 1, len) == 0)
+		if (ft_strncmp(env_temp->key, name + 1, len - 1) == 0)
 		{
 			(*lst)->content = ft_strdup(env_temp->val);
 			return ;

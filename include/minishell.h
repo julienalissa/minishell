@@ -10,11 +10,13 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
+# include <errno.h>
 # include "struct.h"
 # include "../libft/libft.h"
 # include "../src/ast/ast.h"
 # include "../src/execution/exec.h"
-# include <signal.h>
+
 // Initialisation de la structure data
 void set_data(t_data *data, char **env);
 

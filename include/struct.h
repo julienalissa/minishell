@@ -47,6 +47,7 @@ typedef struct s_data
 {
 	int			i;
 	char		**envp;
+	int			last_exit_code;
 	t_states	flag_states;
 	t_token		*token;
 	t_env		*env;

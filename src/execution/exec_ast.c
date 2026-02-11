@@ -56,15 +56,22 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	signal(SIGQUIT, SIG_DFL);
 	define_redir(node, fd_in, fd_out);
 	if ((path = find_path(node, data)) == NULL)
-		return(ft_error("Error: command not found\n"));
-	if ((execve (path, node->args, data->envp)) < 0)
 	{
-		free(path);
-		ft_split_clear(node->args);
-		if (node->redir)
-			free(node->redir->file);
-		ft_error("Error: Execve failled");
+		ft_putstr_fd(node->args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit (127);
 	}
+	execve (path, node->args, data->envp);
+	perror(node->args[0]);
+	free(path);
+	ft_split_clear(node->args);
+	if (node->redir)
+		free(node->redir->file);
+	if (errno == EACCES)
+		exit (126);
+	if (errno == ENOENT)
+		exit (127);
+	exit (1);
 }
 
 static int	command_count(t_ast *node)

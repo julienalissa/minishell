@@ -43,6 +43,7 @@ int	main(int argc, char **argv, char **env)
 			ast = build_ast(data.token, &data);
 			setup_exec(ast, &data);
 		}
+		add_history(line);
 		free(line);
 	}
 	lstclear_env(&data);
