@@ -2,7 +2,7 @@
 
 int	env(t_data *data)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = data->env;
 	while (tmp)

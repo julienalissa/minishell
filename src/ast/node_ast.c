@@ -3,7 +3,7 @@
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst);
 void	creat_cmd_node(t_list *args_lst, t_ast **node);
 
-t_ast	*creat_node(t_token	*token, t_data *data)
+t_ast	*creat_node(t_token *token, t_data *data)
 {
 	t_ast	*node;
 	t_token	*temp;
@@ -48,7 +48,7 @@ t_ast	*creat_node(t_token	*token, t_data *data)
 		}
 	}
 	creat_cmd_node(args_lst, &node);
-	return(node);
+	return (node);
 }
 
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
@@ -87,8 +87,8 @@ void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 void	creat_cmd_node(t_list *args_lst, t_ast **node)
 {
 	t_list	*temp;
-	int	size;
-	int	i;
+	int		size;
+	int		i;
 
 	i = 0;
 	temp = args_lst;
@@ -128,5 +128,3 @@ void	creat_operator(t_token *temp, t_ast **node)
 	(*node)->args[0] = ft_strdup(temp->value);
 	(*node)->args[1] = NULL;
 }
-
-

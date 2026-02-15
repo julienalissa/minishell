@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-t_token	*trim_paranthesis(t_token	*token);
+t_token	*trim_paranthesis(t_token *token);
 void	node_left(t_token *token, t_token *pivot);
 void	free_pivot(t_token *pivot);
 
@@ -12,19 +12,19 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	char	*pivot_value;
 
 	if (!token)
-		return(NULL);
+		return (NULL);
 	pivot = find_lowest_prio(token);
 	if (pivot == NULL)
 	{
 		if (token->token_type == TOKEN_PARENTHESIS_IN)
 		{
 			token = trim_paranthesis(token);
-			return(build_ast(token, data));
+			return (build_ast(token, data));
 		}
 		else
 		{
 			node = creat_node(token, data);
-			return(node);
+			return (node);
 		}
 	}
 	right_start = pivot->next;
@@ -32,7 +32,8 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	pivot_value = ft_strdup(pivot->value);
 	if (token == NULL || token == pivot)
 	{
-		ft_printf("-bash: syntax error near unexpected token `%s'\n", pivot_value);
+		ft_printf("-bash: syntax error near unexpected token `%s'\n",
+			pivot_value);
 		data->last_exit_code = 2;
 		free(pivot_value);
 		return (NULL);
@@ -44,7 +45,8 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	free_pivot(pivot);
 	if (right_start == NULL)
 	{
-		ft_printf("-bash: syntax error near unexpected token `%s'\n", pivot_value);
+		ft_printf("-bash: syntax error near unexpected token `%s'\n",
+			pivot_value);
 		data->last_exit_code = 2;
 		free(node);
 		free(pivot_value);
@@ -54,7 +56,8 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	node->right = build_ast(right_start, data);
 	if (node->left == NULL || node->right == NULL)
 	{
-		ft_printf("-bash: syntax error near unexpected token `%s'\n", pivot_value);
+		ft_printf("-bash: syntax error near unexpected token `%s'\n",
+			pivot_value);
 		data->last_exit_code = 2;
 		free(node);
 		free(pivot_value);
@@ -66,12 +69,12 @@ t_ast	*build_ast(t_token *token, t_data *data)
 
 void	node_left(t_token *token, t_token *pivot)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	if (!token || token == pivot)
 		return ;
 	temp = token;
-	while(temp && temp->next != pivot)
+	while (temp && temp->next != pivot)
 		temp = temp->next;
 	if (temp)
 		temp->next = NULL;
@@ -84,22 +87,23 @@ t_token	*trim_paranthesis(t_token *token)
 	t_token	*temp;
 
 	last = lstlast_token(token);
-	if (!token || (token->token_type != TOKEN_PARENTHESIS_IN && last->token_type != TOKEN_PARENTHESIS_OUT))
+	if (!token || (token->token_type != TOKEN_PARENTHESIS_IN
+			&& last->token_type != TOKEN_PARENTHESIS_OUT))
 		return (token);
 	start = token->next;
 	lstdel_token(token);
 	temp = start;
-	while(temp)
+	while (temp)
 	{
 		if (temp->next == last)
 		{
 			temp->next = NULL;
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
 	lstdel_token(last);
-	return(start);
+	return (start);
 }
 
 void	free_pivot(t_token *pivot)

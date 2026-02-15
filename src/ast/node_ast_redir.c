@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-void	creat_redir(t_token	*temp_redir, t_ast **node, t_token *temp_file)
+void	creat_redir(t_token *temp_redir, t_ast **node, t_token *temp_file)
 {
 	t_redir	*new_node_redir;
 
@@ -22,11 +22,12 @@ void	creat_redir(t_token	*temp_redir, t_ast **node, t_token *temp_file)
 
 int	is_redir(t_token *token)
 {
-	if(token->token_type == TOKEN_APPEND || token->token_type == TOKEN_HEREDOC
-		|| token->token_type == TOKEN_REDIR_IN || token->token_type == TOKEN_REDIR_OUT)
+	if (token->token_type == TOKEN_APPEND || token->token_type == TOKEN_HEREDOC
+		|| token->token_type == TOKEN_REDIR_IN
+		|| token->token_type == TOKEN_REDIR_OUT)
 		return (1);
 	else
-		return(0);
+		return (0);
 }
 
 void	choise_redir(t_redir **redir, t_token *temp_redir)

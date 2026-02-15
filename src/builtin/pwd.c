@@ -1,8 +1,8 @@
 #include "../../include/minishell.h"
 
-int pwd(void)
+int	pwd(void)
 {
-	char cwd[1024];
+	char	cwd[1024];
 
 	if (!getcwd(cwd, sizeof(cwd)))
 	{

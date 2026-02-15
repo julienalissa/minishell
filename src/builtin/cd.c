@@ -5,7 +5,7 @@ int	cd(char **args)
 	char	*path;
 	int		ret;
 
-	if (!args[1] || ft_strcmp(args[1],"~") == 0)
+	if (!args[1] || ft_strcmp(args[1], "~") == 0)
 	{
 		path = getenv("HOME");
 		if (!path)

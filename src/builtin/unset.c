@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	unset(char **args,t_data *data)
+int	unset(char **args, t_data *data)
 {
 	int		i;
 	t_env	*tmp;
@@ -14,7 +14,7 @@ int	unset(char **args,t_data *data)
 		prev = NULL;
 		while (tmp)
 		{
-			if (ft_strcmp(tmp->key,args[i]) == 0)
+			if (ft_strcmp(tmp->key, args[i]) == 0)
 			{
 				if (prev)
 					prev->next = tmp->next;

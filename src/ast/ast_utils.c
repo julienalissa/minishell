@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	parantheses_counter(t_token	*temp);
+int		parantheses_counter(t_token *temp);
 
 t_token	*find_lowest_prio(t_token *token)
 {
@@ -11,7 +11,7 @@ t_token	*find_lowest_prio(t_token *token)
 	parantheses_count = 0;
 	temp = token;
 	pivot = NULL;
-	while(temp)
+	while (temp)
 	{
 		parantheses_count += parantheses_counter(temp);
 		if (parantheses_count == 0)
@@ -20,7 +20,8 @@ t_token	*find_lowest_prio(t_token *token)
 				pivot = temp;
 			else if (temp->token_type == TOKEN_PIPE)
 			{
-				if (!pivot || (temp->token_type != TOKEN_AND && temp->token_type != TOKEN_OR))
+				if (!pivot || (temp->token_type != TOKEN_AND
+						&& temp->token_type != TOKEN_OR))
 					pivot = temp;
 			}
 		}
@@ -28,10 +29,10 @@ t_token	*find_lowest_prio(t_token *token)
 	}
 	if (parantheses_count != 0)
 		return (NULL);
-	return(pivot);
+	return (pivot);
 }
 
-int	parantheses_counter(t_token	*temp)
+int	parantheses_counter(t_token *temp)
 {
 	if (temp->token_type == TOKEN_PARENTHESIS_IN)
 		return (1);

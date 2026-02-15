@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int execut_builtin(t_ast *node, t_data *data)
+int	execut_builtin(t_ast *node, t_data *data)
 {
 	if (!node || !node->args || !node->args[0])
 		return (1);

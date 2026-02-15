@@ -14,13 +14,15 @@ void	set_data(t_data *data, char **env)
 void	ft_error(char *errorname)
 {
 	perror(errorname);
-	exit (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 void	ft_freetab(char **tab)
 {
-	int i = 0;
-	while(tab[i] != NULL)
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
 	{
 		free(tab[i]);
 		i++;
@@ -28,7 +30,7 @@ void	ft_freetab(char **tab)
 	free(tab);
 }
 
-void free_node(t_ast *node)
+void	free_node(t_ast *node)
 {
 	t_redir	*temp_redir;
 
@@ -40,7 +42,7 @@ void free_node(t_ast *node)
 		ft_freetab(node->args);
 	if (node->redir)
 	{
-		while(node->redir)
+		while (node->redir)
 		{
 			temp_redir = node->redir->next;
 			free(node->redir->file);
@@ -50,4 +52,3 @@ void free_node(t_ast *node)
 	}
 	free(node);
 }
-

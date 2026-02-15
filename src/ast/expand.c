@@ -2,7 +2,7 @@
 
 void	expand_dollar(char *name, t_list **lst, t_data *data)
 {
-	int	len;
+	int		len;
 	t_env	*env_temp;
 
 	env_temp = data->env;
@@ -12,7 +12,7 @@ void	expand_dollar(char *name, t_list **lst, t_data *data)
 		(*lst)->content = ft_itoa(data->last_exit_code);
 		return ;
 	}
-	while(env_temp)
+	while (env_temp)
 	{
 		if (ft_strncmp(env_temp->key, name + 1, len - 1) == 0)
 		{
@@ -24,20 +24,20 @@ void	expand_dollar(char *name, t_list **lst, t_data *data)
 	(*lst)->content = ft_strdup("");
 }
 
-
 int	check_file(char *name, char *file)
 {
 	if (*name == '\0' && *file == '\0')
-		return(1);
+		return (1);
 	else if (*name == *file && *name != '*')
-		return(check_file(name + 1, file +1));
+		return (check_file(name + 1, file + 1));
 	else if (*name == '*')
-		return (check_file(name + 1, file)
-			|| (*file && check_file(name, file + 1)));
+		return (check_file(name + 1, file) || (*file && check_file(name, file
+					+ 1)));
 	return (0);
 }
 
-void	creat_asterisk(t_list **current, t_list	**lst, char *namefile, int *flag)
+void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
+		int *flag)
 {
 	if (*flag == 0)
 	{
@@ -48,7 +48,7 @@ void	creat_asterisk(t_list **current, t_list	**lst, char *namefile, int *flag)
 	{
 		*current = malloc(sizeof(t_list));
 		if (!*current)
-			return;
+			return ;
 		(*current)->content = ft_strdup(namefile);
 		(*current)->next = NULL;
 		ft_lstadd_back(lst, (*current));
@@ -64,17 +64,17 @@ void	expand_asterisk(char *name, t_list **lst)
 	flag = 0;
 	current = *lst;
 	dirp = NULL;
-	if (!ft_strchr (name, '/'))
+	if (!ft_strchr(name, '/'))
 		dirp = opendir(".");
-	if(!dirp)
+	if (!dirp)
 	{
 		current->content = ft_strdup(name);
 		return ;
 	}
-	while((dp = readdir(dirp)) != NULL)
+	while ((dp = readdir(dirp)) != NULL)
 	{
-		if ((name[0] == '.' || dp->d_name[0] != '.')
-			&& check_file(name, dp->d_name))
+		if ((name[0] == '.' || dp->d_name[0] != '.') && check_file(name,
+				dp->d_name))
 			creat_asterisk(&current, lst, dp->d_name, &flag);
 	}
 	closedir(dirp);

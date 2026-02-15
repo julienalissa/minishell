@@ -26,8 +26,8 @@ char	*remove_quote(char *line, t_data *data, char quote)
 
 void	make_quotes(char *line, t_data *data)
 {
-	t_token		*new;
-	char		*res;
+	t_token	*new;
+	char	*res;
 
 	if (line[data->i] == '\'')
 	{
@@ -43,4 +43,3 @@ void	make_quotes(char *line, t_data *data)
 	}
 	lstadd_back_token(&data->token, new);
 }
-

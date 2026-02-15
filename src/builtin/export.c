@@ -2,7 +2,7 @@
 
 int	is_valid(char *s)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
@@ -18,7 +18,7 @@ int	is_valid(char *s)
 
 void	cat_env(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
@@ -81,11 +81,9 @@ void	add_or_update_env(t_data *data, char *arg)
 		lstadd_back_env(&data->env, lstnew_env(key, val));
 }
 
-
-
 int	export(char **args, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!args[1])
@@ -93,7 +91,6 @@ int	export(char **args, t_data *data)
 		cat_env(data->env);
 		return (0);
 	}
-
 	while (args[i])
 	{
 		if (is_valid(args[i]) == 0)

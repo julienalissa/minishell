@@ -7,7 +7,6 @@ void	wait_all_process(t_data *data)
 	int	status;
 
 	status = 0;
-
 	while ((waitpid(-1, &status, 0)) > 0)
 	{
 		if (WIFEXITED(status))
@@ -29,7 +28,7 @@ int	wait_process(t_data *data)
 		ret_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		ret_status = 128 + WTERMSIG(status);
-	return(ret_status);
+	return (ret_status);
 }
 
 void	dup_and_close(int std_target, int fd)
@@ -41,7 +40,7 @@ void	dup_and_close(int std_target, int fd)
 	close(fd);
 }
 
-char *find_path(t_ast *node, t_data *data)
+char	*find_path(t_ast *node, t_data *data)
 {
 	int		i;
 	char	*ret;
@@ -57,14 +56,14 @@ char *find_path(t_ast *node, t_data *data)
 	}
 	temp = data->env;
 	i = 0;
-	while((ft_strncmp(temp->key, "PATH", ft_strlen("PATH"))) != 0)
+	while ((ft_strncmp(temp->key, "PATH", ft_strlen("PATH"))) != 0)
 		temp = temp->next;
 	path = ft_split(temp->val, ':');
 	while (path[i])
 	{
 		ret = ft_strjoin_path(path[i], node->args[0]);
 		if (access(ret, F_OK | X_OK) == 0)
-			return(ft_split_clear(path), ret);
+			return (ft_split_clear(path), ret);
 		else
 			free(ret);
 		i++;

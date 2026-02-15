@@ -12,7 +12,7 @@ void	creat_token(char *line, t_data *data)
 	{
 		skip_spaces(line, data);
 		if (!line[data->i])
-			break;
+			break ;
 		if (ft_strchr("<>()&|", line[data->i]))
 			make_op(line, data);
 		else if (line[data->i] == '\'' || line[data->i] == '"')
@@ -73,10 +73,10 @@ void	make_word(char *line, t_data *data)
 			i++;
 	}
 	if (i == 0)
-		return;
+		return ;
 	res = ft_substr(line, start, i);
 	if (!res)
-		return;
+		return ;
 	data->i = data->i + i;
 	cleaned = remove_escape(res);
 	free(res);
@@ -87,7 +87,8 @@ void	make_word(char *line, t_data *data)
 
 void	skip_spaces(char *line, t_data *data)
 {
-	while (line[data->i] && (line[data->i] == ' ' || (line[data->i] >= 9 && line[data->i] <= 13)))
+	while (line[data->i] && (line[data->i] == ' ' || (line[data->i] >= 9
+				&& line[data->i] <= 13)))
 		data->i++;
 }
 
@@ -97,10 +98,10 @@ char	*check_op(char *line, t_data *data)
 	int		i;
 
 	i = 1;
-	if ((line[data->i] == '<' && line[data->i + 1] == '<') ||
-		(line[data->i] == '>' && line[data->i + 1] == '>') ||
-		(line[data->i] == '|' && line[data->i + 1] == '|') ||
-		(line[data->i] == '&' && line[data->i + 1] == '&'))
+	if ((line[data->i] == '<' && line[data->i + 1] == '<')
+		|| (line[data->i] == '>' && line[data->i + 1] == '>')
+		|| (line[data->i] == '|' && line[data->i + 1] == '|')
+		|| (line[data->i] == '&' && line[data->i + 1] == '&'))
 		i = 2;
 	op = ft_substr(line, data->i, i);
 	data->i = data->i + i;
@@ -127,13 +128,14 @@ void	make_op(char *line, t_data *data)
 // 	{
 // 		skip_spaces(line, data);
 // 		if (line[data->i] == '\0')
-// 			break;
+// 			break ;
 // 		if (ft_strchr("<>()&|"), line[data->i])
 // 		{
 // 			res = check_op(line, data);
 // 			data->flag_states = NORMAL;
 // 		}
-// 		else if (line[data->i] && line[data->i] == '\'' || line[data->i] == '\"')
+// 		else if (line[data->i] && line[data->i] == '\''
+			// || line[data->i] == '\"')
 
 // 		else
 // 		{
@@ -171,7 +173,5 @@ void	make_op(char *line, t_data *data)
 // 	data->i += ft_strlen(tmp);
 // 	return (tmp);
 // }
-
-
 
 // void	put_token(t_token *)

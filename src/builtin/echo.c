@@ -16,7 +16,7 @@ int	echo(char **args)
 		while (args[i][j] == 'n')
 			j++;
 		if (args[i][j] != '\0')
-			break;
+			break ;
 		newline = 0;
 		i++;
 	}

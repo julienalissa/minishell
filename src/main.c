@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			g_signal_received = 0;
 			free(line);
-			continue;
+			continue ;
 		}
 		if (!line)
 		{

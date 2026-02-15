@@ -2,7 +2,7 @@
 
 int	exit_42(t_ast *node, t_data *data)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	ft_printf("exit\n");
