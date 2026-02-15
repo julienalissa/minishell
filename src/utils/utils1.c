@@ -8,6 +8,7 @@ void	set_data(t_data *data, char **env)
 	if (!data->exec)
 		return ;
 	ft_bzero(data->exec, sizeof(t_exec));
+	data->exec->pids = NULL;
 }
 
 void	ft_error(char *errorname)
@@ -29,6 +30,8 @@ void	ft_freetab(char **tab)
 
 void free_node(t_ast *node)
 {
+	t_redir	*temp_redir;
+
 	if (!node)
 		return ;
 	free_node(node->left);
@@ -39,10 +42,11 @@ void free_node(t_ast *node)
 	{
 		while(node->redir)
 		{
+			temp_redir = node->redir->next;
 			free(node->redir->file);
-			node->redir = node->redir->next;
+			free(node->redir);
+			node->redir = temp_redir;
 		}
-		free(node->redir);
 	}
 	free(node);
 }

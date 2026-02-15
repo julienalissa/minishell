@@ -18,5 +18,9 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
+	if (ft_strcmp(cmd, ":") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "!") == 0)
+		return (1);
 	return (0);
 }

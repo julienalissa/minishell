@@ -27,6 +27,10 @@ void	cat_env(t_env *env)
 		{
 			ft_printf("%s=%s\n", tmp->key, tmp->val);
 		}
+		else
+		{
+			ft_printf("%s\n", tmp->key);
+		}
 		tmp = tmp->next;
 	}
 }

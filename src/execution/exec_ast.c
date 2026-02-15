@@ -7,6 +7,8 @@ void	setup_exec(t_ast *node, t_data *data)
 {
 	int total_cmds;
 
+	if (!node)
+		return;
 	total_cmds = command_count(node);
 	data->exec->pids = malloc(sizeof(pid_t) * total_cmds);
 	if (!data->exec->pids)
@@ -36,7 +38,7 @@ void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 		if (is_builtin(node->args[0]))
 		{
 			define_redir(node, fd_in, fd_out);
-			execut_builtin(node, data);
+			data->last_exit_code = execut_builtin(node, data);
 		}
 		else
 		{

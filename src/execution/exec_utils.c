@@ -48,6 +48,13 @@ char *find_path(t_ast *node, t_data *data)
 	t_env	*temp;
 	char	**path;
 
+	i = 0;
+	if (node->args[0][0] == '/')
+	{
+		if (access(node->args[0], F_OK | X_OK) == 0)
+			return (ft_strdup(node->args[0]));
+		return (NULL);
+	}
 	temp = data->env;
 	i = 0;
 	while((ft_strncmp(temp->key, "PATH", ft_strlen("PATH"))) != 0)
@@ -62,6 +69,7 @@ char *find_path(t_ast *node, t_data *data)
 			free(ret);
 		i++;
 	}
+	ft_split_clear(path);
 	return (NULL);
 }
 

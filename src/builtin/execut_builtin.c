@@ -18,5 +18,9 @@ int execut_builtin(t_ast *node, t_data *data)
 		return (env(data));
 	else if (ft_strcmp(node->args[0], "exit") == 0)
 		return (exit_42(node, data));
+	else if (ft_strcmp(node->args[0], ":") == 0)
+		return (0);
+	else if (ft_strcmp(node->args[0], "!") == 0)
+		return (1);
 	return (1);
 }

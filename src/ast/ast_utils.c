@@ -27,7 +27,7 @@ t_token	*find_lowest_prio(t_token *token)
 		temp = temp->next;
 	}
 	if (parantheses_count != 0)
-		ft_error("Error: Paranthesis impaire\n"); // Penser à free
+		return (NULL);
 	return(pivot);
 }
 

@@ -9,6 +9,7 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	t_token	*pivot;
 	t_token	*right_start;
 	t_ast	*node;
+	char	*pivot_value;
 
 	if (!token)
 		return(NULL);
@@ -28,12 +29,38 @@ t_ast	*build_ast(t_token *token, t_data *data)
 	}
 	right_start = pivot->next;
 	node_left(token, pivot);
+	pivot_value = ft_strdup(pivot->value);
+	if (token == NULL || token == pivot)
+	{
+		ft_printf("-bash: syntax error near unexpected token `%s'\n", pivot_value);
+		data->last_exit_code = 2;
+		free(pivot_value);
+		return (NULL);
+	}
 	node = malloc(sizeof(t_ast));
 	ft_bzero(node, sizeof(t_ast));
 	creat_operator(pivot, &node);
+	pivot_value = ft_strdup(pivot->value);
 	free_pivot(pivot);
+	if (right_start == NULL)
+	{
+		ft_printf("-bash: syntax error near unexpected token `%s'\n", pivot_value);
+		data->last_exit_code = 2;
+		free(node);
+		free(pivot_value);
+		return (NULL);
+	}
 	node->left = build_ast(token, data);
 	node->right = build_ast(right_start, data);
+	if (node->left == NULL || node->right == NULL)
+	{
+		ft_printf("-bash: syntax error near unexpected token `%s'\n", pivot_value);
+		data->last_exit_code = 2;
+		free(node);
+		free(pivot_value);
+		return (NULL);
+	}
+	free(pivot_value);
 	return (node);
 }
 
@@ -41,12 +68,13 @@ void	node_left(t_token *token, t_token *pivot)
 {
 	t_token *temp;
 
-	if (!token)
+	if (!token || token == pivot)
 		return ;
 	temp = token;
 	while(temp && temp->next != pivot)
 		temp = temp->next;
-	temp->next = NULL;
+	if (temp)
+		temp->next = NULL;
 }
 
 t_token	*trim_paranthesis(t_token *token)

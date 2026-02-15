@@ -22,26 +22,67 @@ void	creat_token(char *line, t_data *data)
 	}
 }
 
+char	*remove_escape(char *str)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	if (!str)
+		return (NULL);
+	res = malloc(ft_strlen(str) + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\' && str[i + 1])
+		{
+			i++;
+			res[j++] = str[i++];
+		}
+		else
+		{
+			res[j++] = str[i++];
+		}
+	}
+	res[j] = '\0';
+	return (res);
+}
+
 void	make_word(char *line, t_data *data)
 {
 	char	*res;
+	char	*cleaned;
 	int		start;
 	int		i;
 	t_token	*new;
 
 	start = data->i;
 	i = 0;
-	while (line[data->i + i] && !ft_strchr( " <>()&|\'\"", line[data->i + i]))
-		i++;
+	while (line[data->i + i])
+	{
+		if (line[data->i + i] == '\\' && line[data->i + i + 1])
+		{
+			i += 2;
+		}
+		else if (ft_strchr(" <>()&|\'\"", line[data->i + i]))
+			break ;
+		else
+			i++;
+	}
 	if (i == 0)
 		return;
 	res = ft_substr(line, start, i);
 	if (!res)
 		return;
 	data->i = data->i + i;
-	new = lstnew_token(res, NORMAL);
-	lstadd_back_token(&data->token, new);
+	cleaned = remove_escape(res);
 	free(res);
+	new = lstnew_token(cleaned, NORMAL);
+	lstadd_back_token(&data->token, new);
+	free(cleaned);
 }
 
 void	skip_spaces(char *line, t_data *data)

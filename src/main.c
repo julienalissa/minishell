@@ -41,11 +41,17 @@ int	main(int argc, char **argv, char **env)
 		{
 			creat_token(line, &data);
 			ast = build_ast(data.token, &data);
-			setup_exec(ast, &data);
+			if (ast)
+				setup_exec(ast, &data);
+			else
+			{
+				lstclear_token(&data.token);
+				data.token = NULL;
+			}
 		}
 		add_history(line);
 		free(line);
 	}
 	lstclear_env(&data);
-	return (0);
+	return (data.last_exit_code);
 }

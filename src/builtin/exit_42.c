@@ -11,7 +11,8 @@ int	exit_42(t_ast *node, t_data *data)
 	lstclear_token(&data->token);
 	free_node(node);
 	lstclear_env(data);
-	free(data->exec->pids);
+	if (data->exec->pids)
+		free(data->exec->pids);
 	free(data->exec);
 	exit(status);
 }

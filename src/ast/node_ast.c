@@ -24,8 +24,22 @@ t_ast	*creat_node(t_token	*token, t_data *data)
 		}
 		else if (is_redir(temp))
 		{
-			creat_redir(temp, &node, temp->next);
-			temp = temp->next->next;
+			if (temp->next && temp->next->token_type == TOKEN_WORD)
+			{
+				creat_redir(temp, &node, temp->next);
+				temp = temp->next->next;
+			}
+			else
+			{
+				ft_printf("-bash: syntax error near unexpected token\n");
+				data->last_exit_code = 2;
+				if (node->args)
+					ft_freetab(node->args);
+				if (args_lst)
+					ft_lstclear(&args_lst, free);
+				free(node);
+				return (NULL);
+			}
 		}
 		else if (temp->token_type == TOKEN_WORD)
 		{
