@@ -30,6 +30,7 @@ static double	res(double res, int comma, int signe)
 	res = res / powerof;
 	return (signe * res);
 }
+
 static int	count_comma(char *str)
 {
 	int	i;

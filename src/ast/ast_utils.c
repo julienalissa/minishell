@@ -2,6 +2,19 @@
 
 int		parantheses_counter(t_token *temp);
 
+t_token	*check_pivot(t_token *pivot, t_token *temp)
+{
+	if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
+		pivot = temp;
+	else if (temp->token_type == TOKEN_PIPE)
+	{
+		if (!pivot || (temp->token_type != TOKEN_AND
+				&& temp->token_type != TOKEN_OR))
+			pivot = temp;
+	}
+	return (pivot);
+}
+
 t_token	*find_lowest_prio(t_token *token)
 {
 	t_token	*temp;
@@ -15,16 +28,7 @@ t_token	*find_lowest_prio(t_token *token)
 	{
 		parantheses_count += parantheses_counter(temp);
 		if (parantheses_count == 0)
-		{
-			if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
-				pivot = temp;
-			else if (temp->token_type == TOKEN_PIPE)
-			{
-				if (!pivot || (temp->token_type != TOKEN_AND
-						&& temp->token_type != TOKEN_OR))
-					pivot = temp;
-			}
-		}
+			pivot = check_pivot(pivot, temp);
 		temp = temp->next;
 	}
 	if (parantheses_count != 0)

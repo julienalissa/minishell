@@ -1,6 +1,8 @@
 #ifndef EXEC_H
 # define EXEC_H
 
+# include "../../include/minishell.h"
+
 void	setup_exec(t_ast *node, t_data *data);
 void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out);
 void	exec_pipe(t_ast *node, t_data *data, int fd_in, int fd_out);

@@ -135,7 +135,7 @@ void	make_op(char *line, t_data *data)
 // 			data->flag_states = NORMAL;
 // 		}
 // 		else if (line[data->i] && line[data->i] == '\''
-			// || line[data->i] == '\"')
+// || line[data->i] == '\"')
 
 // 		else
 // 		{

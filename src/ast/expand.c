@@ -54,6 +54,7 @@ void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
 		ft_lstadd_back(lst, (*current));
 	}
 }
+
 void	expand_asterisk(char *name, t_list **lst)
 {
 	DIR				*dirp;

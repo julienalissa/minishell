@@ -1,7 +1,7 @@
 #include "../../include/minishell.h"
 
 static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
-void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
+void		setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static int	command_count(t_ast *node);
 
 void	setup_exec(t_ast *node, t_data *data)
@@ -75,7 +75,7 @@ static int	command_count(t_ast *node)
 
 void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (is_builtin(node->args[0]) && (data->exec->is_piped == 0))

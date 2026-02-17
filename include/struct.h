@@ -5,15 +5,15 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,           // 0
-	TOKEN_PIPE,           // 1
-	TOKEN_REDIR_IN,       // 2
-	TOKEN_REDIR_OUT,      // 3
-	TOKEN_HEREDOC,        // 4
-	TOKEN_APPEND,         // 5
-	TOKEN_AND,            // 6
-	TOKEN_OR,             // 7
-	TOKEN_PARENTHESIS_IN, // 8
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_HEREDOC,
+	TOKEN_APPEND,
+	TOKEN_AND,
+	TOKEN_OR,
+	TOKEN_PARENTHESIS_IN,
 	TOKEN_PARENTHESIS_OUT,
 }					t_token_type;
 

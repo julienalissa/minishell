@@ -1,25 +1,32 @@
 #include "../../include/minishell.h"
 
+int	check_it(char **args, int *i)
+{
+	int	j;
+
+	while (args[*i] && args[*i][0] == '-' && args[*i][1] == 'n')
+	{
+		j = 2;
+		while (args[*i][j] == 'n')
+			j++;
+		if (args[*i][j] != '\0')
+			break ;
+		(*i)++;
+	}
+	return ((*i) > 1);
+}
+
 int	echo(char **args)
 {
 	int	i;
-	int	j;
 	int	newline;
 
 	i = 1;
 	newline = 1;
 	if (!args)
 		return (1);
-	while (args[i] && args[i][0] == '-' && args[i][1] == 'n')
-	{
-		j = 2;
-		while (args[i][j] == 'n')
-			j++;
-		if (args[i][j] != '\0')
-			break ;
+	if (check_it(args, &i))
 		newline = 0;
-		i++;
-	}
 	while (args[i])
 	{
 		ft_printf("%s", args[i]);

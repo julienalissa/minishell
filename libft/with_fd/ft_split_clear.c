@@ -2,10 +2,10 @@
 
 void	ft_split_clear(char **split)
 {
-	int i;
+	int	i;
 
 	if (!split)
-		return;
+		return ;
 	i = 0;
 	while (split[i])
 	{

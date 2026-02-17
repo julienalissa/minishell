@@ -12,10 +12,10 @@
 
 #include "../libft.h"
 
-int float_format(char c, va_list *param, size_t *i, const char *str)
+int	float_format(char c, va_list *param, size_t *i, const char *str)
 {
-	int precision;
-	int count;
+	int	precision;
+	int	count;
 
 	count = 0;
 	precision = 0;
@@ -27,7 +27,7 @@ int float_format(char c, va_list *param, size_t *i, const char *str)
 		count += get_float_printf(precision, va_arg(*param, double));
 	}
 	else if (c == 'f')
-			count += get_float_printf(6, va_arg(*param, double));
+		count += get_float_printf(6, va_arg(*param, double));
 	return (count);
 }
 
@@ -38,7 +38,7 @@ int	get_float_printf(int precision, double value)
 
 	count = 0;
 	str = NULL;
-	str = ft_ftoa (value, precision);
+	str = ft_ftoa(value, precision);
 	if (!str)
 		return (0);
 	count += ft_putstr_printf(str);

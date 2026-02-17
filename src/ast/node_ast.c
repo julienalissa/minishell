@@ -3,70 +3,27 @@
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst);
 void	creat_cmd_node(t_list *args_lst, t_ast **node);
 
-t_ast	*creat_node(t_token *token, t_data *data)
+void	add_new_token(t_token *token, t_data *data, t_list **lst)
 {
-	t_ast	*node;
-	t_token	*temp;
-	t_list	*args_lst;
-
-	if (!token)
-		return (NULL);
-	args_lst = NULL;
-	temp = token;
-	node = malloc(sizeof(t_ast));
-	ft_bzero(node, sizeof(t_ast));
-	while (temp && temp->token_type != TOKEN_PIPE)
-	{
-		if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
-		{
-			creat_operator(temp, &node);
-			break ;
-		}
-		else if (is_redir(temp))
-		{
-			if (temp->next && temp->next->token_type == TOKEN_WORD)
-			{
-				creat_redir(temp, &node, temp->next);
-				temp = temp->next->next;
-			}
-			else
-			{
-				ft_printf("-bash: syntax error near unexpected token\n");
-				data->last_exit_code = 2;
-				if (node->args)
-					ft_freetab(node->args);
-				if (args_lst)
-					ft_lstclear(&args_lst, free);
-				free(node);
-				return (NULL);
-			}
-		}
-		else if (temp->token_type == TOKEN_WORD)
-		{
-			creat_lst(temp, data, &args_lst);
-			temp = temp->next;
-		}
-	}
-	creat_cmd_node(args_lst, &node);
-	return (node);
+	if (ft_strchr(token->value, '*') && token->states == NORMAL)
+		expand_asterisk(token->value, lst);
+	else if (token->states != QUOTES && ft_strchr(token->value, '$'))
+		expand_dollar(token->value, lst, data);
+	else
+		(*lst)->content = ft_strdup(token->value);
 }
 
 void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 {
 	t_list	*lst;
 
-	if ((*args_lst) == NULL)
+	if (*args_lst == NULL)
 	{
-		(*args_lst) = malloc(sizeof(t_list));
-		if (!(*args_lst))
+		*args_lst = malloc(sizeof(t_list));
+		if (!*args_lst)
 			return ;
 		(*args_lst)->next = NULL;
-		if (ft_strchr(token->value, '*') && token->states == NORMAL)
-			expand_asterisk(token->value, args_lst);
-		else if (token->states != QUOTES && ft_strchr(token->value, '$'))
-			expand_dollar(token->value, args_lst, data);
-		else
-			(*args_lst)->content = ft_strdup(token->value);
+		add_new_token(token, data, args_lst);
 	}
 	else
 	{
@@ -74,39 +31,41 @@ void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 		if (!lst)
 			return ;
 		lst->next = NULL;
-		if (ft_strchr(token->value, '*') && token->states == NORMAL)
-			expand_asterisk(token->value, &lst);
-		else if (token->states != QUOTES && ft_strchr(token->value, '$'))
-			expand_dollar(token->value, &lst, data);
-		else
-			lst->content = ft_strdup(token->value);
+		add_new_token(token, data, &lst);
 		ft_lstadd_back(args_lst, lst);
 	}
 }
 
-void	creat_cmd_node(t_list *args_lst, t_ast **node)
+void	check_arg(t_list *args_lst, t_ast *node)
 {
 	t_list	*temp;
-	int		size;
 	int		i;
+	int		size;
 
-	i = 0;
+	size = ft_lstsize(args_lst);
+	node->args = malloc(sizeof(char *) * (size + 1));
+	if (!node->args)
+		return ;
 	temp = args_lst;
-	if (args_lst)
+	i = 0;
+	while (temp)
 	{
-		size = ft_lstsize(temp);
-		(*node)->args = malloc(sizeof(char *) * (size + 1));
-		while (temp)
-		{
-			(*node)->args[i] = ft_strdup((char *)temp->content);
-			i++;
-			temp = temp->next;
-		}
-		(*node)->args[i] = NULL;
+		node->args[i] = ft_strdup((char *)temp->content);
+		i++;
+		temp = temp->next;
 	}
+	node->args[i] = NULL;
+}
+
+void	creat_cmd_node(t_list *args_lst, t_ast **node)
+{
+	if (args_lst)
+		check_arg(args_lst, *node);
 	else
 	{
 		(*node)->args = malloc(sizeof(char *));
+		if (!(*node)->args)
+			return ;
 		(*node)->args[0] = NULL;
 	}
 	ft_lstclear(&args_lst, free);

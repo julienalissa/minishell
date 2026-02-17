@@ -30,14 +30,14 @@ int	ft_putdigit_printf(const char c, va_list *param)
 		count += ft_putnbr_base_printf("0123456789", nb, 10, c);
 	}
 	else if (c == 'u')
-		count += ft_putnbr_base_printf("0123456789",
-				(long)va_arg(*param, unsigned), 10, c);
+		count += ft_putnbr_base_printf("0123456789", (long)va_arg(*param,
+					unsigned), 10, c);
 	else if (c == 'x')
-		count += ft_putnbr_base_printf("0123456789abcdef",
-				(long)va_arg(*param, unsigned), 16, c);
+		count += ft_putnbr_base_printf("0123456789abcdef", (long)va_arg(*param,
+					unsigned), 16, c);
 	else if (c == 'X')
-		count += ft_putnbr_base_printf("0123456789ABCDEF",
-				(long)va_arg(*param, unsigned), 16, c);
+		count += ft_putnbr_base_printf("0123456789ABCDEF", (long)va_arg(*param,
+					unsigned), 16, c);
 	return (count);
 }
 
@@ -68,7 +68,7 @@ int	ft_countlen_printf(unsigned long nb, unsigned int lenbase)
 }
 
 int	ft_putnbr_base_printf(char *base, unsigned long n, unsigned int lenbase,
-	const char c)
+		const char c)
 {
 	int		count;
 	long	nb;

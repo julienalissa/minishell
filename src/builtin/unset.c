@@ -1,33 +1,39 @@
 #include "../../include/minishell.h"
 
-int	unset(char **args, t_data *data)
+static void	remove_node(t_env **env, char *key)
 {
-	int		i;
 	t_env	*tmp;
 	t_env	*prev;
+
+	tmp = *env;
+	prev = NULL;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, key) == 0)
+		{
+			if (prev)
+				prev->next = tmp->next;
+			else
+				*env = tmp->next;
+			free(tmp->key);
+			free(tmp->val);
+			free(tmp);
+			return ;
+		}
+		prev = tmp;
+		tmp = tmp->next;
+	}
+}
+
+int	unset(char **args, t_data *data)
+{
+	int	i;
 
 	i = 1;
 	while (args[i])
 	{
 		if (data->env)
-			tmp = data->env;
-		prev = NULL;
-		while (tmp)
-		{
-			if (ft_strcmp(tmp->key, args[i]) == 0)
-			{
-				if (prev)
-					prev->next = tmp->next;
-				else
-					data->env = tmp->next;
-				free(tmp->key);
-				free(tmp->val);
-				free(tmp);
-				break ;
-			}
-			prev = tmp;
-			tmp = tmp->next;
-		}
+			remove_node(&data->env, args[i]);
 		i++;
 	}
 	return (0);

@@ -12,18 +12,18 @@
 
 #include "../libft.h"
 
-//choise number after comma
+// choise number after comma
 static char	*float_temp(double fpart, int fnb)
 {
 	int		i;
 	char	*temp;
-	char *res;
+	char	*res;
 
 	i = 0;
 	temp = malloc(sizeof(char) * fnb + 1);
-	if(!temp)
+	if (!temp)
 		return (NULL);
-	while(i < fnb)
+	while (i < fnb)
 	{
 		fpart *= 10;
 		temp[i] = ((int)fpart % 10) + '0';
@@ -32,21 +32,21 @@ static char	*float_temp(double fpart, int fnb)
 	temp[fnb] = '\0';
 	res = ft_strjoin(".", temp);
 	free(temp);
-	return(res);
+	return (res);
 }
 
 static char	*ft_result(double fpart, int ipart, int fnb)
 {
-	char *itemp;
-	char *ftemp;
-	char *result;
+	char	*itemp;
+	char	*ftemp;
+	char	*result;
 
 	itemp = ft_itoa(ipart);
 	ftemp = float_temp(fpart, fnb);
 	result = ft_strjoin(itemp, ftemp);
 	free(ftemp);
 	free(itemp);
-	return(result);
+	return (result);
 }
 
 char	*ft_ftoa(double n, int fnb)
@@ -60,6 +60,5 @@ char	*ft_ftoa(double n, int fnb)
 	if (fpart < 0)
 		fpart *= -1;
 	ret = ft_result(fpart, ipart, fnb);
-	return(ret);
+	return (ret);
 }
-

@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -22,6 +21,8 @@ void							set_data(t_data *data, char **env);
 
 // Environnement
 void							creat_env(t_data *data);
+char							*define_key(char *env);
+char							*define_value(char *env);
 t_env							*lstnew_env(char *key, char *value);
 void							lstadd_back_env(t_env **lst, t_env *new);
 void							lstdel_env(t_env *env);
@@ -29,9 +30,13 @@ void							lstclear_env(t_data *data);
 
 // Gestion variables d'environnement
 void							print_env(t_env *env);
+int								is_valid(char *str);
 int								is_valid_export(char *str);
 void							add_or_update_env(t_data *data, char *str);
 void							creat_envp(t_data *data);
+int								count_env(t_env *env);
+char							**alloc_envp(t_env *env, int count);
+char							*create_env_str(t_env *env);
 void							delete_env(t_data *data, char *key);
 char							*get_env_value(t_data *data, char *key);
 void							update_env_var(t_data *data, char *key,
@@ -47,6 +52,13 @@ void							lstadd_back_token(t_token **lst, t_token *new);
 void							lstclear_token(t_token **lst);
 void							lstdel_token(t_token *token);
 t_token							*lstlast_token(t_token *lst);
+
+// AST Node Creation
+void							creat_lst(t_token *token, t_data *data, t_list **args_lst);
+void							creat_cmd_node(t_list *args_lst, t_ast **node);
+t_token							*trim_paranthesis(t_token *token);
+void							node_left(t_token *token, t_token *pivot);
+void							free_pivot(t_token *pivot);
 
 // Builtins
 int								echo(char **args);

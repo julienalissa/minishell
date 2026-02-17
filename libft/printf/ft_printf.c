@@ -41,7 +41,7 @@ int	ft_printf(const char *str, ...)
 
 	i = 0;
 	count = 0;
-	va_start (param, str);
+	va_start(param, str);
 	while (str[i])
 	{
 		if (str[i] == '%')
@@ -59,4 +59,3 @@ int	ft_printf(const char *str, ...)
 	va_end(param);
 	return (count);
 }
-
