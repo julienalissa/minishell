@@ -1,7 +1,38 @@
 #include "../../include/minishell.h"
+static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node, t_list *args_lst);
+static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
+		t_list **args_lst);
+static t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst);
 
-t_token	*check_op_redir(t_token *temp, t_ast **node,
-	t_data *data, t_list **args_lst)
+t_ast	*creat_node(t_token *token, t_data *data)
+{
+	t_ast	*node;
+	t_token	*temp;
+	t_list	*args_lst;
+
+	if (!token)
+		return (NULL);
+	args_lst = NULL;
+	temp = token;
+	node = malloc(sizeof(t_ast));
+	ft_bzero(node, sizeof(t_ast));
+	while (temp && temp->token_type != TOKEN_PIPE)
+	{
+		temp = check_op_redir(temp, &node, data, &args_lst);
+		if (!temp)
+			return (NULL);
+		if (temp && temp->token_type == TOKEN_WORD)
+			temp = check_list(temp, data, &args_lst);
+		else if (temp && (temp->token_type == TOKEN_PARENTHESIS_IN
+			|| temp->token_type == TOKEN_PARENTHESIS_OUT))
+			return (parenthesis_error(temp, data, node, args_lst));
+	}
+	creat_cmd_node(args_lst, &node);
+	return (node);
+}
+
+static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
+		t_list **args_lst)
 {
 	if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
 	{
@@ -30,7 +61,7 @@ t_token	*check_op_redir(t_token *temp, t_ast **node,
 	return (temp);
 }
 
-t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst)
+static t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst)
 {
 	while (temp && temp->token_type == TOKEN_WORD)
 	{
@@ -40,26 +71,14 @@ t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst)
 	return (temp);
 }
 
-t_ast	*creat_node(t_token *token, t_data *data)
+static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node, t_list *args_lst)
 {
-	t_ast	*node;
-	t_token	*temp;
-	t_list	*args_lst;
-
-	if (!token)
-		return (NULL);
-	args_lst = NULL;
-	temp = token;
-	node = malloc(sizeof(t_ast));
-	ft_bzero(node, sizeof(t_ast));
-	while (temp && temp->token_type != TOKEN_PIPE)
-	{
-		temp = check_op_redir(temp, &node, data, &args_lst);
-		if (!temp)
-			return (NULL);
-		if (temp && temp->token_type == TOKEN_WORD)
-			temp = check_list(temp, data, &args_lst);
-	}
-	creat_cmd_node(args_lst, &node);
-	return (node);
+	ft_printf("-bash: syntax error near unexpected token `%s'\n", temp->value);
+	data->last_exit_code = 2;
+	if (node->args)
+		ft_freetab(node->args);
+	if (args_lst)
+		ft_lstclear(&args_lst, free);
+	free(node);
+	return (NULL);
 }

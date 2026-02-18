@@ -29,7 +29,7 @@ void	creat_env(t_data *data)
 
 void	creat_envp(t_data *data)
 {
-	int		count;
+	int	count;
 
 	if (!data || !data->env)
 		return ;

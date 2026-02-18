@@ -1,7 +1,7 @@
 #include "../../include/minishell.h"
 
-int	check_syntax_errors(t_token *token, t_token *pivot,
-		t_data *data, char *pivot_value)
+int	check_syntax_errors(t_token *token, t_token *pivot, t_data *data,
+		char *pivot_value)
 {
 	if (token == NULL || token == pivot)
 	{
@@ -22,17 +22,35 @@ int	check_syntax_errors(t_token *token, t_token *pivot,
 
 t_ast	*handle_no_pivot(t_token *token, t_data *data)
 {
+	t_token	*new_head;
+	t_token	*old_head;
+
 	if (token->token_type == TOKEN_PARENTHESIS_IN)
 	{
-		token = trim_paranthesis(token);
-		return (build_ast(token, data));
+		old_head = token;
+		new_head = trim_paranthesis(token);
+		if (new_head == old_head)
+		{
+			ft_printf("-bash: syntax error near unexpected token `)'\n");
+			data->last_exit_code = 2;
+			return (NULL);
+		}
+		if (old_head == data->token)
+			data->token = new_head;
+		if (!new_head)
+		{
+			ft_printf("-bash: syntax error near unexpected token `)'\n");
+			data->last_exit_code = 2;
+			return (NULL);
+		}
+		return (build_ast(new_head, data));
 	}
 	else
 		return (creat_node(token, data));
 }
 
-t_ast	*create_node_from_pivot(t_token *token, t_token *pivot,
-		t_data *data, t_token *right_start)
+t_ast	*create_node_from_pivot(t_token *token, t_token *pivot, t_data *data,
+		t_token *right_start)
 {
 	t_ast	*node;
 	char	*pivot_value;
