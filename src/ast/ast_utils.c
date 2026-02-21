@@ -8,8 +8,7 @@ t_token	*check_pivot(t_token *pivot, t_token *temp)
 		pivot = temp;
 	else if (temp->token_type == TOKEN_PIPE)
 	{
-		if (!pivot || (temp->token_type != TOKEN_AND
-				&& temp->token_type != TOKEN_OR))
+		if (!pivot || pivot->token_type == TOKEN_PIPE)
 			pivot = temp;
 	}
 	return (pivot);

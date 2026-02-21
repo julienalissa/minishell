@@ -19,13 +19,21 @@ void	exec_pipe(t_ast *node, t_data *data, int fd_in, int fd_out)
 void	exec_and(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
 	exec_ast(node->left, data, fd_in, fd_out);
-	if ((data->exec->ret_status = (wait_process(data))) == 0)
+	wait_all_process(data);
+	if (data->last_exit_code == 0)
+	{
 		exec_ast(node->right, data, fd_in, fd_out);
+		wait_all_process(data);
+	}
 }
 
 void	exec_or(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
 	exec_ast(node->left, data, fd_in, fd_out);
-	if ((data->exec->ret_status = (wait_process(data))) != 0)
+	wait_all_process(data);
+	if (data->last_exit_code != 0)
+	{
 		exec_ast(node->right, data, fd_in, fd_out);
+		wait_all_process(data);
+	}
 }
