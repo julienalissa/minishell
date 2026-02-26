@@ -14,7 +14,7 @@ void	sigint(int sig)
 
 void	signals(void)
 {
-	struct sigaction	sa;
+	struct sigaction	  sa;
 
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = sigint;

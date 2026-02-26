@@ -47,5 +47,6 @@ int	main(int argc, char **argv, char **env)
 		free(line);
 	}
 	lstclear_env(&data);
+	free(data.exec);
 	return (data.last_exit_code);
 }
