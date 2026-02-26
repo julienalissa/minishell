@@ -19,7 +19,7 @@ void	setup_exec(t_ast *node, t_data *data)
 	signal(SIGQUIT, SIG_IGN);
 	exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
 	wait_all_process(data);
-	if (data->last_exit_code == 130)
+	if (data->last_exit_code == 130 || data->last_exit_code == 131)
 		write(1, "\n", 1);
 	signals();
 	free(data->exec->pids);
