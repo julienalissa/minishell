@@ -26,12 +26,6 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("minishell > ");
-		if (g_signal_received)
-		{
-			g_signal_received = 0;
-			free(line);
-			continue ;
-		}
 		if (!line)
 		{
 			write(1, "exit\n", 5);
