@@ -21,12 +21,10 @@ char	*define_value(char *env)
 	int				i;
 
 	i = 0;
-	while (env[i] != '=')
+	while (env[i] && env[i] != '=')
 		i++;
 	start = i + 1;
-	while (env[i++])
-		;
-	value = ft_substr(env, start, i);
+	value = ft_strdup(env + start);
 	if (!value)
 		return (NULL);
 	return (value);
