@@ -79,7 +79,6 @@ int								is_builtin(char *cmd);
 int								execut_builtin(t_ast *node, t_data *data);
 
 // Signaux
-extern volatile sig_atomic_t	g_signal_received;
-void							signals(void);
+void								signals(void);
 
 #endif
