@@ -14,8 +14,10 @@ char	*remove_quote(char *line, t_data *data, char quote)
 	if (!line[data->i + i])
 	{
 		lstclear_token(&data->token);
-		ft_printf("cheffff ferme les quotes");
-		exit(1);
+		ft_printf("cheffff ferme les quotes\n");
+		data->last_exit_code = 2;
+		data->i = ft_strlen(line);
+		return (NULL);
 	}
 	res = ft_substr(line, start, i);
 	if (!res)
@@ -32,14 +34,19 @@ void	make_quotes(char *line, t_data *data)
 	if (line[data->i] == '\'')
 	{
 		res = remove_quote(line, data, '\'');
+		if (!res)
+			return ;
 		new = lstnew_token(res, QUOTES);
 		new->token_type = TOKEN_WORD;
 	}
 	else
 	{
 		res = remove_quote(line, data, '"');
+		if (!res)
+			return ;
 		new = lstnew_token(res, DQUOTES);
 		new->token_type = TOKEN_WORD;
 	}
 	lstadd_back_token(&data->token, new);
+	free(res);
 }

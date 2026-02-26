@@ -15,8 +15,13 @@ void	setup_exec(t_ast *node, t_data *data)
 	if (!data->exec->pids)
 		return ;
 	data->exec->nb_cmds = 0;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
 	wait_all_process(data);
+	if (data->last_exit_code == 130)
+		write(1, "\n", 1);
+	signals();
 	free(data->exec->pids);
 	free_node(node);
 	lstclear_token(&data->token);
