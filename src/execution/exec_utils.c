@@ -48,7 +48,7 @@ char	*find_path(t_ast *node, t_data *data)
 	char	**path;
 
 	i = 0;
-	if (node->args[0][0] == '/')
+	if (ft_strchr(node->args[0], '/'))
 	{
 		if (access(node->args[0], F_OK | X_OK) == 0)
 			return (ft_strdup(node->args[0]));
