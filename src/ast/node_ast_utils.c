@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   node_ast_utils.c                                    :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: jualissa <marvin@42.fr>                       +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2026/02/27 13:15:27 by jualissa       #+#    #+#                */
+/*   Updated: 2026/02/27 13:16:11 by jualissa       ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
+
 static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node, t_list *args_lst);
 static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
-		t_list **args_lst);
+			t_list **args_lst);
 static t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst);
 
 t_ast	*creat_node(t_token *token, t_data *data)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   node_ast_redir.c                                    :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: jualissa <marvin@42.fr>                       +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2026/02/27 13:13:10 by jualissa       #+#    #+#                */
+/*   Updated: 2026/02/27 13:13:11 by jualissa       ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	creat_redir(t_token *temp_redir, t_ast **node, t_token *temp_file)

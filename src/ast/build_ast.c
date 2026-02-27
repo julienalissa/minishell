@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   build_ast.c                                         :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: jualissa <marvin@42.fr>                       +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2026/02/27 13:12:43 by jualissa       #+#    #+#                */
+/*   Updated: 2026/02/27 13:12:44 by jualissa       ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 int	check_syntax_errors(t_token *token, t_token *pivot, t_data *data,

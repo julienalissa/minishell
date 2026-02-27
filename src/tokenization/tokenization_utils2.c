@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   tokenization_utils2.c                               :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: jualissa <marvin@42.fr>                       +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2026/02/27 13:22:39 by jualissa       #+#    #+#                */
+/*   Updated: 2026/02/27 13:22:40 by jualissa       ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 char	*remove_quote(char *line, t_data *data, char quote)

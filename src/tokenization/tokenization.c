@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   tokenization.c                                      :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: jualissa <marvin@42.fr>                       +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2026/02/27 13:22:51 by jualissa       #+#    #+#                */
+/*   Updated: 2026/02/27 13:23:42 by jualissa       ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	skip_spaces(char *line, t_data *data);
@@ -73,10 +85,10 @@ void	make_word(char *line, t_data *data)
 			i++;
 	}
 	if (i == 0)
-		return ;
+		return;
 	res = ft_substr(line, start, i);
 	if (!res)
-		return ;
+		return;
 	data->i = data->i + i;
 	cleaned = remove_escape(res);
 	free(res);
@@ -118,60 +130,3 @@ void	make_op(char *line, t_data *data)
 	lstadd_back_token(&data->token, new);
 	free(res);
 }
-
-// void	creat_token(char *line, t_data *data)
-// {
-// 	char	*res;
-
-// 	data->i = 0;
-// 	while (line[data->i])
-// 	{
-// 		skip_spaces(line, data);
-// 		if (line[data->i] == '\0')
-// 			break ;
-// 		if (ft_strchr("<>()&|"), line[data->i])
-// 		{
-// 			res = check_op(line, data);
-// 			data->flag_states = NORMAL;
-// 		}
-// 		else if (line[data->i] && line[data->i] == '\''
-// || line[data->i] == '\"')
-
-// 		else
-// 		{
-// 			data->flag_states = NORMAL;
-// 			res = setup_value(line, ' ', data);
-// 		}
-// 		new_node = lstnew_token(res, data);
-// 		lstadd_back_token(&data->token, new_node);
-// 		free(res);
-// 	}
-// }
-
-// char	*check_quotes(char *line, t_data *data)
-// {
-// 	char	*res;
-
-// 	quote = line[data->i];
-// }
-
-// char	*setup_value(cha r *line, char ws, t_data *data)
-// {
-// 	char	*tmp;
-// 	int		i;
-
-// 	i = 0;
-// 	while (line[data->i + i] && line[data->i + i] != ws)
-// 		i++;
-// 	if (data->flag_states == QUOTES && line[data->i + i] == '\0')
-// 		ft_error("Error : Unclosed quote"); // checker si on doit free
-// 	else if (data->flag_states == DQUOTES && line[data->i + i] == '\0')
-// 		ft_error("Error : Unclosed double quote");
-// 	tmp = ft_substr(line, data->i, i);
-// 	if (!tmp)
-// 		return (NULL);
-// 	data->i += ft_strlen(tmp);
-// 	return (tmp);
-// }
-
-// void	put_token(t_token *)
