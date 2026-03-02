@@ -93,12 +93,20 @@ static int	command_count(t_ast *node)
 void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
 	int	ret;
+	int	save_stdin;
+	int	save_stdout;
 
 	ret = 0;
 	if (is_builtin(node->args[0]) && (data->exec->is_piped == 0))
 	{
+		save_stdin = dup(STDIN_FILENO);
+		save_stdout = dup(STDOUT_FILENO);
+		if (save_stdin < 0 || save_stdout < 0)
+			ft_error("Error: dup failed\n");
 		define_redir(node, fd_in, fd_out);
 		data->last_exit_code = execut_builtin(node, data);
+		dup_and_close(STDIN_FILENO, save_stdin);
+		dup_and_close(STDOUT_FILENO, save_stdout);
 	}
 	else
 	{

@@ -32,8 +32,10 @@ t_ast	*creat_node(t_token *token, t_data *data)
 	while (temp && temp->token_type != TOKEN_PIPE)
 	{
 		temp = check_op_redir(temp, &node, data, &args_lst);
-		if (!temp)
+		if (!node)
 			return (NULL);
+		if (!temp)
+			break ;
 		if (temp && temp->token_type == TOKEN_WORD)
 			temp = check_list(temp, data, &args_lst);
 		else if (temp && (temp->token_type == TOKEN_PARENTHESIS_IN
@@ -68,6 +70,7 @@ static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
 			if (*args_lst)
 				ft_lstclear(args_lst, free);
 			free(*node);
+			*node = NULL;
 			return (NULL);
 		}
 	}

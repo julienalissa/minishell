@@ -22,12 +22,14 @@ void	creat_redir(t_token *temp_redir, t_ast **node, t_token *temp_file)
 		(*node)->redir = malloc(sizeof(t_redir));
 		choise_redir(&(*node)->redir, temp_redir);
 		(*node)->redir->file = ft_strdup(temp_file->value);
+		(*node)->redir->next = NULL;
 	}
 	else
 	{
 		new_node_redir = malloc(sizeof(t_redir));
 		choise_redir(&new_node_redir, temp_redir);
 		new_node_redir->file = ft_strdup(temp_file->value);
+		new_node_redir->next = NULL;
 		addback_redir(&(*node)->redir, new_node_redir);
 	}
 }

@@ -73,7 +73,7 @@ void		node_left(t_token *token, t_token *pivot);
 void		free_pivot(t_token *pivot);
 
 // Builtins
-int		echo(char **args);
+int			echo(char **args);
 int		cd(char **args, t_data *data);
 int			pwd(void);
 int			export(char **args, t_data *data);
