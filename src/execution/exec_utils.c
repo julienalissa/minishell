@@ -67,9 +67,10 @@ char	*find_path(t_ast *node, t_data *data)
 		return (NULL);
 	}
 	temp = data->env;
-	i = 0;
-	while ((ft_strncmp(temp->key, "PATH", ft_strlen("PATH"))) != 0)
+	while (temp && ft_strncmp(temp->key, "PATH", ft_strlen("PATH")) != 0)
 		temp = temp->next;
+	if (!temp || !temp->val || temp->val[0] == '\0')
+		return (ft_strdup(node->args[0]));
 	path = ft_split(temp->val, ':');
 	while (path[i])
 	{

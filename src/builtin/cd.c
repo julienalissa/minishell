@@ -12,19 +12,31 @@
 
 #include "../../include/minishell.h"
 
-int	cd(char **args)
+int	cd(char **args, t_data *data)
 {
+	char	path_buf[1024];
+	char	cwd_buf[1024];
 	char	*path;
+	char	*home;
 	int		ret;
+	char	*tmp;
 
-	if (!args[1] || ft_strcmp(args[1], "~") == 0)
+	if (!getcwd(path_buf, sizeof(path_buf)))
+		path_buf[0] = '\0';
+	if (!args[1] || ft_strcmp(args[1], "~") == 0
+		|| (args[1][0] == '~' && (args[1][1] == '/' || args[1][1] == '\0')))
 	{
-		path = getenv("HOME");
-		if (!path)
+		home = getenv("HOME");
+		if (!home)
 		{
 			ft_printf("home is unset\n");
 			return (1);
 		}
+		if (!args[1] || ft_strcmp(args[1], "~") == 0
+			|| args[1][1] == '\0')
+			path = home;
+		else
+			path = ft_strjoin(home, args[1] + 1);
 	}
 	else
 		path = args[1];
@@ -32,7 +44,29 @@ int	cd(char **args)
 	if (ret != 0)
 	{
 		perror("cd");
+		if (args[1] && args[1][0] == '~' && args[1][1] == '/')
+			free(path);
 		return (1);
 	}
+	if (path_buf[0] != '\0')
+	{
+		tmp = ft_strjoin("OLDPWD=", path_buf);
+		if (tmp)
+		{
+			add_or_update_env(data, tmp);
+			free(tmp);
+		}
+	}
+	if (getcwd(cwd_buf, sizeof(cwd_buf)))
+	{
+		tmp = ft_strjoin("PWD=", cwd_buf);
+		if (tmp)
+		{
+			add_or_update_env(data, tmp);
+			free(tmp);
+		}
+	}
+	if (args[1] && args[1][0] == '~' && args[1][1] == '/')
+		free(path);
 	return (0);
 }

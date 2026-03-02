@@ -19,7 +19,7 @@ int	execut_builtin(t_ast *node, t_data *data)
 	if (ft_strcmp(node->args[0], "echo") == 0)
 		return (echo(node->args));
 	else if (ft_strcmp(node->args[0], "cd") == 0)
-		return (cd(node->args));
+		return (cd(node->args, data));
 	else if (ft_strcmp(node->args[0], "pwd") == 0)
 		return (pwd());
 	else if (ft_strcmp(node->args[0], "export") == 0)

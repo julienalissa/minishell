@@ -10,3 +10,14 @@ prob :
 8. si il ya un script dans un fichier un .sh par exmple et que on le lance, cela ne echo pour le resultat si on le lance (./file.sh)
 9. norminette des trucs
 10. les leaks sont pas bon chef
+11. export bien
+
+
+
+3 ok
+ajoute dans exec_utils.c
+	if (!temp || !temp->val || temp->val[0] == '\0')
+		return (ft_strdup(node->args[0]));
+5 ok
+6 ok
+11. ok

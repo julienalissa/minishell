@@ -12,23 +12,54 @@
 
 #include "../../include/minishell.h"
 
-void	cat_env(t_env *env)
+static void	print_export_sorted(t_env *env)
 {
-	t_env	*tmp;
+	int		count;
+	int		i;
+	int		j;
+	t_env		**strr;
+	t_env		*tmp;
+	t_env		*swap;
 
+	count = count_env(env);
+	if (count <= 0)
+		return;
+	strr = malloc(sizeof(t_env *) * count);
+	if (!strr)
+		return;
 	tmp = env;
+	i = 0;
 	while (tmp)
 	{
-		if (tmp->val)
-		{
-			ft_printf("%s=%s\n", tmp->key, tmp->val);
-		}
-		else
-		{
-			ft_printf("%s\n", tmp->key);
-		}
+		strr[i++] = tmp;
 		tmp = tmp->next;
 	}
+	i = 0;
+	while (i < count - 1)
+	{
+		j = i + 1;
+		while (j < count)
+		{
+			if (ft_strcmp(strr[i]->key, strr[j]->key) > 0)
+			{
+				swap = strr[i];
+				strr[i] = strr[j];
+				strr[j] = swap;
+			}
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < count)
+	{
+		ft_printf("declare -x %s", strr[i]->key);
+		if (strr[i]->val)
+			ft_printf("=\"%s\"", strr[i]->val);
+		ft_printf("\n");
+		i++;
+	}
+	free(strr);
 }
 
 void	parse_args(char *arg, char **key, char **val)
@@ -84,7 +115,7 @@ int	export(char **args, t_data *data)
 	i = 1;
 	if (!args[1])
 	{
-		cat_env(data->env);
+		print_export_sorted(data->env);
 		return (0);
 	}
 	while (args[i])
