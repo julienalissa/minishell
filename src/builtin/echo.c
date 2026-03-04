@@ -42,8 +42,6 @@ int	echo(char **args)
 	while (args[i])
 	{
 		ft_printf("%s", args[i]);
-		if (args[i + 1])
-			write(1, " ", 1);
 		i++;
 	}
 	if (newline)

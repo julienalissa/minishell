@@ -12,6 +12,8 @@
 
 #include "../../include/minishell.h"
 
+static void	expand_error_code(char *name, t_list **lst, t_data *data);
+
 void	expand_dollar(char *name, t_list **lst, t_data *data)
 {
 	int		len;
@@ -21,8 +23,8 @@ void	expand_dollar(char *name, t_list **lst, t_data *data)
 	len = ft_strlen(name);
 	if (name[1] == '?')
 	{
-		(*lst)->content = ft_itoa(data->last_exit_code);
-		return ;
+		expand_error_code(name, lst, data);
+		return;
 	}
 	while (env_temp)
 	{
@@ -60,7 +62,7 @@ void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
 	{
 		*current = malloc(sizeof(t_list));
 		if (!*current)
-			return ;
+			return;
 		(*current)->content = ft_strdup(namefile);
 		(*current)->next = NULL;
 		ft_lstadd_back(lst, (*current));
@@ -88,9 +90,22 @@ void	expand_asterisk(char *name, t_list **lst)
 	{
 		if ((name[0] == '.' || dp->d_name[0] != '.') && check_file(name,
 				dp->d_name))
-			creat_asterisk(&current, lst, dp->d_name, &flag);
+		creat_asterisk(&current, lst, dp->d_name, &flag);
 	}
 	closedir(dirp);
 	if (flag == 0)
 		current->content = ft_strdup(name);
+}
+
+static void	expand_error_code(char *name, t_list **lst, t_data *data)
+{
+	char *temp;
+
+	temp = ft_itoa(data->last_exit_code);
+	if (name[2])
+		(*lst)->content = ft_strjoin(temp, &name[2]);
+	else
+		(*lst)->content = ft_strdup(temp);
+	free(temp);
+	return ;
 }

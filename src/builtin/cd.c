@@ -12,6 +12,19 @@
 
 #include "../../include/minishell.h"
 
+
+
+char	*my_getenv(char *my_home, t_env *env)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->key, my_home) ==  0)
+			return (env->val);
+		env = env->next;
+	}
+	return (NULL);
+}
+
 int	cd(char **args, t_data *data)
 {
 	char	path_buf[1024];
@@ -26,11 +39,10 @@ int	cd(char **args, t_data *data)
 	if (!args[1] || ft_strcmp(args[1], "~") == 0
 		|| (args[1][0] == '~' && (args[1][1] == '/' || args[1][1] == '\0')))
 	{
-		home = getenv("HOME");
+		home = my_getenv("HOME", data->env);
 		if (!home)
 		{
-			ft_printf("home is unset\n");
-			return (1);
+			return (0);
 		}
 		if (!args[1] || ft_strcmp(args[1], "~") == 0
 			|| args[1][1] == '\0')
