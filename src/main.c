@@ -26,6 +26,11 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("minishell > ");
+		if (signal_exit != 0)
+		{
+			data.last_exit_code = signal_exit;
+			signal_exit = 0;
+		}
 		if (!line)
 		{
 			write(1, "exit\n", 5);

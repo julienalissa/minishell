@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 
 static char	*ft_strjoin_path(char const *s1, char const *s2);
-
+//  free si probleme dans les process enfant
 void	wait_all_process(t_data *data)
 {
 	int	status;

@@ -1,16 +1,26 @@
 prob :
 
-1. ne pas affichier minishell > mais les path (option)
-2. ctrl + c et apres pritn $? doit etre 130 et c'est 0
-3. unset PATH et apres ls pas de message d'erreur
-4. problemes avec tout les redirections
-5. ~/le lien clea ne marche pas par exmple cat ~/test.txt
-6. echo $PWD ne marche pas (si on fait un $PWD et apres on change d'endroit cela affiche le meme pwd, meme chose pour $OLDPWD)
-7. si on fait une mauvaise commande et apres on ctrl + d le code d'exite n'est pas bon cela ne garde pas le code d'erreur
-8. si il ya un script dans un fichier un .sh par exmple et que on le lance, cela ne echo pour le resultat si on le lance (./file.sh)
-9. norminette des trucs
-10. les leaks sont pas bon chef
-11. export bien
+1. ~/le lien clea ne marche pas par exmple cat ~/test.txt
+2. si il ya un script dans un fichier un .sh par exmple et que on le lance, cela ne echo pour le resultat si on le lance (./file.sh)
+3. norminette des trucs
+4. ceho $? marche bien mais pas print $? il faut qu'il fassee la meme chose
+5. les redire ne fonctionnent toujours pas encore au top, pour echo "salut" > filename ca marche mais pas print "salut" > a.c alors que le vrai marche
+6. export ajouter le de faire test=$path ou test=~
+7. echo ~ mettre le pwd
+8. echo ~/$nom
+9. echo $?$
+10. unset pwd leaks
+11. unset home doit pas bouger avec cd
+12. checker leaks avec les pipes
+13. commande qui existe pas tout qui leaks
+14. echo ""$USER"" espace quand cotes consecutives
+minishell > export x=abc
+minishell > export y=def
+minishell > echo $x$y
+ca doit faire abcdef
+10. Readme
+
+
 
 
 

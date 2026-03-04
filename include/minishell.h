@@ -28,6 +28,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+extern int	signal_exit;
+
 // Initialisation de la structure data
 void		set_data(t_data *data, char **env);
 
@@ -74,7 +76,7 @@ void		free_pivot(t_token *pivot);
 
 // Builtins
 int			echo(char **args);
-int		cd(char **args, t_data *data);
+int			cd(char **args, t_data *data);
 int			pwd(void);
 int			export(char **args, t_data *data);
 int			unset(char **args, t_data *data);

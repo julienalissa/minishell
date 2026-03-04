@@ -70,6 +70,8 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	}
 	execve(path, node->args, data->envp);
 	perror(node->args[0]);
+	// lstclear_env(data);
+	// lstclear_token(data->token);
 	free(path);
 	ft_split_clear(node->args);
 	if (node->redir)

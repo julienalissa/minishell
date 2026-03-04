@@ -12,9 +12,12 @@
 
 #include "../../include/minishell.h"
 
+int	signal_exit = 0;
+
 void	sigint(int sig)
 {
 	(void)sig;
+	signal_exit = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
