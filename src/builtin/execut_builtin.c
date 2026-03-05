@@ -17,7 +17,7 @@ int	execut_builtin(t_ast *node, t_data *data)
 	if (!node || !node->args || !node->args[0])
 		return (1);
 	if (ft_strcmp(node->args[0], "echo") == 0)
-		return (echo(node->args));
+		return (echo(node->args, data));
 	else if (ft_strcmp(node->args[0], "cd") == 0)
 		return (cd(node->args, data));
 	else if (ft_strcmp(node->args[0], "pwd") == 0)

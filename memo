@@ -1,29 +1,8 @@
 prob :
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3. norminette des trucs
-4. ceho $? marche bien mais pas print $? il faut qu'il fassee la meme chose
-5. print $?
-6. export ajouter le de faire test=$path ou test=~
-7. echo ~ mettre le pwd
-8. echo ~/$nom
-10. unset pwd leaks
-11. unset home doit pas bouger avec cd
-12. checker leaks avec les pipes
-15. lucas Readme
-
-
-11. ok
+1. norminette des trucs
+2. ceho $? marche bien mais pas print $? il faut qu'il fassee la meme chose && check print $?
+3. export ajouter le de faire test=$path ou test=~
+4. echo ~/$nom
+5. checker leaks avec les pipes
+6. lucas Readme
