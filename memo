@@ -14,8 +14,6 @@ prob :
 
 
 
-1. ~/le lien clea ne marche pas par exmple cat ~/test.txt
-2. lucas : si il ya un script dans un fichier un .sh par exmple et que on le lance, cela ne echo pour le resultat si on le lance (./file.sh)
 3. norminette des trucs
 4. ceho $? marche bien mais pas print $? il faut qu'il fassee la meme chose
 5. print $?
@@ -25,12 +23,6 @@ prob :
 10. unset pwd leaks
 11. unset home doit pas bouger avec cd
 12. checker leaks avec les pipes
-13. lucas commande qui existe pas tout qui leaks
-14.
-minishell > export x=abc
-minishell > export y=def
-minishell > echo $x$y
-ca doit faire abcdef
 15. lucas Readme
 
 

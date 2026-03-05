@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   exec_operator.c                                     :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:20:00 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:20:00 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   exec_operator.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:20:00 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/05 19:05:43 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ void	exec_or(t_ast *node, t_data *data, int fd_in, int fd_out)
 		exec_ast(node->right, data, fd_in, fd_out);
 		wait_all_process(data);
 	}
+}
+
+void	exec_script(t_data *data, t_ast *node, char *path)
+{
+	char *sh_arg[3];
+	sh_arg[0] = "/bin/sh";
+	sh_arg[1] = path;
+	sh_arg[2] = NULL;
+	ft_freetab(node->args);
+	execve("/bin/sh", sh_arg, data->envp);
 }

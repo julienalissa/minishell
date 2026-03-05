@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   minishell.h                                         :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 12:55:57 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:00:19 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/05 15:15:36 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		ft_error(char *msg);
 void		ft_split_clear(char **split);
 void		free_node(t_ast *node);
 void		ft_freetab(char **tab);
-
+void		free_path_not_found(t_data *data, t_ast *node, char *path);
 int			is_builtin(char *cmd);
 int			execut_builtin(t_ast *node, t_data *data);
 

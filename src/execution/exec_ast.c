@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   exec_ast.c                                          :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:19:28 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:21:13 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   exec_ast.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/05 15:12:13 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	{
 		ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
+		free_path_not_found(data, node, path);
 		exit(127);
 	}
 	execve(path, node->args, data->envp);
+	if (errno == ENOEXEC)
+		exec_script(data, node, path);
 	perror(node->args[0]);
-	// lstclear_env(data);
-	// lstclear_token(data->token);
 	free(path);
 	ft_split_clear(node->args);
 	if (node->redir)

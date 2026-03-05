@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   utils1.c                                            :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:24:09 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:24:10 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:24:09 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/05 17:12:20 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,20 @@ void	free_node(t_ast *node)
 		}
 	}
 	free(node);
+}
+
+void	free_path_not_found(t_data *data, t_ast *node, char *path)
+{
+	free(path);
+	if (node)
+		free_node(node);
+	if (data->token)
+		lstclear_token(&data->token);
+	if (data->envp)
+		lstclear_env(data);
+	if (data->exec && data->exec->pids)
+	{
+		free(data->exec->pids);
+		free(data->exec);
+	}
 }

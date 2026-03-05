@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   exec.h                                              :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:19:53 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:19:53 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:19:53 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/05 14:58:29 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int		wait_process(t_data *data);
 void	wait_all_process(t_data *data);
 void	define_redir(t_ast *node, int fd_in, int fd_out);
 void	dup_and_close(int std_target, int fd);
+void	exec_script(t_data *data, t_ast *node, char *path);
 
 #endif
