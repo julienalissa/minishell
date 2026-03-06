@@ -12,9 +12,10 @@
 
 #include "../../include/minishell.h"
 
-static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node, t_list *args_lst);
+static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node,
+					t_list *args_lst);
 static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
-			t_list **args_lst);
+					t_list **args_lst);
 static t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst);
 
 t_ast	*creat_node(t_token *token, t_data *data)
@@ -39,7 +40,7 @@ t_ast	*creat_node(t_token *token, t_data *data)
 		if (temp && temp->token_type == TOKEN_WORD)
 			temp = check_list(temp, data, &args_lst);
 		else if (temp && (temp->token_type == TOKEN_PARENTHESIS_IN
-			|| temp->token_type == TOKEN_PARENTHESIS_OUT))
+				|| temp->token_type == TOKEN_PARENTHESIS_OUT))
 			return (parenthesis_error(temp, data, node, args_lst));
 	}
 	creat_cmd_node(args_lst, &node);
@@ -87,7 +88,8 @@ static t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst)
 	return (temp);
 }
 
-static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node, t_list *args_lst)
+static t_ast	*parenthesis_error(t_token *temp, t_data *data, t_ast *node,
+		t_list *args_lst)
 {
 	ft_printf("-bash: syntax error near unexpected token `%s'\n", temp->value);
 	data->last_exit_code = 2;

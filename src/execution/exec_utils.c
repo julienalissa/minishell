@@ -1,56 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   exec_utils.c                                        :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:20:13 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:20:14 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:20:13 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/06 07:42:49 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static char	*if_backslash(t_ast *node);
 static char	*ft_strjoin_path(char const *s1, char const *s2);
-//  free si probleme dans les process enfant
-void	wait_all_process(t_data *data)
-{
-	int	status;
-
-	status = 0;
-	while ((waitpid(-1, &status, 0)) > 0)
-	{
-		if (WIFEXITED(status))
-			data->last_exit_code = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			data->last_exit_code = 128 + WTERMSIG(status);
-	}
-}
-
-int	wait_process(t_data *data)
-{
-	int	status;
-	int	ret_status;
-
-	status = 0;
-	ret_status = 0;
-	waitpid(data->exec->pids[data->exec->nb_cmds - 1], &status, 0);
-	if (WIFEXITED(status))
-		ret_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		ret_status = 128 + WTERMSIG(status);
-	return (ret_status);
-}
-
-void	dup_and_close(int std_target, int fd)
-{
-	if (std_target == fd)
-		return ;
-	if (dup2(fd, std_target) < 0)
-		ft_error("Error: dup2 failed\n");
-	close(fd);
-}
 
 char	*find_path(t_ast *node, t_data *data)
 {
@@ -61,11 +24,7 @@ char	*find_path(t_ast *node, t_data *data)
 
 	i = 0;
 	if (ft_strchr(node->args[0], '/'))
-	{
-		if (access(node->args[0], F_OK | X_OK) == 0)
-			return (ft_strdup(node->args[0]));
-		return (NULL);
-	}
+		return (if_backslash(node));
 	temp = data->env;
 	while (temp && ft_strncmp(temp->key, "PATH", ft_strlen("PATH")) != 0)
 		temp = temp->next;
@@ -83,6 +42,14 @@ char	*find_path(t_ast *node, t_data *data)
 	}
 	ft_split_clear(path);
 	return (NULL);
+}
+
+static char	*if_backslash(t_ast *node)
+{
+	if (access(node->args[0], F_OK | X_OK) == 0)
+		return (ft_strdup(node->args[0]));
+	else
+		return (NULL);
 }
 
 static char	*ft_strjoin_path(char const *s1, char const *s2)

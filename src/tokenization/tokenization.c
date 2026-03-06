@@ -85,10 +85,10 @@ void	make_word(char *line, t_data *data)
 			i++;
 	}
 	if (i == 0)
-		return;
+		return ;
 	res = ft_substr(line, start, i);
 	if (!res)
-		return;
+		return ;
 	data->i = data->i + i;
 	cleaned = remove_escape(res);
 	free(res);

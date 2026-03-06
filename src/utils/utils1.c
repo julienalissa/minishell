@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:24:09 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 17:12:20 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 07:46:04 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_node(t_ast *node)
 	free(node);
 }
 
-void	free_path_not_found(t_data *data, t_ast *node, char *path)
+void	free_all(t_data *data, t_ast *node, char *path)
 {
 	free(path);
 	if (node)

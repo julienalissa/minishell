@@ -52,7 +52,8 @@ void	exec_or(t_ast *node, t_data *data, int fd_in, int fd_out)
 
 void	exec_script(t_data *data, t_ast *node, char *path)
 {
-	char *sh_arg[3];
+	char	*sh_arg[3];
+
 	sh_arg[0] = "/bin/sh";
 	sh_arg[1] = path;
 	sh_arg[2] = NULL;

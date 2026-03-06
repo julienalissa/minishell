@@ -6,15 +6,15 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 15:12:13 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 07:58:12 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
-void		setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
-static int	command_count(t_ast *node);
+static void		exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
+static void		setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
+static void		setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out);
 
 void	setup_exec(t_ast *node, t_data *data)
 {
@@ -62,21 +62,19 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	define_redir(node, fd_in, fd_out);
-	if ((path = find_path(node, data)) == NULL)
+	path = find_path(node, data);
+	if (!path)
 	{
 		ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		free_path_not_found(data, node, path);
+		free_all(data, node, path);
 		exit(127);
 	}
 	execve(path, node->args, data->envp);
 	if (errno == ENOEXEC)
 		exec_script(data, node, path);
 	perror(node->args[0]);
-	free(path);
-	ft_split_clear(node->args);
-	if (node->redir)
-		free(node->redir->file);
+	free_all(data, node, path);
 	if (errno == EACCES)
 		exit(126);
 	if (errno == ENOENT)
@@ -84,22 +82,11 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	exit(1);
 }
 
-static int	command_count(t_ast *node)
+static void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
-	if (!node)
-		return (0);
-	if (node->op_type == NODE_CMD)
-		return (1);
-	return (command_count(node->left) + command_count(node->right));
-}
-
-void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
-{
-	int	ret;
 	int	save_stdin;
 	int	save_stdout;
 
-	ret = 0;
 	if (is_builtin(node->args[0]) && (data->exec->is_piped == 0))
 	{
 		save_stdin = dup(STDIN_FILENO);
@@ -112,19 +99,21 @@ void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 		dup_and_close(STDOUT_FILENO, save_stdout);
 	}
 	else
+		setup_cmdd(node, data, fd_in, fd_out);
+}
+
+static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
+{
+	data->exec->pids[data->exec->nb_cmds] = fork();
+	if ((data->exec->pids[data->exec->nb_cmds]) == 0)
 	{
-		data->exec->pids[data->exec->nb_cmds] = fork();
-		if ((data->exec->pids[data->exec->nb_cmds]) == 0)
+		if (is_builtin(node->args[0]) && (data->exec->is_piped == 1))
 		{
-			if (is_builtin(node->args[0]) && (data->exec->is_piped == 1))
-			{
-				define_redir(node, fd_in, fd_out);
-				ret = execut_builtin(node, data);
-				exit(ret);
-			}
-			else
-				exec_cmd(node, data, fd_in, fd_out);
-			data->exec->nb_cmds++;
+			define_redir(node, fd_in, fd_out);
+			exit(execut_builtin(node, data));
 		}
+		else
+			exec_cmd(node, data, fd_in, fd_out);
+		data->exec->nb_cmds++;
 	}
 }

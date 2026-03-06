@@ -17,16 +17,16 @@ static void	print_export_sorted(t_env *env)
 	int		count;
 	int		i;
 	int		j;
-	t_env		**strr;
-	t_env		*tmp;
-	t_env		*swap;
+	t_env	**strr;
+	t_env	*tmp;
+	t_env	*swap;
 
 	count = count_env(env);
 	if (count <= 0)
-		return;
+		return ;
 	strr = malloc(sizeof(t_env *) * count);
 	if (!strr)
-		return;
+		return ;
 	tmp = env;
 	i = 0;
 	while (tmp)
@@ -107,7 +107,7 @@ void	add_or_update_env(t_data *data, char *arg)
 			if (ft_strncmp(tmp->env->key, "HOME", 4) == 0)
 			{
 				val = ft_strdup("HOME");
-				break;
+				break ;
 			}
 			tmp->env = tmp->env->next;
 		}

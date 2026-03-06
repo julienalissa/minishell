@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 
 static void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
-		int *flag);
+				int *flag);
 static int	check_file(char *name, char *file);
 
 void	expand_asterisk(char *name, t_list **lst)
@@ -37,7 +37,7 @@ void	expand_asterisk(char *name, t_list **lst)
 	{
 		if ((name[0] == '.' || dp->d_name[0] != '.') && check_file(name,
 				dp->d_name))
-		creat_asterisk(&current, lst, dp->d_name, &flag);
+			creat_asterisk(&current, lst, dp->d_name, &flag);
 	}
 	closedir(dirp);
 	if (flag == 0)
@@ -68,10 +68,9 @@ static void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
 	{
 		*current = malloc(sizeof(t_list));
 		if (!*current)
-			return;
+			return ;
 		(*current)->content = ft_strdup(namefile);
 		(*current)->next = NULL;
 		ft_lstadd_back(lst, (*current));
 	}
 }
-

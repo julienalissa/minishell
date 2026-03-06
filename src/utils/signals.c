@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	signal_exit = 0;
+int		signal_exit = 0;
 
 void	sigint(int sig)
 {

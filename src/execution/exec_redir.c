@@ -6,17 +6,15 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:06 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 14:37:18 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 07:58:03 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <fcntl.h>
 
 static int	open_redir_out(char *file, int final_out, int fd_out);
 static int	open_redir_in(char *file, int final_in, int fd_in);
 static int	open_redir_append(char *file, int final_out, int fd_out);
-static int	open_redir_hd(char *delimiter, int final_in, int fd_in);
 
 void	define_redir(t_ast *node, int fd_in, int fd_out)
 {
@@ -88,41 +86,3 @@ static int	open_redir_append(char *file, int final_out, int fd_out)
 	return (ret_append);
 }
 
-static int	open_redir_hd(char *delimiter, int final_in, int fd_in)
-{
-	int		fd_write;
-	int		fd_rd;
-	char	*line;
-	char	buffer[1024];
-	int		n;
-
-	if (final_in != fd_in && final_in > 2)
-		close(final_in);
-	if ((fd_write = open(".hd_tmp", O_WRONLY | O_CREAT | O_APPEND, 0644)) < 0)
-		ft_error("Error: can't write in [.hd_tmp]\n");
-	while (1)
-	{
-		ft_putstr_fd("> ", STDOUT_FILENO);
-		n = read(STDIN_FILENO, buffer, 1023);
-		if (n <= 0)
-			break ;
-		buffer[n] = '\0';
-		line = buffer;
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
-			&& (line[ft_strlen(delimiter)] == '\n'
-				|| line[ft_strlen(delimiter)] == '\0'))
-		{
-			close(fd_write);
-			if ((fd_rd = open(".hd_tmp", O_RDONLY)) < 0)
-				ft_error("Error : can't read in [.hd_tmp]\n");
-			unlink(".hd_tmp");
-			return (fd_rd);
-		}
-		ft_putstr_fd(line, fd_write);
-	}
-	close(fd_write);
-	if ((fd_rd = open(".hd_tmp", O_RDONLY)) < 0)
-		ft_error("Error : can't read in [.hd_tmp]\n");
-	unlink(".hd_tmp");
-	return (fd_rd);
-}

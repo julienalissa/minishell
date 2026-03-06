@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 15:15:36 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 07:46:17 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "struct.h"
 # include "../src/ast/ast.h"
 # include "../src/execution/exec.h"
+# include <fcntl.h>
 # include <dirent.h>
 # include <errno.h>
 # include <readline/history.h>
@@ -30,9 +31,6 @@
 
 extern int	signal_exit;
 
-// Initialisation de la structure data
-void		set_data(t_data *data, char **env);
-
 // Environnement
 void		creat_env(t_data *data);
 char		*define_key(char *env);
@@ -43,18 +41,12 @@ void		lstdel_env(t_env *env);
 void		lstclear_env(t_data *data);
 
 // Gestion variables d'environnement
-void		print_env(t_env *env);
 int			is_valid(char *str);
-int			is_valid_export(char *str);
 void		add_or_update_env(t_data *data, char *str);
 void		creat_envp(t_data *data);
 int			count_env(t_env *env);
 char		**alloc_envp(t_env *env, int count);
 char		*create_env_str(t_env *env);
-void		delete_env(t_data *data, char *key);
-char		*get_env_value(t_data *data, char *key);
-void		update_env_var(t_data *data, char *key,
-				char *value);
 
 // Tokenization
 void		creat_token(char *line, t_data *data);
@@ -84,11 +76,12 @@ int			env(t_data *data);
 int			exit_42(t_ast *node, t_data *data);
 
 // Utilitaires
+void		set_data(t_data *data, char **env);
 void		ft_error(char *msg);
 void		ft_split_clear(char **split);
 void		free_node(t_ast *node);
 void		ft_freetab(char **tab);
-void		free_path_not_found(t_data *data, t_ast *node, char *path);
+void		free_all(t_data *data, t_ast *node, char *path);
 int			is_builtin(char *cmd);
 int			execut_builtin(t_ast *node, t_data *data);
 
