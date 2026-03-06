@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:06 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 07:58:03 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 11:12:38 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	open_redir_in(char *file, int final_in, int fd_in)
 	}
 	ret_in = open(file, O_RDONLY);
 	if (ret_in < 0)
-		ft_error("error: redir_in\n");
+		ft_error("file");
 	return (ret_in);
 }
 
@@ -67,7 +67,7 @@ static int	open_redir_out(char *file, int final_out, int fd_out)
 	}
 	ret_out = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ret_out < 0)
-		ft_error("Error: redir_out\n");
+		ft_error("file");
 	return (ret_out);
 }
 
@@ -82,7 +82,6 @@ static int	open_redir_append(char *file, int final_out, int fd_out)
 	}
 	ret_append = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (ret_append < 0)
-		ft_error("Error: redir_append\n");
+		ft_error("file");
 	return (ret_append);
 }
-

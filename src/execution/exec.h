@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:53 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 07:57:52 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 10:42:05 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int		command_count(t_ast *node);
 void	define_redir(t_ast *node, int fd_in, int fd_out);
 void	dup_and_close(int std_target, int fd);
 void	exec_script(t_data *data, t_ast *node, char *path);
-int	open_redir_hd(char *delimiter, int final_in, int fd_in);
+int		open_redir_hd(char *delimiter, int final_in, int fd_in);
 
 #endif

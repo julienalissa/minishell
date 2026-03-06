@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:21 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 18:36:01 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/06 14:25:06 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_ast
 	t_redir			*redir;
 	struct s_ast	*left;
 	struct s_ast	*right;
-
 }					t_ast;
 
 t_ast				*build_ast(t_token *token, t_data *data);
@@ -61,6 +60,5 @@ void				creat_redir(t_token *temp, t_ast **node,
 void				addback_redir(t_redir **lst, t_redir *new);
 void				choise_redir(t_redir **redir, t_token *temp_redir);
 t_redir				*last_redir(t_redir *lst);
-
 
 #endif
