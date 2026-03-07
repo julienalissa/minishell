@@ -25,7 +25,9 @@ int	check_it(char **args, int *i)
 			break ;
 		(*i)++;
 	}
-	return ((*i) > 1);
+	if (*i > 1)
+		return (1);
+	return (0);
 }
 
 int	echo(char **args, t_data *data)
