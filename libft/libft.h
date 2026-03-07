@@ -109,11 +109,9 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 // Utilitaire
-void				ft_error(char *msg);
 void				ft_split_clear(char **split);
 
 // GNL
-
 char				*get_next_line(int fd);
 
 #endif

@@ -95,21 +95,38 @@ void	add_or_update_env(t_data *data, char *arg)
 	char	*key;
 	char	*val;
 	t_env	*existing;
-	t_data	*tmp;
+	t_env	*tmp_env;
 
-	tmp = data;
 	parse_args(arg, &key, &val);
 	if (val && val[0] == '~')
 	{
-		free(val);
-		while (tmp->env)
+		char	*home_val;
+		char	*new_val;
+
+		home_val = NULL;
+		tmp_env = data->env;
+		while (tmp_env)
 		{
-			if (ft_strncmp(tmp->env->key, "HOME", 4) == 0)
+			if (ft_strcmp(tmp_env->key, "HOME") == 0)
 			{
-				val = ft_strdup("HOME");
+				home_val = tmp_env->val;
 				break ;
 			}
-			tmp->env = tmp->env->next;
+			tmp_env = tmp_env->next;
+		}
+		if (home_val)
+		{
+			if (val[1] == '\0')
+				new_val = ft_strdup(home_val);
+			else
+				new_val = ft_strjoin(home_val, val + 1);
+			free(val);
+			val = new_val;
+			if (!val)
+			{
+				free(key);
+				return ;
+			}
 		}
 	}
 	existing = check_env(data->env, key);

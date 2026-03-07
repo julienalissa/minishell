@@ -75,7 +75,6 @@ SRCS = \
 	lst/ft_lstmap_bonus.c \
 	lst/ft_lstnew_bonus.c \
 	lst/ft_lstsize_bonus.c\
-	with_fd/ft_error.c \
 	with_fd/ft_split_clear.c
 
 # Objets correspondants (mappage .c -> object/dir/file.o)
