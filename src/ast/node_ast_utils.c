@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   node_ast_utils.c                                    :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:15:27 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:16:11 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   node_ast_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:15:27 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/09 16:37:45 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
 		t_list **args_lst)
 {
 	if (temp->token_type == TOKEN_AND || temp->token_type == TOKEN_OR)
-	{
-		creat_operator(temp, node);
-		return (NULL);
-	}
+		return (creat_operator(temp, node), NULL);
 	else if (is_redir(temp))
 	{
 		if (temp->next && temp->next->token_type == TOKEN_WORD)

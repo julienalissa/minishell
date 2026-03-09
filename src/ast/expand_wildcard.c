@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:48 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 17:07:05 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 17:13:05 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
 				int *flag);
 static int	check_file(char *name, char *file);
+static void	close_and_set(DIR *dirp, t_list *current, char *name, int flag);
 
 void	expand_asterisk(char *name, t_list **lst)
 {
@@ -33,12 +34,19 @@ void	expand_asterisk(char *name, t_list **lst)
 		current->content = ft_strdup(name);
 		return ;
 	}
-	while ((dp = readdir(dirp)) != NULL)
+	dp = readdir(dirp);
+	while (dp!= NULL)
 	{
 		if ((name[0] == '.' || dp->d_name[0] != '.') && check_file(name,
 				dp->d_name))
 			creat_asterisk(&current, lst, dp->d_name, &flag);
+		dp = readdir(dirp);
 	}
+	close_and_set(dirp, current, name, flag);
+}
+
+static void	close_and_set(DIR *dirp, t_list *current, char *name, int flag)
+{
 	closedir(dirp);
 	if (flag == 0)
 		current->content = ft_strdup(name);
