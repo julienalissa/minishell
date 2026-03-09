@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   struct.h                                            :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:01:32 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:01:34 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:01:32 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/09 15:55:22 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define STRUCT_H
 
 # include "minishell.h"
+
+typedef struct s_ast	t_ast;
 
 typedef enum e_token_type
 {
@@ -57,6 +59,7 @@ typedef struct s_exec
 	int				nb_cmds;
 	int				ret_status;
 	int				is_piped;
+	int				fd_to_close;
 }					t_exec;
 
 typedef struct s_data
@@ -64,7 +67,10 @@ typedef struct s_data
 	int				i;
 	char			**envp;
 	int				last_exit_code;
+	int				need_exit;
+	int				save_status;
 	t_states		flag_states;
+	t_ast			*save_ast;
 	t_token			*token;
 	t_env			*env;
 	t_exec			*exec;

@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 07:58:12 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 16:00:12 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@ void	setup_exec(t_ast *node, t_data *data)
 	if (data->last_exit_code == 130 || data->last_exit_code == 131)
 		write(1, "\n", 1);
 	signals();
-	free(data->exec->pids);
-	free_node(node);
-	lstclear_token(&data->token);
-	data->token = NULL;
-	node = NULL;
+	free_all(data, node, NULL);
 }
 
 void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
@@ -67,14 +63,14 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	{
 		ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		free_all(data, node, path);
+		free_child(data, path);
 		exit(127);
 	}
 	execve(path, node->args, data->envp);
 	if (errno == ENOEXEC)
 		exec_script(data, node, path);
 	perror(node->args[0]);
-	free_all(data, node, path);
+	free_child(data, path);
 	if (errno == EACCES)
 		exit(126);
 	if (errno == ENOENT)
@@ -97,6 +93,12 @@ static void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 		data->last_exit_code = execut_builtin(node, data);
 		dup_and_close(STDIN_FILENO, save_stdin);
 		dup_and_close(STDOUT_FILENO, save_stdout);
+		if (data->need_exit)
+		{
+			free_all(data, node, NULL);
+			lstclear_env(data);
+			exit(data->save_status);
+		}
 	}
 	else
 		setup_cmdd(node, data, fd_in, fd_out);
@@ -107,13 +109,17 @@ static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	data->exec->pids[data->exec->nb_cmds] = fork();
 	if ((data->exec->pids[data->exec->nb_cmds]) == 0)
 	{
+		if (data->exec->fd_to_close != -1)
+			close(data->exec->fd_to_close);
 		if (is_builtin(node->args[0]) && (data->exec->is_piped == 1))
 		{
 			define_redir(node, fd_in, fd_out);
-			exit(execut_builtin(node, data));
+			data->last_exit_code = execut_builtin(node, data);
+			free_child(data, NULL);
+			exit(data->last_exit_code);
 		}
 		else
 			exec_cmd(node, data, fd_in, fd_out);
-		data->exec->nb_cmds++;
 	}
+	data->exec->nb_cmds++;
 }

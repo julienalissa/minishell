@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 07:46:17 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 15:02:16 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void		ft_split_clear(char **split);
 void		free_node(t_ast *node);
 void		ft_freetab(char **tab);
 void		free_all(t_data *data, t_ast *node, char *path);
+void		free_child(t_data *data, char *path);
 int			is_builtin(char *cmd);
 int			execut_builtin(t_ast *node, t_data *data);
 

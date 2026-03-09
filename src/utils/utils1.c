@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:24:09 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 07:46:04 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 15:58:11 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	set_data(t_data *data, char **env)
 		return ;
 	ft_bzero(data->exec, sizeof(t_exec));
 	data->exec->pids = NULL;
+	data->exec->fd_to_close = -1;
 }
 
 void	ft_error(char *errorname)
@@ -67,11 +68,24 @@ void	free_node(t_ast *node)
 
 void	free_all(t_data *data, t_ast *node, char *path)
 {
-	free(path);
-	if (node)
-		free_node(node);
-	if (data->token)
-		lstclear_token(&data->token);
+	(void)node;
+	if (path)
+		free(path);
+	if (data->save_ast)
+		free_node(data->save_ast);
+	if (data->exec && data->exec->pids)
+	{
+		free(data->exec->pids);
+		data->exec->pids = NULL;
+	}
+}
+
+void	free_child(t_data *data, char *path)
+{
+	if (path)
+		free(path);
+	if (data->save_ast)
+		free_node(data->save_ast);
 	if (data->envp)
 		lstclear_env(data);
 	if (data->exec && data->exec->pids)

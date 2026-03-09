@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:00 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 19:05:43 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 15:59:07 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	exec_pipe(t_ast *node, t_data *data, int fd_in, int fd_out)
 		return ;
 	save = data->exec->is_piped;
 	data->exec->is_piped = 1;
+	data->exec->fd_to_close = pipefd[0];
 	exec_ast(node->left, data, fd_in, pipefd[1]);
 	close(pipefd[1]);
+	data->exec->fd_to_close = -1;
 	exec_ast(node->right, data, pipefd[0], fd_out);
 	close(pipefd[0]);
 	data->exec->is_piped = save;

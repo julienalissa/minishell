@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 10:01:31 by ludebarn          #+#    #+#             */
-/*   Updated: 2026/01/12 10:56:55 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 14:03:49 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ int	main(int argc, char **argv, char **env)
 		{
 			creat_token(line, &data);
 			ast = build_ast(data.token, &data);
+			data.save_ast = ast;
+			lstclear_token(&data.token);
+			data.token = NULL;
 			if (ast)
 				setup_exec(ast, &data);
-			else
-			{
-				lstclear_token(&data.token);
-				data.token = NULL;
-			}
 		}
 		add_history(line);
 		free(line);

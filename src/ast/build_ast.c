@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   build_ast.c                                         :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:12:43 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:12:44 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   build_ast.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:12:43 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/09 15:26:13 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,12 @@ t_ast	*build_ast(t_token *token, t_data *data)
 		return (NULL);
 	node->left = build_ast(token, data);
 	node->right = build_ast(right_start, data);
+	lstclear_token(&right_start);
 	if (!node->left || !node->right)
 	{
 		ft_printf("-bash: syntax error near unexpected token\n");
 		data->last_exit_code = 2;
-		free(node);
+		free_node(node);
 		return (NULL);
 	}
 	return (node);
