@@ -25,6 +25,7 @@ INCLUDES	= -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRC_FILES   = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/utils/utils1.c \
+			$(SRC_DIR)/utils/utils2.c \
 			$(SRC_DIR)/utils/signals.c \
 			$(SRC_DIR)/tokenization/tokenization_utils2.c \
 			$(SRC_DIR)/tokenization/tokenization_utils.c \

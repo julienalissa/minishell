@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:48 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/09 17:13:05 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 17:19:03 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	expand_asterisk(char *name, t_list **lst)
 		return ;
 	}
 	dp = readdir(dirp);
-	while (dp!= NULL)
+	while (dp != NULL)
 	{
 		if ((name[0] == '.' || dp->d_name[0] != '.') && check_file(name,
 				dp->d_name))
