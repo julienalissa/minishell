@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:16:51 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/05 19:06:09 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/09 16:30:15 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	echo(char **args, t_data *data)
 	while (args[i])
 	{
 		ft_printf("%s", args[i]);
+		if (args[i + 1])
+			ft_printf(" ");
 		i++;
 	}
 	if (newline)
