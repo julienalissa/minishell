@@ -1,5 +1,5 @@
 prob :
 
 1. norminette des trucs
-2. lucas checker leaks avec les pipes
+2. check si les messages d'erreur son bien sur stderr
 3. lucas Readme
