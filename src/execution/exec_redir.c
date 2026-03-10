@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:06 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 11:12:38 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/10 17:38:23 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	open_redir_out(char *file, int final_out, int fd_out);
 static int	open_redir_in(char *file, int final_in, int fd_in);
 static int	open_redir_append(char *file, int final_out, int fd_out);
 
-void	define_redir(t_ast *node, int fd_in, int fd_out)
+void	define_redir(t_data *data, t_ast *node, int fd_in, int fd_out)
 {
 	t_redir	*tmp;
 	int		final_in;
@@ -30,7 +30,7 @@ void	define_redir(t_ast *node, int fd_in, int fd_out)
 		if (tmp && tmp->redir_type == NODE_REDIR_IN)
 			final_in = open_redir_in(tmp->file, final_in, fd_in);
 		else if (tmp && tmp->redir_type == NODE_HEREDOC)
-			final_in = open_redir_hd(tmp->file, final_in, fd_in);
+			final_in = open_redir_hd(data, tmp->file, final_in, fd_in);
 		else if (tmp && tmp->redir_type == NODE_REDIR_OUT)
 			final_out = open_redir_out(tmp->file, final_out, fd_out);
 		else if (tmp && tmp->redir_type == NODE_APPEND)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/09 16:00:12 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/10 17:50:46 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void		exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static void		setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static void		setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out);
+static void	path_not_found(t_data *data, t_ast *node, char *path);
 
 void	setup_exec(t_ast *node, t_data *data)
 {
@@ -57,15 +58,10 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	define_redir(node, fd_in, fd_out);
+	define_redir(data, node, fd_in, fd_out);
 	path = find_path(node, data);
 	if (!path)
-	{
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_child(data, path);
-		exit(127);
-	}
+		path_not_found(data, node, path);
 	execve(path, node->args, data->envp);
 	if (errno == ENOEXEC)
 		exec_script(data, node, path);
@@ -89,7 +85,7 @@ static void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 		save_stdout = dup(STDOUT_FILENO);
 		if (save_stdin < 0 || save_stdout < 0)
 			ft_error("Error: dup failed\n");
-		define_redir(node, fd_in, fd_out);
+		define_redir(data, node, fd_in, fd_out);
 		data->last_exit_code = execut_builtin(node, data);
 		dup_and_close(STDIN_FILENO, save_stdin);
 		dup_and_close(STDOUT_FILENO, save_stdout);
@@ -113,7 +109,7 @@ static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
 			close(data->exec->fd_to_close);
 		if (is_builtin(node->args[0]) && (data->exec->is_piped == 1))
 		{
-			define_redir(node, fd_in, fd_out);
+			define_redir(data, node, fd_in, fd_out);
 			data->last_exit_code = execut_builtin(node, data);
 			free_child(data, NULL);
 			exit(data->last_exit_code);
@@ -122,4 +118,21 @@ static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
 			exec_cmd(node, data, fd_in, fd_out);
 	}
 	data->exec->nb_cmds++;
+}
+
+static void	path_not_found(t_data *data, t_ast *node, char *path)
+{
+	int	if_exist;
+
+	if_exist = access(node->args[0], F_OK);
+	// dprintf (2, "%d", if_exist);
+	ft_putstr_fd(node->args[0], 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
+	free_child(data, path);
+	if (access(node->args[0], X_OK) < 0 && if_exist == 0)
+		exit (126);
+	else
+		exit(127);
 }

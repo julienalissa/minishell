@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:13 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/06 07:42:49 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/10 16:43:21 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*find_path(t_ast *node, t_data *data)
 	char	**path;
 
 	i = 0;
-	if (ft_strchr(node->args[0], '/'))
+	if (ft_strchr(node->args[0], '/') && node->args[0][0] != '.')
 		return (if_backslash(node));
 	temp = data->env;
 	while (temp && ft_strncmp(temp->key, "PATH", ft_strlen("PATH")) != 0)
@@ -46,7 +46,7 @@ char	*find_path(t_ast *node, t_data *data)
 
 static char	*if_backslash(t_ast *node)
 {
-	if (access(node->args[0], F_OK | X_OK) == 0)
+	if (access(node->args[0], X_OK) == 0)
 		return (ft_strdup(node->args[0]));
 	else
 		return (NULL);

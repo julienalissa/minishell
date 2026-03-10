@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:56:52 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/06 13:40:22 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/10 17:54:36 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static int	del_finded(int fd_write);
 static int	del_not_find(int fd_write);
+static char	*get_line(t_data *data, char *buffer, int n);
 
-int	open_redir_hd(char *delimiter, int final_in, int fd_in)
+int	open_redir_hd(t_data *data, char *delimiter, int final_in, int fd_in)
 {
 	int		fd_write;
 	char	*line;
@@ -34,7 +35,7 @@ int	open_redir_hd(char *delimiter, int final_in, int fd_in)
 		if (n <= 0)
 			break ;
 		buffer[n] = '\0';
-		line = buffer;
+		line = get_line(data, buffer, n);
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
 			&& (line[ft_strlen(delimiter)] == '\n'
 				|| line[ft_strlen(delimiter)] == '\0'))
@@ -68,4 +69,16 @@ static int	del_not_find(int fd_write)
 		ft_error("Error : can't read in [.hd_tmp]\n");
 	unlink(".hd_tmp");
 	return (fd_rd);
+}
+static char	*get_line(t_data *data, char *buffer, int n)
+{
+	t_list	*lst;
+	// char	*res;
+
+	(void)n;
+	lst = NULL;
+	if (buffer[0] != '\'' && ft_strchr(buffer, '$'))
+		expand_dollar(buffer, &lst, data);
+	printf("%s\n", (char *)lst->content);
+	return (buffer);
 }
