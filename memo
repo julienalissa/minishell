@@ -7,4 +7,8 @@ prob :
 5. (LU)expande les variables herdoc ne marche pas
 6. (LU)herdoc doit avoir la prio (cat << eof | echo salut) par exemple
 7. (JU)echo ''"$USER"''"'hello""" fait des espaces en trop, il faut pas check avec le vrai
-
+8. (LU)(JU)norminette
+9. (JU) minishell > cd $PWD hi
+minishell > echo $?
+0
+doit etre 1 avec message erreur check le vrai bash
