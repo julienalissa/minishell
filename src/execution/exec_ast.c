@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/10 17:50:46 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/11 12:46:24 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void		exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static void		setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static void		setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out);
-static void	path_not_found(t_data *data, t_ast *node, char *path);
+static void		path_not_found(t_data *data, t_ast *node, char *path);
 
 void	setup_exec(t_ast *node, t_data *data)
 {
@@ -23,6 +23,11 @@ void	setup_exec(t_ast *node, t_data *data)
 
 	if (!node)
 		return ;
+	if (prepare_heredocs(node, data) == -1)
+	{
+		free_all(data, node, NULL);
+		return ;
+	}
 	total_cmds = command_count(node);
 	data->exec->pids = malloc(sizeof(pid_t) * total_cmds);
 	if (!data->exec->pids)
@@ -58,7 +63,7 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	define_redir(data, node, fd_in, fd_out);
+	define_redir(node, fd_in, fd_out);
 	path = find_path(node, data);
 	if (!path)
 		path_not_found(data, node, path);
@@ -85,7 +90,7 @@ static void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 		save_stdout = dup(STDOUT_FILENO);
 		if (save_stdin < 0 || save_stdout < 0)
 			ft_error("Error: dup failed\n");
-		define_redir(data, node, fd_in, fd_out);
+		define_redir(node, fd_in, fd_out);
 		data->last_exit_code = execut_builtin(node, data);
 		dup_and_close(STDIN_FILENO, save_stdin);
 		dup_and_close(STDOUT_FILENO, save_stdout);
@@ -93,6 +98,7 @@ static void	setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 		{
 			free_all(data, node, NULL);
 			lstclear_env(data);
+			free(data->exec);
 			exit(data->save_status);
 		}
 	}
@@ -109,7 +115,7 @@ static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
 			close(data->exec->fd_to_close);
 		if (is_builtin(node->args[0]) && (data->exec->is_piped == 1))
 		{
-			define_redir(data, node, fd_in, fd_out);
+			define_redir(node, fd_in, fd_out);
 			data->last_exit_code = execut_builtin(node, data);
 			free_child(data, NULL);
 			exit(data->last_exit_code);

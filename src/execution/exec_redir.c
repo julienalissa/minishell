@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:06 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/10 17:38:23 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/11 10:57:56 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 static int	open_redir_out(char *file, int final_out, int fd_out);
 static int	open_redir_in(char *file, int final_in, int fd_in);
 static int	open_redir_append(char *file, int final_out, int fd_out);
+static int	open_redir_hd(char *file, int final_in, int fd_in);
 
-void	define_redir(t_data *data, t_ast *node, int fd_in, int fd_out)
+void	define_redir(t_ast *node, int fd_in, int fd_out)
 {
 	t_redir	*tmp;
 	int		final_in;
@@ -30,7 +31,7 @@ void	define_redir(t_data *data, t_ast *node, int fd_in, int fd_out)
 		if (tmp && tmp->redir_type == NODE_REDIR_IN)
 			final_in = open_redir_in(tmp->file, final_in, fd_in);
 		else if (tmp && tmp->redir_type == NODE_HEREDOC)
-			final_in = open_redir_hd(data, tmp->file, final_in, fd_in);
+			final_in = open_redir_hd(tmp->file, final_in, fd_in);
 		else if (tmp && tmp->redir_type == NODE_REDIR_OUT)
 			final_out = open_redir_out(tmp->file, final_out, fd_out);
 		else if (tmp && tmp->redir_type == NODE_APPEND)
@@ -52,7 +53,7 @@ static int	open_redir_in(char *file, int final_in, int fd_in)
 	}
 	ret_in = open(file, O_RDONLY);
 	if (ret_in < 0)
-		ft_error("file");
+		ft_error(file);
 	return (ret_in);
 }
 
@@ -67,7 +68,7 @@ static int	open_redir_out(char *file, int final_out, int fd_out)
 	}
 	ret_out = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ret_out < 0)
-		ft_error("file");
+		ft_error(file);
 	return (ret_out);
 }
 
@@ -82,6 +83,21 @@ static int	open_redir_append(char *file, int final_out, int fd_out)
 	}
 	ret_append = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (ret_append < 0)
-		ft_error("file");
+		ft_error(file);
 	return (ret_append);
+}
+
+static int	open_redir_hd(char *file, int final_in, int fd_in)
+{
+	int	ret_hd;
+
+	if (final_in)
+	{
+		if (final_in != fd_in && final_in > 2)
+			close(final_in);
+	}
+	ret_hd = open(file, O_RDONLY);
+	if (ret_hd < 0)
+		ft_error(file);
+	return (ret_hd);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   node_ast_redir.c                                    :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:13:10 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:13:11 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   node_ast_redir.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:13:10 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/11 12:29:16 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 
 void	creat_redir(t_token *temp_redir, t_ast **node, t_token *temp_file)
 {
-	t_redir	*new_node_redir;
+	t_redir	*new;
 
-	new_node_redir = NULL;
-	if ((*node)->redir == NULL)
+	new = malloc(sizeof(t_redir));
+	if (!new)
+		return ;
+	ft_bzero(new, sizeof(t_redir));
+	choise_redir(&new, temp_redir);
+	if (new->redir_type == NODE_HEREDOC)
 	{
-		(*node)->redir = malloc(sizeof(t_redir));
-		choise_redir(&(*node)->redir, temp_redir);
-		(*node)->redir->file = ft_strdup(temp_file->value);
-		(*node)->redir->next = NULL;
+		new->delimiter = ft_strdup(temp_file->value);
+		if (temp_file->states == QUOTES || temp_file->states == DQUOTES)
+			new->quote_hd = 1;
 	}
 	else
-	{
-		new_node_redir = malloc(sizeof(t_redir));
-		choise_redir(&new_node_redir, temp_redir);
-		new_node_redir->file = ft_strdup(temp_file->value);
-		new_node_redir->next = NULL;
-		addback_redir(&(*node)->redir, new_node_redir);
-	}
+		new->file = ft_strdup(temp_file->value);
+	new->next = NULL;
+	if ((*node)->redir == NULL)
+		(*node)->redir = new;
+	else
+		addback_redir(&(*node)->redir, new);
 }
 
 int	is_redir(t_token *token)

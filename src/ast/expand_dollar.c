@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:10:18 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/06 07:10:19 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/11 10:01:07 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static char	*expand_error_code(char *res, t_data *data);
 static char	*ft_strjoin_free_s1(char *s1, char *s2);
-static char	*result_expand(t_env *env_temp, char *name, t_data *data);
 static char	*expand_key(t_env *env_temp, char *name, char *res, int *i);
 
 void	expand_dollar(char *name, t_list **lst, t_data *data)
@@ -43,7 +42,7 @@ static char	*ft_strjoin_free_s1(char *s1, char *s2)
 	return (ret);
 }
 
-static char	*result_expand(t_env *env_temp, char *name, t_data *data)
+char	*result_expand(t_env *env_temp, char *name, t_data *data)
 {
 	char	temp_char[2];
 	char	*result;

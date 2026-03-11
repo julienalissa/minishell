@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:21 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/09 17:07:49 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/11 09:45:50 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef enum e_redir_type
 typedef struct s_redir
 {
 	char			*file;
+	char			*delimiter;
+	int				quote_hd;
 	t_redir_type	redir_type;
 	struct s_redir	*next;
 }					t_redir;

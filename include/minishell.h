@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/10 15:34:05 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/11 10:53:04 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		creat_cmd_node(t_list *args_lst, t_ast **node);
 t_token		*trim_paranthesis(t_token *token);
 void		node_left(t_token *token, t_token *pivot);
 void		free_pivot(t_token *pivot);
+char		*result_expand(t_env *env_temp, char *name, t_data *data);
 
 // Builtins
 int			echo(char **args, t_data *data);
@@ -86,6 +87,7 @@ void		free_all(t_data *data, t_ast *node, char *path);
 void		free_child(t_data *data, char *path);
 int			is_builtin(char *cmd);
 int			execut_builtin(t_ast *node, t_data *data);
+void		free_redir(t_redir	*redir);
 
 // Signaux
 void		signals(void);
