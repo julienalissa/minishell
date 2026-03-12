@@ -142,7 +142,11 @@ void	add_or_update_env(t_data *data, char *arg)
 
 int	export(char **args, t_data *data)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*arg;
+	char	*tmp;
+	int		has_equal;
 
 	i = 1;
 	if (!args[1])
@@ -152,13 +156,34 @@ int	export(char **args, t_data *data)
 	}
 	while (args[i])
 	{
-		if (is_valid(args[i]) == 0)
+		j = i;
+		arg = ft_strdup(args[j]);
+		if (!arg)
+			return (1);
+		has_equal = (ft_strchr(arg, '=') != NULL);
+		j++;
+		while (args[j])
+		{
+			if (!has_equal)
+				break ;
+			if (ft_strchr(args[j], '='))
+				break ;
+			tmp = ft_strjoin(arg, args[j]);
+			free(arg);
+			if (!tmp)
+				return (1);
+			arg = tmp;
+			j++;
+		}
+		if (is_valid(arg) == 0)
 		{
 			ft_printf("wrong format\n");
+			free(arg);
 			return (1);
 		}
-		add_or_update_env(data, args[i]);
-		i++;
+		add_or_update_env(data, arg);
+		free(arg);
+		i = j;
 	}
 	return (0);
 }

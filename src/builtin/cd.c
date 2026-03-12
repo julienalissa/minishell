@@ -31,7 +31,16 @@ int	cd(char **args, t_data *data)
 	char	*home;
 	int		ret;
 	char	*tmp;
+	int		argc;
 
+	argc = 0;
+	while (args[argc])
+		argc++;
+	if (argc > 2)
+	{
+		ft_putendl_fd("-bash: cd: too many arguments", 2);
+		return (1);
+	}
 	if (!getcwd(path_buf, sizeof(path_buf)))
 		path_buf[0] = '\0';
 	if (!args[1] || ft_strcmp(args[1], "~") == 0 || (args[1][0] == '~'

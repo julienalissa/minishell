@@ -1,11 +1,5 @@
 prob :
 
-1. (JU)export avec export a="salut" ou export salut='salut' il faut le parser et pas faire un a=""
 3. (JU)ctrl + d et ctrl + c doit ne marche pas avec les herdoc
 4. (JU)le message d'erreur n'est pas correct si une command n'existe pas ou erreur de permission il faut check cela
-7. (JU)echo ''"$USER"''"'hello""" fait des espaces en trop, il faut pas check avec le vrai
 8. (LU)(JU)norminette
-9. (JU) minishell > cd $PWD hi
-minishell > echo $?
-0
-doit etre 1 avec message erreur check le vrai bash

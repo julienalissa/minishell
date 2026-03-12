@@ -39,7 +39,7 @@ int	echo(char **args, t_data *data)
 	newline = 1;
 	if (!args)
 		return (1);
-	if (args[1][0] == '~' && args[1][1] == '\0')
+	if (args[1] && args[1][0] == '~' && args[1][1] == '\0')
 	{
 		i = 0;
 		while (data->env)
@@ -57,8 +57,6 @@ int	echo(char **args, t_data *data)
 	while (args[i])
 	{
 		ft_printf("%s", args[i]);
-		if (args[i + 1])
-			ft_printf(" ");
 		i++;
 	}
 	if (newline)
