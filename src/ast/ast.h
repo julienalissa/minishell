@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:21 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/11 09:45:50 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/12 16:22:03 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_redir
 	char			*file;
 	char			*delimiter;
 	int				quote_hd;
+	int				fd_hd;
 	t_redir_type	redir_type;
 	struct s_redir	*next;
 }					t_redir;

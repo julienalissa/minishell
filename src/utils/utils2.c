@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 17:20:05 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/12 11:29:03 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:50:30 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_redir(t_redir	*redir)
 	{
 		temp_redir = redir->next;
 		if (redir->redir_type == NODE_HEREDOC && redir->delimiter)
-				unlink(redir->file);
+			unlink(redir->file);
 		if (redir->file)
 			free(redir->file);
 		if (redir->delimiter)

@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/12 11:57:59 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:53:32 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@ static void		setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out);
 
 void	setup_exec(t_ast *node, t_data *data)
 {
-	int	total_cmds;
+	int		total_cmds;
 
+	// printf("%d\n", data->i);
 	if (!node)
 		return ;
-	if (prepare_heredocs(node, data) == -1)
+	if (setup_heredocs(data, node) == -1)
 	{
 		free_all(data, node, NULL);
 		return ;
 	}
+	// printf("%d\n", data->i);
+	// printf("%s\n", node->redir->file);
 	total_cmds = command_count(node);
 	data->exec->pids = malloc(sizeof(pid_t) * total_cmds);
 	if (!data->exec->pids)

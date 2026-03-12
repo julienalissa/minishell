@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:28:50 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/11 07:35:57 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/12 16:19:46 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,28 @@ int	command_count(t_ast *node)
 	if (node->op_type == NODE_CMD)
 		return (1);
 	return (command_count(node->left) + command_count(node->right));
+}
+
+int	setup_heredocs(t_data *data, t_ast *node)
+{
+	pid_t	pid;
+	int		status;
+	int		ret_status;
+
+	ret_status = 0;
+	status = 0;
+	pid = fork();
+	if (pid == 0)
+	{
+		if (prepare_heredocs(node, data) == -1)
+			exit (data->last_exit_code);
+		else
+			exit (EXIT_SUCCESS);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		ret_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		ret_status = 128 + WTERMSIG(status);
+	return (0);
 }

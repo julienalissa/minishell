@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 10:01:31 by ludebarn          #+#    #+#             */
-/*   Updated: 2026/03/12 11:37:49 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:46:47 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		add_history(line);
 		free(line);
+		data.i = 0;
 	}
 	lstclear_env(&data);
 	free(data.exec);
