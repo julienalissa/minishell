@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/11 13:27:50 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/12 11:57:59 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void		exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static void		setup_cmd(t_ast *node, t_data *data, int fd_in, int fd_out);
 static void		setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out);
-static void		path_not_found(t_data *data, t_ast *node, char *path);
 
 void	setup_exec(t_ast *node, t_data *data)
 {
@@ -35,7 +34,8 @@ void	setup_exec(t_ast *node, t_data *data)
 	data->exec->nb_cmds = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
+	if (node->args[0])
+		exec_ast(node, data, STDIN_FILENO, STDOUT_FILENO);
 	wait_all_process(data);
 	if (data->last_exit_code == 130 || data->last_exit_code == 131)
 		write(1, "\n", 1);
@@ -124,28 +124,4 @@ static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
 			exec_cmd(node, data, fd_in, fd_out);
 	}
 	data->exec->nb_cmds++;
-}
-
-static void	path_not_found(t_data *data, t_ast *node, char *path)
-{
-	int	if_exist;
-
-	if (ft_strchr(node->args[0], '/'))
-	{
-		if_exist = access(node->args[0], F_OK);
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": ", 2);
-		free_child(data, path);
-		if (access(node->args[0], X_OK) < 0 && if_exist == 0)
-		{
-			ft_putendl_fd(strerror(errno), 2);
-			exit (126);
-		}
-		ft_putendl_fd(strerror(errno), 2);
-		exit (127);
-	}
-	ft_putstr_fd(node->args[0], 2);
-	ft_putendl_fd(": command not found", 2);
-	free_child(data, path);
-	exit (127);
 }

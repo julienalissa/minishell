@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir_hd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:56:52 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/11 12:59:17 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/12 12:00:55 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int	open_heredocs(t_redir *redir, t_data *data);
 static void	close_and_free(char *line, char *write_line, int fd_file, int flag);
 static int	open_redir_hd(t_data *data, t_redir *redir);
-static char	*line_to_write(t_env	*env_temp, char *line, t_data *data, t_redir *redir);
+static char	*line_to_write(t_env *env_temp, char *line, t_data *data,
+				t_redir *redir);
 
 int	prepare_heredocs(t_ast *node, t_data *data)
 {
@@ -42,7 +43,7 @@ int	prepare_heredocs(t_ast *node, t_data *data)
 
 static int	open_heredocs(t_redir *redir, t_data *data)
 {
-	int	fd_filetemp;
+	int		fd_filetemp;
 	char	*line;
 	char	*write_line;
 	t_env	*env_temp;
@@ -52,11 +53,11 @@ static int	open_heredocs(t_redir *redir, t_data *data)
 	while (1)
 	{
 		write_line = NULL;
-		line = readline("heredoc >");
+		line = readline("heredoc > ");
 		if (!line)
-			break;
+			break ;
 		if (ft_strcmp(line, redir->delimiter) == 0)
-			break;
+			break ;
 		write_line = line_to_write(env_temp, line, data, redir);
 		ft_putendl_fd(write_line, fd_filetemp);
 		close_and_free(line, write_line, fd_filetemp, 0);
@@ -75,6 +76,7 @@ static void	close_and_free(char *line, char *write_line, int fd_file, int flag)
 	if (flag)
 		close(fd_file);
 }
+
 static int	open_redir_hd(t_data *data, t_redir *redir)
 {
 	int		fd_w;
@@ -90,9 +92,10 @@ static int	open_redir_hd(t_data *data, t_redir *redir)
 	return (fd_w);
 }
 
-static char *line_to_write(t_env	*env_temp, char *line, t_data *data, t_redir *redir)
+static char	*line_to_write(t_env *env_temp, char *line, t_data *data,
+				t_redir *redir)
 {
-	char *res;
+	char	*res;
 
 	res = NULL;
 	if (redir->quote_hd == 0)
@@ -101,7 +104,3 @@ static char *line_to_write(t_env	*env_temp, char *line, t_data *data, t_redir *r
 		res = ft_strdup(line);
 	return (res);
 }
-
-
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:53 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/11 10:58:02 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/12 11:57:42 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void	define_redir(t_ast *node, int fd_in, int fd_out);
 void	dup_and_close(int std_target, int fd);
 void	exec_script(t_data *data, t_ast *node, char *path);
 int		prepare_heredocs(t_ast *node, t_data *data);
+void	path_not_found(t_data *data, t_ast *node, char *path);
 
 #endif

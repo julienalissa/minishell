@@ -6,11 +6,36 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 10:01:31 by ludebarn          #+#    #+#             */
-/*   Updated: 2026/03/10 15:25:14 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/12 11:37:49 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	exec_prog(t_data *data, t_ast *ast, char *line)
+{
+	if (signal_exit != 0)
+	{
+		data->last_exit_code = signal_exit;
+		signal_exit = 0;
+	}
+	if (!line)
+	{
+		write(1, "exit\n", 5);
+		return (0);
+	}
+	if (line && *line)
+	{
+		creat_token(line, data);
+		ast = build_ast(data->token, data);
+		data->save_ast = ast;
+		lstclear_token(&data->token);
+		data->token = NULL;
+		if (ast)
+			setup_exec(ast, data);
+	}
+	return (1);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -22,30 +47,13 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	set_data(&data, env);
 	creat_env(&data);
+	ft_bzero(&ast, sizeof(t_ast));
 	signals();
 	while (1)
 	{
 		line = readline("minishell > ");
-		if (signal_exit != 0)
-		{
-			data.last_exit_code = signal_exit;
-			signal_exit = 0;
-		}
-		if (!line)
-		{
-			write(1, "exit\n", 5);
+		if (!exec_prog(&data, ast, line))
 			break ;
-		}
-		if (line && *line)
-		{
-			creat_token(line, &data);
-			ast = build_ast(data.token, &data);
-			data.save_ast = ast;
-			lstclear_token(&data.token);
-			data.token = NULL;
-			if (ast)
-				setup_exec(ast, &data);
-		}
 		add_history(line);
 		free(line);
 	}
