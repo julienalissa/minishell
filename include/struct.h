@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:01:32 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/11 06:58:35 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/13 14:55:50 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_data
 {
 	int				i;
 	char			**envp;
+	char			**current_env;
 	int				last_exit_code;
 	int				need_exit;
 	int				save_status;

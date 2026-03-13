@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/11 10:53:04 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/13 18:36:11 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,14 @@ void		lstclear_env(t_data *data);
 // Gestion variables d'environnement
 int			is_valid(char *str);
 void		add_or_update_env(t_data *data, char *str);
-void		creat_envp(t_data *data);
 int			count_env(t_env *env);
 char		**alloc_envp(t_env *env, int count);
 char		*create_env_str(t_env *env);
+char		**get_current_env(t_data *data);
+int			lstsize_env(t_env *env);
+char		*define_key(char *env);
+char		*define_value(char *env);
+// void		no_env(t_data *data);
 
 // Tokenization
 void		creat_token(char *line, t_data *data);
@@ -88,6 +92,7 @@ void		free_child(t_data *data, char *path);
 int			is_builtin(char *cmd);
 int			execut_builtin(t_ast *node, t_data *data);
 void		free_redir(t_redir	*redir);
+char		*ft_strjoin_free_s1(char *s1, char *s2);
 
 // Signaux
 void		signals(void);

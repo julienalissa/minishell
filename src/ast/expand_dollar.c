@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:10:18 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/11 10:01:07 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/13 14:10:36 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 static char	*expand_error_code(char *res, t_data *data);
-static char	*ft_strjoin_free_s1(char *s1, char *s2);
 static char	*expand_key(t_env *env_temp, char *name, char *res, int *i);
 
 void	expand_dollar(char *name, t_list **lst, t_data *data)
@@ -27,7 +26,7 @@ void	expand_dollar(char *name, t_list **lst, t_data *data)
 	free(res);
 }
 
-static char	*ft_strjoin_free_s1(char *s1, char *s2)
+char	*ft_strjoin_free_s1(char *s1, char *s2)
 {
 	char	*ret;
 

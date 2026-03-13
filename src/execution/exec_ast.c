@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/12 15:53:32 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/13 14:57:59 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	setup_exec(t_ast *node, t_data *data)
 {
 	int		total_cmds;
 
-	// printf("%d\n", data->i);
 	if (!node)
 		return ;
 	if (setup_heredocs(data, node) == -1)
@@ -28,8 +27,6 @@ void	setup_exec(t_ast *node, t_data *data)
 		free_all(data, node, NULL);
 		return ;
 	}
-	// printf("%d\n", data->i);
-	// printf("%s\n", node->redir->file);
 	total_cmds = command_count(node);
 	data->exec->pids = malloc(sizeof(pid_t) * total_cmds);
 	if (!data->exec->pids)
@@ -70,7 +67,8 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	path = find_path(node, data);
 	if (!path)
 		path_not_found(data, node, path);
-	execve(path, node->args, data->envp);
+	data->current_env = get_current_env(data);
+	execve(path, node->args, data->current_env);
 	if (errno == ENOEXEC)
 		exec_script(data, node, path);
 	perror(node->args[0]);

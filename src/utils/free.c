@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 17:20:05 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/12 16:50:30 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:01:44 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	free_redir(t_redir	*redir)
 	while (redir)
 	{
 		temp_redir = redir->next;
-		if (redir->redir_type == NODE_HEREDOC && redir->delimiter)
-			unlink(redir->file);
+		if (redir->redir_type == NODE_HEREDOC && redir->fd_hd > 2)
+			close(redir->fd_hd);
 		if (redir->file)
 			free(redir->file);
 		if (redir->delimiter)
@@ -66,9 +66,13 @@ void	free_child(t_data *data, char *path)
 		free_node(data->save_ast);
 	if (data->env)
 		lstclear_env(data);
-	if (data->exec && data->exec->pids)
+	if (data->current_env)
+		ft_freetab(data->current_env);
+	if (data->exec)
 	{
-		free(data->exec->pids);
+		if (data->exec->pids)
+			free(data->exec->pids);
 		free(data->exec);
 	}
 }
+

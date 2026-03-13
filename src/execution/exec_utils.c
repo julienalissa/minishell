@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:13 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/12 13:52:53 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/13 13:33:00 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*find_path(t_ast *node, t_data *data)
 
 static char	*if_backslash(t_ast *node)
 {
-	if (access(node->args[0], X_OK) == 0)
+	if (access(node->args[0], F_OK | X_OK) == 0)
 		return (ft_strdup(node->args[0]));
 	else
 		return (NULL);
@@ -94,7 +94,8 @@ void	path_not_found(t_data *data, t_ast *node, char *path)
 			ft_putendl_fd("Permission denied", 2);
 			exit (126);
 		}
-		ft_putendl_fd(strerror(errno), 2);
+		perror("");
+		free_child(data, path);
 		exit (127);
 	}
 	ft_putstr_fd(node->args[0], 2);

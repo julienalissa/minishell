@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:56:52 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/12 16:50:58 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/13 16:40:32 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	prepare_heredocs(t_ast *node, t_data *data)
 		}
 		temp = temp->next;
 	}
+	fprintf(stderr, "fd_hd = %d\n file = %s\n", node->redir->fd_hd, node->redir->file);
 	if (prepare_heredocs(node->left, data) == -1)
 		return (-1);
 	if (prepare_heredocs(node->right, data) == -1)
@@ -64,6 +65,10 @@ static int	open_heredocs(t_redir *redir, t_data *data)
 		line = NULL;
 	}
 	close_and_free(line, write_line, fd_filetemp, 1);
+	redir->fd_hd = open(redir->file, O_RDONLY);
+	if (redir->fd_hd < 0)
+		return(-1);
+	unlink(redir->file);
 	return (1);
 }
 
@@ -83,7 +88,7 @@ static int	open_redir_hd(t_data *data, t_redir *redir)
 	char	*nb;
 
 	nb = ft_itoa(data->i);
-	redir->file = ft_strjoin("hd_temp", nb);
+	redir->file = ft_strjoin(".hd_temp", nb);
 	fd_w = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (fd_w < 0)
 		ft_error("heredoc: ");

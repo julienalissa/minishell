@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   envp.c                                              :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:18:42 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:18:43 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   envp.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:18:42 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/13 18:36:22 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	*define_key(char *env);
-char	*define_value(char *env);
 
 void	creat_env(t_data *data)
 {
@@ -22,6 +19,11 @@ void	creat_env(t_data *data)
 	char	*value;
 	t_env	*env_tmp;
 
+	// if (!data->envp || !data->envp[0])
+	// {
+	// 	no_env(data);
+	// 	return ;
+	// }
 	i = 0;
 	while (data->envp[i])
 	{
@@ -39,12 +41,47 @@ void	creat_env(t_data *data)
 	}
 }
 
-void	creat_envp(t_data *data)
+char	**get_current_env(t_data *data)
 {
-	int	count;
+	char	**res;
+	t_env	*temp;
+	int		size;
+	int		i;
 
-	if (!data || !data->env)
-		return ;
-	count = count_env(data->env);
-	data->envp = alloc_envp(data->env, count);
+	i = 0;
+	temp = data->env;
+	size = lstsize_env(data->env);
+	res = malloc(sizeof(char *) * (size + 1));
+	if (!res)
+		return (NULL);
+	while(temp)
+	{
+		res[i] = ft_strjoin(temp->key, "=");
+		res[i] = ft_strjoin_free_s1(res[i], temp->val);
+		i++;
+		temp = temp->next;
+	}
+	res[i] = NULL;
+	return(res);
 }
+
+int	lstsize_env(t_env *env)
+{
+	int		i;
+	t_env	*temp;
+
+	temp = env;
+	i = 0;
+	while(temp)
+	{
+		temp = temp->next;
+		i++;
+	}
+	return (i);
+}
+
+// void	no_env(t_data *data)
+// {
+// 	(void);
+// 	// Fonction pour mettre les 3 variables denvironnement si il ny a pas de env au lancement
+// }

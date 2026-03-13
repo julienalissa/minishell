@@ -3,3 +3,8 @@ prob :
 3. (JU)ctrl + d et ctrl + c doit ne marche pas avec les herdoc
 4. (JU)le message d'erreur n'est pas correct si une command n'existe pas ou erreur de permission il faut check cela
 8. (LU)(JU)norminette
+
+Dans la fonction envp faire la fonction no env pour les 3 variable d'environnement obligatoire.
+env -i --> environnement vide -> mettre OLWPWD et PWD et SHLVL=0
+addSHLVL -> +1 juste apres lenvironement
+(OPTIONNEL --> si cotes pas fermer -> readline + message d'erreur)
