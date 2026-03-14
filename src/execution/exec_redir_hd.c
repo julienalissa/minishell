@@ -54,7 +54,7 @@ static int	open_heredocs(t_redir *redir, t_data *data)
 	while (1)
 	{
 		write_line = NULL;
-		line = readline("heredoc > ");
+		line = readline("> ");
 		if (!line)
 			break ;
 		if (ft_strcmp(line, redir->delimiter) == 0)

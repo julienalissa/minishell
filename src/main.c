@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	set_data(&data, env);
 	creat_env(&data);
+	if (env && env[0])
+		add_shlvl(&data);
 	ft_bzero(&ast, sizeof(t_ast));
 	signals();
 	while (1)

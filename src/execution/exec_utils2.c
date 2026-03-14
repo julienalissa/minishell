@@ -67,9 +67,13 @@ int	setup_heredocs(t_data *data, t_ast *node)
 
 	ret_status = 0;
 	status = 0;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		if (prepare_heredocs(node, data) == -1)
 			exit (data->last_exit_code);
 		else
@@ -80,5 +84,12 @@ int	setup_heredocs(t_data *data, t_ast *node)
 		ret_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		ret_status = 128 + WTERMSIG(status);
+	signals();
+	if (ret_status == 130 || ret_status == 131)
+	{
+		write(1, "\n", 1);
+		data->last_exit_code = ret_status;
+		return (-1);
+	}
 	return (0);
 }

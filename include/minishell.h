@@ -40,6 +40,8 @@ t_env		*lstnew_env(char *key, char *value);
 void		lstadd_back_env(t_env **lst, t_env *new);
 void		lstdel_env(t_env *env);
 void		lstclear_env(t_data *data);
+void		no_env(t_data *data);
+void		add_shlvl(t_data *data);
 
 // Gestion variables d'environnement
 int			is_valid(char *str);
@@ -51,7 +53,6 @@ char		**get_current_env(t_data *data);
 int			lstsize_env(t_env *env);
 char		*define_key(char *env);
 char		*define_value(char *env);
-// void		no_env(t_data *data);
 
 // Tokenization
 void		creat_token(char *line, t_data *data);
