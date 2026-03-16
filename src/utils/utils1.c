@@ -18,7 +18,7 @@ void	set_data(t_data *data, char **env)
 	data->envp = env;
 	data->exec = malloc(sizeof(t_exec));
 	if (!data->exec)
-		return ;
+		return;
 	ft_bzero(data->exec, sizeof(t_exec));
 	data->exec->pids = NULL;
 	data->exec->fd_to_close = -1;

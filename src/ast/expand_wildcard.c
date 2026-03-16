@@ -32,7 +32,7 @@ void	expand_asterisk(char *name, t_list **lst)
 	if (!dirp)
 	{
 		current->content = ft_strdup(name);
-		return ;
+		return;
 	}
 	dp = readdir(dirp);
 	while (dp != NULL)
@@ -76,7 +76,7 @@ static void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
 	{
 		*current = malloc(sizeof(t_list));
 		if (!*current)
-			return ;
+			return;
 		(*current)->content = ft_strdup(namefile);
 		(*current)->next = NULL;
 		ft_lstadd_back(lst, (*current));

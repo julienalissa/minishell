@@ -17,7 +17,7 @@ void	lstclear_token(t_token **lst)
 	t_token	*temp;
 
 	if (!lst || !*lst)
-		return ;
+		return;
 	while (*lst)
 	{
 		temp = (*lst)->next;
@@ -30,7 +30,7 @@ void	lstclear_token(t_token **lst)
 void	lstdel_token(t_token *token)
 {
 	if (!token)
-		return ;
+		return;
 	free(token->value);
 	free(token);
 }

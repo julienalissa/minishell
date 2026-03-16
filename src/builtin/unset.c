@@ -30,7 +30,7 @@ static void	remove_node(t_env **env, char *key)
 			free(tmp->key);
 			free(tmp->val);
 			free(tmp);
-			return ;
+			return;
 		}
 		prev = tmp;
 		tmp = tmp->next;

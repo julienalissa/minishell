@@ -12,7 +12,6 @@
 
 #include "../../include/minishell.h"
 
-static char	*if_backslash(t_ast *node);
 static char	*ft_strjoin_path(char const *s1, char const *s2);
 
 char	*find_path(t_ast *node, t_data *data)
@@ -24,7 +23,7 @@ char	*find_path(t_ast *node, t_data *data)
 
 	i = 0;
 	if (ft_strchr(node->args[0], '/'))
-		return (if_backslash(node));
+		return (ft_strdup(node->args[0]));
 	temp = data->env;
 	while (temp && ft_strncmp(temp->key, "PATH", ft_strlen("PATH")) != 0)
 		temp = temp->next;
@@ -42,14 +41,6 @@ char	*find_path(t_ast *node, t_data *data)
 	}
 	ft_split_clear(path);
 	return (NULL);
-}
-
-static char	*if_backslash(t_ast *node)
-{
-	if (access(node->args[0], F_OK | X_OK) == 0)
-		return (ft_strdup(node->args[0]));
-	else
-		return (NULL);
 }
 
 static char	*ft_strjoin_path(char const *s1, char const *s2)

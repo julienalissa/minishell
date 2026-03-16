@@ -18,7 +18,7 @@ void	exec_pipe(t_ast *node, t_data *data, int fd_in, int fd_out)
 	int	save;
 
 	if ((pipe(pipefd)) == -1)
-		return ;
+		return;
 	save = data->exec->is_piped;
 	data->exec->is_piped = 1;
 	data->exec->fd_to_close = pipefd[0];

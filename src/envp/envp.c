@@ -87,26 +87,26 @@ void	no_env(t_data *data)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return ;
+		return;
 	env_tmp = lstnew_env(ft_strdup("PWD"), ft_strdup(pwd));
 	if (!env_tmp)
 	{
 		free(pwd);
-		return ;
+		return;
 	}
 	lstadd_back_env(&data->env, env_tmp);
 	env_tmp = lstnew_env(ft_strdup("OLDPWD"), ft_strdup(""));
 	if (!env_tmp)
 	{
 		free(pwd);
-		return ;
+		return;
 	}
 	lstadd_back_env(&data->env, env_tmp);
 	env_tmp = lstnew_env(ft_strdup("SHLVL"), ft_strdup("0"));
 	if (!env_tmp)
 	{
 		free(pwd);
-		return ;
+		return;
 	}
 	lstadd_back_env(&data->env, env_tmp);
 	free(pwd);
@@ -125,12 +125,12 @@ void	add_shlvl(t_data *data)
 	{
 		new_val = ft_strdup("1");
 		if (!new_val)
-			return ;
+			return;
 		tmp = lstnew_env(ft_strdup("SHLVL"), new_val);
 		if (!tmp)
-			return ;
+			return;
 		lstadd_back_env(&data->env, tmp);
-		return ;
+		return;
 	}
 	lvl = 0;
 	if (tmp->val)
@@ -139,5 +139,5 @@ void	add_shlvl(t_data *data)
 	free(tmp->val);
 	tmp->val = ft_itoa(lvl);
 	if (!tmp->val)
-		return ;
+		return;
 }

@@ -47,7 +47,7 @@ void	make_quotes(char *line, t_data *data)
 	{
 		res = remove_quote(line, data, '\'');
 		if (!res)
-			return ;
+			return;
 		new = lstnew_token(res, QUOTES);
 		new->token_type = TOKEN_WORD;
 	}
@@ -55,7 +55,7 @@ void	make_quotes(char *line, t_data *data)
 	{
 		res = remove_quote(line, data, '"');
 		if (!res)
-			return ;
+			return;
 		new = lstnew_token(res, DQUOTES);
 		new->token_type = TOKEN_WORD;
 	}

@@ -33,11 +33,11 @@ void	lstadd_back_token(t_token **lst, t_token *new)
 	t_token	*temp;
 
 	if (!lst || !new)
-		return ;
+		return;
 	if (!lst || !*lst)
 	{
 		*lst = new;
-		return ;
+		return;
 	}
 	temp = lstlast_token(*lst);
 	temp->next = new;
@@ -55,7 +55,7 @@ t_token	*lstlast_token(t_token *lst)
 void	define_token(t_token *node)
 {
 	if (!node || !node->value)
-		return ;
+		return;
 	if (ft_strncmp(node->value, "<<", 2) == 0)
 		node->token_type = TOKEN_HEREDOC;
 	else if (ft_strncmp(node->value, ">>", 2) == 0)

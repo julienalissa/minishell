@@ -44,7 +44,7 @@ int	wait_process(t_data *data)
 void	dup_and_close(int std_target, int fd)
 {
 	if (std_target == fd)
-		return ;
+		return;
 	if (dup2(fd, std_target) < 0)
 		ft_error("Error: dup2 failed\n");
 	close(fd);

@@ -33,7 +33,7 @@ void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 	{
 		*args_lst = malloc(sizeof(t_list));
 		if (!*args_lst)
-			return ;
+			return;
 		(*args_lst)->next = NULL;
 		add_new_token(token, data, args_lst);
 	}
@@ -41,7 +41,7 @@ void	creat_lst(t_token *token, t_data *data, t_list **args_lst)
 	{
 		lst = malloc(sizeof(t_list));
 		if (!lst)
-			return ;
+			return;
 		lst->next = NULL;
 		add_new_token(token, data, &lst);
 		ft_lstadd_back(args_lst, lst);
@@ -57,7 +57,7 @@ void	check_arg(t_list *args_lst, t_ast *node)
 	size = ft_lstsize(args_lst);
 	node->args = malloc(sizeof(char *) * (size + 1));
 	if (!node->args)
-		return ;
+		return;
 	temp = args_lst;
 	i = 0;
 	while (temp)
@@ -77,7 +77,7 @@ void	creat_cmd_node(t_list *args_lst, t_ast **node)
 	{
 		(*node)->args = malloc(sizeof(char *));
 		if (!(*node)->args)
-			return ;
+			return;
 		(*node)->args[0] = NULL;
 	}
 	ft_lstclear(&args_lst, free);
@@ -95,7 +95,7 @@ void	creat_operator(t_token *temp, t_ast **node)
 	else if (temp->token_type == TOKEN_PIPE)
 		(*node)->op_type = NODE_PIPE;
 	else
-		return ;
+		return;
 	(*node)->args[0] = ft_strdup(temp->value);
 	(*node)->args[1] = NULL;
 }

@@ -36,7 +36,7 @@ void	node_left(t_token *token, t_token *pivot)
 	t_token	*temp;
 
 	if (!token || token == pivot)
-		return ;
+		return;
 	temp = token;
 	while (temp && temp->next != pivot)
 		temp = temp->next;
@@ -70,7 +70,7 @@ static t_token	*exec_trim(t_token *token, t_token *last)
 void	free_pivot(t_token *pivot)
 {
 	if (!pivot)
-		return ;
+		return;
 	if (pivot->value)
 		free(pivot->value);
 	free(pivot);

@@ -15,7 +15,7 @@
 void	free_node(t_ast *node)
 {
 	if (!node)
-		return ;
+		return;
 	free_node(node->left);
 	free_node(node->right);
 	if (node->args)

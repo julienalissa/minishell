@@ -23,10 +23,10 @@ static void	print_export_sorted(t_env *env)
 
 	count = count_env(env);
 	if (count <= 0)
-		return ;
+		return;
 	strr = malloc(sizeof(t_env *) * count);
 	if (!strr)
-		return ;
+		return;
 	tmp = env;
 	i = 0;
 	while (tmp)
@@ -125,7 +125,7 @@ void	add_or_update_env(t_data *data, char *arg)
 			if (!val)
 			{
 				free(key);
-				return ;
+				return;
 			}
 		}
 	}
