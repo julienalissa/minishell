@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:00 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/10 16:43:37 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:54:34 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_pipe(t_ast *node, t_data *data, int fd_in, int fd_out)
 	int	save;
 
 	if ((pipe(pipefd)) == -1)
-		return;
+		return ;
 	save = data->exec->is_piped;
 	data->exec->is_piped = 1;
 	data->exec->fd_to_close = pipefd[0];

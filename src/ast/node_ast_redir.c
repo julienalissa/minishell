@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_ast_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:13:10 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/11 12:29:16 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/16 15:13:58 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	creat_redir(t_token *temp_redir, t_ast **node, t_token *temp_file)
 
 	new = malloc(sizeof(t_redir));
 	if (!new)
-		return;
+		return ;
 	ft_bzero(new, sizeof(t_redir));
 	choise_redir(&new, temp_redir);
 	if (new->redir_type == NODE_HEREDOC)
@@ -65,10 +65,10 @@ void	addback_redir(t_redir **lst, t_redir *new)
 	if (!lst || !*lst)
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	if (!lst && !new)
-		return;
+		return ;
 	temp = last_redir(*lst);
 	if (temp)
 		temp->next = new;

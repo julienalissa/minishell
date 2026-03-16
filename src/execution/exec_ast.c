@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 08:23:00 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/16 14:59:47 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	setup_exec(t_ast *node, t_data *data)
 	int		total_cmds;
 
 	if (!node)
-		return;
+		return ;
 	if (prepare_heredocs(node, data) == -1)
 	{
 		free_all(data, node, NULL);
-		return;
+		return ;
 	}
 	total_cmds = command_count(node);
 	data->exec->pids = malloc(sizeof(pid_t) * total_cmds);
 	if (!data->exec->pids)
-		return;
+		return ;
 	data->exec->nb_cmds = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
@@ -46,7 +46,7 @@ void	setup_exec(t_ast *node, t_data *data)
 void	exec_ast(t_ast *node, t_data *data, int fd_in, int fd_out)
 {
 	if (!node)
-		return;
+		return ;
 	if (node->op_type == NODE_PIPE)
 		exec_pipe(node, data, fd_in, fd_out);
 	else if (node->op_type == NODE_AND)

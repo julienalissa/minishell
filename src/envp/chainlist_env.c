@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   chainlist_env.c                                     :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:18:37 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:18:37 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   chainlist_env.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:18:37 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/16 15:00:32 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	lstadd_back_env(t_env **lst, t_env *new)
 	if (!lst || !*lst)
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	if (!*lst && !new)
-		return;
+		return ;
 	temp = lstlast_env(*lst);
 	if (temp)
 		temp->next = new;
@@ -59,7 +59,7 @@ void	lstclear_env(t_data *data)
 	t_env	*temp;
 
 	if (!data->env)
-		return;
+		return ;
 	while (data->env)
 	{
 		temp = data->env->next;
@@ -71,7 +71,7 @@ void	lstclear_env(t_data *data)
 void	lstdel_env(t_env *env)
 {
 	if (!env)
-		return;
+		return ;
 	if (env->key)
 		free(env->key);
 	if (env->val)

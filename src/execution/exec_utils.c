@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:13 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/13 13:33:00 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:10:22 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,29 @@ void	path_not_found(t_data *data, t_ast *node, char *path)
 	ft_putendl_fd(": command not found", 2);
 	free_child(data, path);
 	exit (127);
+}
+
+int	get_status_hd(t_data *data, t_redir *redir, int *fdpipe, int status)
+{
+	int	ret_status;
+
+	ret_status = 0;
+	if (WIFEXITED(status))
+		ret_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		ret_status = 128 + WTERMSIG(status);
+	signals();
+	if (ret_status == 130 || ret_status == 131)
+	{
+		write(1, "\n", 1);
+		data->last_exit_code = ret_status;
+		return (-1);
+	}
+	else
+	{
+		redir->fd_hd = fdpipe[0];
+		if (redir->fd_hd < 0)
+			return (-1);
+	}
+	return (1);
 }

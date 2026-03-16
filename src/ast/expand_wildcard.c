@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:48 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/09 17:19:03 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/16 15:13:08 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	expand_asterisk(char *name, t_list **lst)
 	if (!dirp)
 	{
 		current->content = ft_strdup(name);
-		return;
+		return ;
 	}
 	dp = readdir(dirp);
 	while (dp != NULL)
@@ -76,7 +76,7 @@ static void	creat_asterisk(t_list **current, t_list **lst, char *namefile,
 	{
 		*current = malloc(sizeof(t_list));
 		if (!*current)
-			return;
+			return ;
 		(*current)->content = ft_strdup(namefile);
 		(*current)->next = NULL;
 		ft_lstadd_back(lst, (*current));

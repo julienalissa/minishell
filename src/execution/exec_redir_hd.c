@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:56:52 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/16 13:52:17 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:10:17 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,11 @@ static int	open_heredocs(t_redir *redir, t_data *data)
 		heredocs_child(data, redir, fdpipe);
 	close(fdpipe[1]);
 	waitpid(-1, &status, 0);
-	if (WIFEXITED(status))
-		ret_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		ret_status = 128 + WTERMSIG(status);
-	signals();
-	if (ret_status == 130 || ret_status == 131)
-	{
-		write(1, "\n", 1);
-		data->last_exit_code = ret_status;
+	ret_status = get_status_hd(data, redir, fdpipe, status);
+	if (ret_status < 0)
 		return (-1);
-	}
 	else
-	{
-		redir->fd_hd = fdpipe[0];
-		if (redir->fd_hd < 0)
-			return(-1);
-	}
-	return (1);
+		return (1);
 }
 
 static void	close_and_free(char *line, char *write_line, int *fdpipe, int flag)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   ast.c                                               :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:12:15 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:15:18 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   ast.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:12:15 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/16 15:12:57 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	node_left(t_token *token, t_token *pivot)
 	t_token	*temp;
 
 	if (!token || token == pivot)
-		return;
+		return ;
 	temp = token;
 	while (temp && temp->next != pivot)
 		temp = temp->next;
@@ -70,7 +70,7 @@ static t_token	*exec_trim(t_token *token, t_token *last)
 void	free_pivot(t_token *pivot)
 {
 	if (!pivot)
-		return;
+		return ;
 	if (pivot->value)
 		free(pivot->value);
 	free(pivot);

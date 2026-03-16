@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:53 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/12 14:27:44 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:10:25 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	dup_and_close(int std_target, int fd);
 void	exec_script(t_data *data, t_ast *node, char *path);
 int		prepare_heredocs(t_ast *node, t_data *data);
 void	path_not_found(t_data *data, t_ast *node, char *path);
-int		setup_heredocs(t_data *data, t_ast *node);
+int		get_status_hd(t_data *data, t_redir *redir, int *fdpipe, int status);
 
 #endif
