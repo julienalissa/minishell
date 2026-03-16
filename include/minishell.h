@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 17:41:51 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 18:13:49 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int	signal_exit;
+extern int	g_signal_exit;
 
 // Environnement
 void		creat_env(t_data *data);

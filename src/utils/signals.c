@@ -6,18 +6,18 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:24:06 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 15:40:53 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 18:13:49 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int		signal_exit = 0;
+int		g_signal_exit = 0;
 
 void	sigint(int sig)
 {
 	(void)sig;
-	signal_exit = 130;
+	g_signal_exit = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 10:01:31 by ludebarn          #+#    #+#             */
-/*   Updated: 2026/03/16 17:51:08 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 18:13:49 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	exec_prog(t_data *data, t_ast *ast, char *line)
 {
-	if (signal_exit != 0)
+	if (g_signal_exit != 0)
 	{
-		data->last_exit_code = signal_exit;
-		signal_exit = 0;
+		data->last_exit_code = g_signal_exit;
+		g_signal_exit = 0;
 	}
 	if (!line)
 	{
