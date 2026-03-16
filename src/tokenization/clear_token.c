@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   clear_token.c                                       :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:22:30 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:22:33 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   clear_token.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:22:30 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/16 16:02:35 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	lstclear_token(t_token **lst)
 	t_token	*temp;
 
 	if (!lst || !*lst)
-		return;
+		return ;
 	while (*lst)
 	{
 		temp = (*lst)->next;
@@ -30,7 +30,7 @@ void	lstclear_token(t_token **lst)
 void	lstdel_token(t_token *token)
 {
 	if (!token)
-		return;
+		return ;
 	free(token->value);
 	free(token);
 }

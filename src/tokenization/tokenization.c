@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   tokenization.c                                      :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:22:51 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:23:42 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   tokenization.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:22:51 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/16 16:04:19 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,40 +61,6 @@ char	*remove_escape(char *str)
 	}
 	res[j] = '\0';
 	return (res);
-}
-
-void	make_word(char *line, t_data *data)
-{
-	char	*res;
-	char	*cleaned;
-	int		start;
-	int		i;
-	t_token	*new;
-
-	start = data->i;
-	i = 0;
-	while (line[data->i + i])
-	{
-		if (line[data->i + i] == '\\' && line[data->i + i + 1])
-		{
-			i += 2;
-		}
-		else if (ft_strchr(" <>()&|\'\"", line[data->i + i]))
-			break ;
-		else
-			i++;
-	}
-	if (i == 0)
-		return;
-	res = ft_substr(line, start, i);
-	if (!res)
-		return;
-	data->i = data->i + i;
-	cleaned = remove_escape(res);
-	free(res);
-	new = lstnew_token(cleaned, NORMAL);
-	lstadd_back_token(&data->token, new);
-	free(cleaned);
 }
 
 void	skip_spaces(char *line, t_data *data)
