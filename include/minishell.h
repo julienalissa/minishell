@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 17:09:44 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:41:51 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void		no_env(t_data *data);
 void		add_shlvl(t_data *data);
 
 // Gestion variables d'environnement
-int			is_valid(char *str);
 void		add_or_update_env(t_data *data, char *str);
 int			count_env(t_env *env);
 char		**alloc_envp(t_env *env, int count);
@@ -83,7 +82,14 @@ int			export(char **args, t_data *data);
 int			unset(char **args, t_data *data);
 int			env(t_data *data);
 int			exit_42(t_ast *node, t_data *data);
-
+int			is_valid(char *str);
+void		copy_it(t_env *tmp, t_env **tab);
+void		bbsort_it(int count, t_env **tab);
+void		print_export_sorted(t_env *env);
+void		parse_args(char *arg, char **key, char **val);
+t_env		*check_env(t_env *env, char *key);
+int			make_home(char *home_val, char *val, char *key);
+int			error_ret(char **args, char *path, int ret);
 // Utilitaires
 void		set_data(t_data *data, char **env);
 void		ft_error(char *msg);

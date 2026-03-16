@@ -44,6 +44,7 @@ SRC_FILES   = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/builtin/unset.c \
 			$(SRC_DIR)/builtin/pwd.c \
 			$(SRC_DIR)/builtin/export_utils.c \
+			$(SRC_DIR)/builtin/export_utils2.c \
 			$(SRC_DIR)/builtin/export.c \
 			$(SRC_DIR)/builtin/exit_42.c \
 			$(SRC_DIR)/builtin/execut_builtin.c \

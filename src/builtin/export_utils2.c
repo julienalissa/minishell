@@ -1,52 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/27 13:17:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 17:50:47 by ludebarn         ###   ########.fr       */
+/*   Created: 2026/03/16 17:36:48 by ludebarn          #+#    #+#             */
+/*   Updated: 2026/03/16 17:55:52 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	remove_node(t_env **env, char *key)
+int	error_ret(char **args, char *path, int ret)
 {
-	t_env	*tmp;
-	t_env	*prev;
-
-	tmp = *env;
-	prev = NULL;
-	while (tmp)
+	if (ret != 0)
 	{
-		if (ft_strcmp(tmp->key, key) == 0)
-		{
-			if (prev)
-				prev->next = tmp->next;
-			else
-				*env = tmp->next;
-			free(tmp->key);
-			free(tmp->val);
-			free(tmp);
-			return ;
-		}
-		prev = tmp;
-		tmp = tmp->next;
+		perror("cd");
+		if (args[1] && args[1][0] == '~' && args[1][1] == '/')
+			free(path);
+		return (1);
 	}
+	return (0);
 }
 
-int	unset(char **args, t_data *data)
+int	is_valid(char *s)
 {
 	int	i;
 
 	i = 1;
-	while (args[i])
+	if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
+		return (0);
+	while (s[i] && s[i] != '=')
 	{
-		if (data->env)
-			remove_node(&data->env, args[i]);
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
+}
+
+void	copy_it(t_env *tmp, t_env **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tmp)
+	{
+		tab[i] = tmp;
+		i = i + 1;
+		tmp = tmp->next;
+	}
 }

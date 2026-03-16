@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   cd.c                                                :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:16:41 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:16:42 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:16:41 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/16 17:34:50 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,49 +23,26 @@ char	*my_getenv(char *my_home, t_env *env)
 	return (NULL);
 }
 
-int	cd(char **args, t_data *data)
+int	check_args(char **args)
 {
-	char	path_buf[1024];
-	char	cwd_buf[1024];
-	char	*path;
-	char	*home;
-	int		ret;
-	char	*tmp;
-	int		argc;
+	int	i;
 
-	argc = 0;
-	while (args[argc])
-		argc++;
-	if (argc > 2)
+	i = 0;
+	while (args[i])
+		i++;
+	if (i > 2)
 	{
 		ft_putendl_fd("-bash: cd: too many arguments", 2);
-		return (1);
+		return (-1);
 	}
-	if (!getcwd(path_buf, sizeof(path_buf)))
-		path_buf[0] = '\0';
-	if (!args[1] || ft_strcmp(args[1], "~") == 0 || (args[1][0] == '~'
-			&& (args[1][1] == '/' || args[1][1] == '\0')))
-	{
-		home = my_getenv("HOME", data->env);
-		if (!home)
-		{
-			return (0);
-		}
-		if (!args[1] || ft_strcmp(args[1], "~") == 0 || args[1][1] == '\0')
-			path = home;
-		else
-			path = ft_strjoin(home, args[1] + 1);
-	}
-	else
-		path = args[1];
-	ret = chdir(path);
-	if (ret != 0)
-	{
-		perror("cd");
-		if (args[1] && args[1][0] == '~' && args[1][1] == '/')
-			free(path);
-		return (1);
-	}
+	return (0);
+}
+
+void	change_old_and_pwd(char *path_buf, t_data *data, char *cwd_buf)
+{
+	char	*tmp;
+
+	tmp = NULL;
 	if (path_buf[0] != '\0')
 	{
 		tmp = ft_strjoin("OLDPWD=", path_buf);
@@ -84,6 +61,40 @@ int	cd(char **args, t_data *data)
 			free(tmp);
 		}
 	}
+}
+
+void	check_home(t_data *data, char **args, char *path)
+{
+	char	*home;
+
+	home = my_getenv("HOME", data->env);
+	if (!args[1] || ft_strcmp(args[1], "~") == 0 || args[1][1] == '\0')
+		path = home;
+	else
+		path = ft_strjoin(home, args[1] + 1);
+}
+
+int	cd(char **args, t_data *data)
+{
+	char	path_buf[1024];
+	char	cwd_buf[1024];
+	char	*path;
+	int		ret;
+
+	path = NULL;
+	if (check_args(args) == -1)
+		return (1);
+	if (!getcwd(path_buf, sizeof(path_buf)))
+		path_buf[0] = '\0';
+	if (!args[1] || ft_strcmp(args[1], "~") == 0 || (args[1][0] == '~'
+		&& (args[1][1] == '/' || args[1][1] == '\0')))
+		check_home(data, args, path);
+	else
+		path = args[1];
+	ret = chdir(path);
+	if (error_ret(args, path, ret) == 1)
+		return (1);
+	change_old_and_pwd(path_buf, data, cwd_buf);
 	if (args[1] && args[1][0] == '~' && args[1][1] == '/')
 		free(path);
 	return (0);

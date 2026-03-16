@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:16:51 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/09 16:30:15 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/16 17:51:30 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ int	check_it(char **args, int *i)
 	if (*i > 1)
 		return (1);
 	return (0);
+}
+
+void	print_them_all(char **args, int newline, int i)
+{
+	while (args[i])
+	{
+		ft_printf("%s", args[i]);
+		if (args[i + 1])
+			write(1, " ", 1);
+		i++;
+	}
+	if (newline)
+		write(1, "\n", 1);
 }
 
 int	echo(char **args, t_data *data)
@@ -54,12 +67,6 @@ int	echo(char **args, t_data *data)
 	}
 	if (check_it(args, &i))
 		newline = 0;
-	while (args[i])
-	{
-		ft_printf("%s", args[i]);
-		i++;
-	}
-	if (newline)
-		write(1, "\n", 1);
+	print_them_all(args, newline, i);
 	return (0);
 }
