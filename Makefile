@@ -88,6 +88,6 @@ re: fclean all
 -include $(DEPS)
 
 leaks: $(NAME)
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	valgrind --suppressions=readline.supp valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:24:09 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/13 14:36:53 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:11:18 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	set_data(t_data *data, char **env)
 	ft_bzero(data->exec, sizeof(t_exec));
 	data->exec->pids = NULL;
 	data->exec->fd_to_close = -1;
+	creat_env(data);
+	if (env && env[0])
+		add_shlvl(data);
 }
 
 void	ft_error(char *errorname)

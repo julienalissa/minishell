@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 10:01:31 by ludebarn          #+#    #+#             */
-/*   Updated: 2026/03/16 08:53:38 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/16 14:14:27 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ int	main(int argc, char **argv, char **env)
 	t_ast	*ast;
 	char	*line;
 
-	(void)argc;
 	(void)argv;
+	if (argc > 1)
+		return (ft_putendl_fd("Usage: ./minishell", STDERR_FILENO), 0);
 	set_data(&data, env);
-	creat_env(&data);
-	if (env && env[0])
-		add_shlvl(&data);
 	ft_bzero(&ast, sizeof(t_ast));
 	signals();
 	while (1)
@@ -60,6 +58,7 @@ int	main(int argc, char **argv, char **env)
 		free(line);
 		data.i = 0;
 	}
+	rl_clear_history();
 	lstclear_env(&data);
 	free(data.exec);
 	return (data.last_exit_code);

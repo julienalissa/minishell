@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir_hd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:56:52 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/16 08:37:06 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/16 13:52:17 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,12 @@ static int	open_heredocs(t_redir *redir, t_data *data)
 	signal(SIGQUIT, SIG_IGN);
 	if (pipe(fdpipe) < 0)
 		return (-1);
+	ret_status = 0;
 	pid = fork();
 	if (pid == 0)
 		heredocs_child(data, redir, fdpipe);
-	waitpid(-1, &status, 0);
 	close(fdpipe[1]);
+	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 		ret_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
@@ -124,6 +125,7 @@ void	heredocs_child(t_data *data, t_redir *redir, int *fdpipe)
 		close_and_free(line, write_line, fdpipe, 0);
 		line = NULL;
 	}
+	rl_clear_history();
 	close_and_free(line, write_line, fdpipe, 1);
 	exit(EXIT_SUCCESS);
 }
