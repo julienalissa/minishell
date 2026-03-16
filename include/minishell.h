@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/13 18:36:11 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:09:44 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void		lstadd_back_token(t_token **lst, t_token *new);
 void		lstclear_token(t_token **lst);
 void		lstdel_token(t_token *token);
 t_token		*lstlast_token(t_token *lst);
+int			get_word(char *line, t_data *data);
+char		*remove_escape(char *str);
 
 // AST Node Creation
 void		creat_lst(t_token *token, t_data *data, t_list **args_lst);
@@ -85,7 +87,6 @@ int			exit_42(t_ast *node, t_data *data);
 // Utilitaires
 void		set_data(t_data *data, char **env);
 void		ft_error(char *msg);
-void		ft_split_clear(char **split);
 void		free_node(t_ast *node);
 void		ft_freetab(char **tab);
 void		free_all(t_data *data, t_ast *node, char *path);

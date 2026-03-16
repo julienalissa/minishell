@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:13 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 15:10:22 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:58:45 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ char	*find_path(t_ast *node, t_data *data)
 	{
 		ret = ft_strjoin_path(path[i], node->args[0]);
 		if (access(ret, F_OK | X_OK) == 0)
-			return (ft_split_clear(path), ret);
+			return (ft_freetab(path), ret);
 		else
 			free(ret);
 		i++;
 	}
-	ft_split_clear(path);
+	ft_freetab(path);
 	return (NULL);
 }
 
