@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/13 14:57:59 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:23:00 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	setup_exec(t_ast *node, t_data *data)
 
 	if (!node)
 		return ;
-	if (setup_heredocs(data, node) == -1)
+	if (prepare_heredocs(node, data) == -1)
 	{
 		free_all(data, node, NULL);
 		return ;
