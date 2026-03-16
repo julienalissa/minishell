@@ -6,7 +6,7 @@
 /*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 17:20:05 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/13 15:01:44 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/16 16:10:55 by ludebarn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_node(t_ast *node)
 {
 	if (!node)
-		return;
+		return ;
 	free_node(node->left);
 	free_node(node->right);
 	if (node->args)
@@ -75,4 +75,3 @@ void	free_child(t_data *data, char *path)
 		free(data->exec);
 	}
 }
-
