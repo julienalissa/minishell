@@ -38,6 +38,7 @@ SRC_FILES   = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/execution/exec_operator.c \
 			$(SRC_DIR)/execution/exec_ast.c \
 			$(SRC_DIR)/envp/envp_utils.c \
+			$(SRC_DIR)/envp/envp_utils2.c \
 			$(SRC_DIR)/envp/envp.c \
 			$(SRC_DIR)/envp/chainlist_env.c \
 			$(SRC_DIR)/builtin/unset.c \
