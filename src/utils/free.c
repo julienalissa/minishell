@@ -1,0 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/09 17:20:05 by lucasdebarn       #+#    #+#             */
+/*   Updated: 2026/03/17 16:59:51 by ludebarn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+void	free_node(t_ast *node)
+{
+	if (!node)
+		return ;
+	if (node->left)
+		free_node(node->left);
+	if (node->right)
+		free_node(node->right);
+	if (node->args)
+		ft_freetab(node->args);
+	if (node->redir)
+		free_redir(node->redir);
+	free(node);
+}
+
+void	free_redir(t_redir	*redir)
+{
+	t_redir	*temp_redir;
+
+	temp_redir = NULL;
+	while (redir)
+	{
+		temp_redir = redir->next;
+		if (redir->redir_type == NODE_HEREDOC && redir->fd_hd > 2)
+			close(redir->fd_hd);
+		if (redir->file)
+			free(redir->file);
+		if (redir->delimiter)
+			free(redir->delimiter);
+		free(redir);
+		redir = temp_redir;
+	}
+}
+
+void	free_all(t_data *data, t_ast *node, char *path)
+{
+	(void)node;
+	if (path)
+		free(path);
+	if (data->save_ast)
+		free_node(data->save_ast);
+	if (data->exec && data->exec->pids)
+	{
+		free(data->exec->pids);
+		data->exec->pids = NULL;
+	}
+}
+
+void	free_child(t_data *data, char *path, int fd_in, int fd_out)
+{
+	if (path)
+		free(path);
+	if (data->save_ast)
+		free_node(data->save_ast);
+	if (data->env)
+		lstclear_env(data);
+	if (data->current_env)
+		ft_freetab(data->current_env);
+	if (data->exec)
+	{
+		if (data->exec->pids)
+			free(data->exec->pids);
+		free(data->exec);
+	}
+	if (fd_in > 2)
+		close(fd_in);
+	if (fd_out > 2)
+		close(fd_out);
+}
