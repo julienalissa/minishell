@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:21 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/12 16:22:03 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 08:28:33 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
-t_ast				*build_ast(t_token *token, t_data *data);
-t_ast				*creat_node(t_token *token, t_data *data);
-t_token				*find_lowest_prio(t_token *token);
+t_ast				*build_ast(t_token *token, t_token *end, t_data *data);
+t_ast				*creat_node(t_token *token, t_token *end, t_data *data);
+t_token				*find_lowest_prio(t_token *token, t_token *end);
 void				expand_dollar(char *name, t_list **lst, t_data *data);
 void				creat_operator(t_token *temp, t_ast **node);
 void				expand_asterisk(char *name, t_list **lst);

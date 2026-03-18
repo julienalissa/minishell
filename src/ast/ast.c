@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:15 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/18 08:21:50 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/18 09:24:09 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 static t_token	*exec_trim(t_token *token, t_token *last);
 void			node_left(t_token *token, t_token *pivot);
 void			free_pivot(t_token *pivot);
-int				check_in_paranthesis(t_token *token);
+int				check_in_paranthesis(t_token *token, t_token *end);
 
-t_token	*trim_paranthesis(t_token *token)
+t_token	*trim_paranthesis(t_token *token, t_token *end, t_token **out_end)
 {
 	t_token	*last;
 
 	if (!token || !token->next)
 		return (token);
-	last = lstlast_token(token);
+	last = lstlast_before(token, end);
 	if (token->token_type != TOKEN_PARENTHESIS_IN
 		|| last->token_type != TOKEN_PARENTHESIS_OUT
-		|| !check_in_paranthesis(token))
+		|| !check_in_paranthesis(token, end))
 		return (token);
+	*out_end = last;
 	return (exec_trim(token, last));
 }
 
@@ -46,25 +47,9 @@ void	node_left(t_token *token, t_token *pivot)
 
 static t_token	*exec_trim(t_token *token, t_token *last)
 {
-	t_token	*start;
-	t_token	*temp;
-
 	if (token->next == last)
-	{
-		token->next = NULL;
-		lstdel_token(token);
-		lstdel_token(last);
 		return (NULL);
-	}
-	start = token->next;
-	token->next = NULL;
-	lstdel_token(token);
-	temp = start;
-	while (temp->next != last)
-		temp = temp->next;
-	temp->next = NULL;
-	lstdel_token(last);
-	return (trim_paranthesis(start));
+	return (token->next);  // ← juste retourne start, sans récursion
 }
 
 void	free_pivot(t_token *pivot)
@@ -76,7 +61,7 @@ void	free_pivot(t_token *pivot)
 	free(pivot);
 }
 
-int	check_in_paranthesis(t_token *token)
+int	check_in_paranthesis(t_token *token, t_token *end)
 {
 	int		count;
 	t_token	*temp;
@@ -85,13 +70,13 @@ int	check_in_paranthesis(t_token *token)
 		return (0);
 	count = 0;
 	temp = token;
-	while (temp)
+	while (temp && temp != end)
 	{
 		if (temp->token_type == TOKEN_PARENTHESIS_IN)
 			count++;
 		else if (temp->token_type == TOKEN_PARENTHESIS_OUT)
 			count--;
-		if (count == 0 && temp->next != NULL)
+		if (count == 0 && temp->next != NULL && temp->next != end)
 			return (0);
 		temp = temp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:22:46 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 16:03:43 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 08:33:13 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ void	lstadd_back_token(t_token **lst, t_token *new)
 	}
 	temp = lstlast_token(*lst);
 	temp->next = new;
+}
+
+t_token	*lstlast_before(t_token *lst, t_token *end)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL && lst->next != end)
+		lst = lst->next;
+	return (lst);
 }
 
 t_token	*lstlast_token(t_token *lst)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   ast_utils.c                                         :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: jualissa <marvin@42.fr>                       +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/02/27 13:12:31 by jualissa       #+#    #+#                */
-/*   Updated: 2026/02/27 13:12:32 by jualissa       ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   ast_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 13:12:31 by jualissa          #+#    #+#             */
+/*   Updated: 2026/03/18 09:18:50 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*check_pivot(t_token *pivot, t_token *temp)
 	return (pivot);
 }
 
-t_token	*find_lowest_prio(t_token *token)
+t_token	*find_lowest_prio(t_token *token, t_token *end)
 {
 	t_token	*temp;
 	t_token	*pivot;
@@ -35,7 +35,7 @@ t_token	*find_lowest_prio(t_token *token)
 	parantheses_count = 0;
 	temp = token;
 	pivot = NULL;
-	while (temp)
+	while (temp && temp != end)
 	{
 		parantheses_count += parantheses_counter(temp);
 		if (parantheses_count == 0)

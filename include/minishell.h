@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/18 08:21:28 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/18 09:23:33 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ void		lstdel_token(t_token *token);
 t_token		*lstlast_token(t_token *lst);
 int			get_word(char *line, t_data *data);
 char		*remove_escape(char *str);
+t_token		*lstlast_before(t_token *lst, t_token *end);
 
 // AST Node Creation
 void		creat_lst(t_token *token, t_data *data, t_list **args_lst);
 void		creat_cmd_node(t_list *args_lst, t_ast **node);
-t_token		*trim_paranthesis(t_token *token);
+t_token		*trim_paranthesis(t_token *token, t_token *end, t_token **out_end);
 void		node_left(t_token *token, t_token *pivot);
 void		free_pivot(t_token *pivot);
 char		*result_expand(t_env *env_temp, char *name, t_data *data);

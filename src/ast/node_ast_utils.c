@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:15:27 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/09 16:37:45 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/18 09:12:47 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_token	*check_op_redir(t_token *temp, t_ast **node, t_data *data,
 					t_list **args_lst);
 static t_token	*check_list(t_token *temp, t_data *data, t_list **args_lst);
 
-t_ast	*creat_node(t_token *token, t_data *data)
+t_ast	*creat_node(t_token *token, t_token *end, t_data *data)
 {
 	t_ast	*node;
 	t_token	*temp;
@@ -30,7 +30,7 @@ t_ast	*creat_node(t_token *token, t_data *data)
 	temp = token;
 	node = malloc(sizeof(t_ast));
 	ft_bzero(node, sizeof(t_ast));
-	while (temp && temp->token_type != TOKEN_PIPE)
+	while (temp && temp->token_type != TOKEN_PIPE && temp != end)
 	{
 		temp = check_op_redir(temp, &node, data, &args_lst);
 		if (!node)

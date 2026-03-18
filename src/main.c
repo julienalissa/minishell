@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 10:01:31 by ludebarn          #+#    #+#             */
-/*   Updated: 2026/03/18 08:22:27 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/18 08:25:20 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exec_prog(t_data *data, t_ast *ast, char *line)
 	if (line && *line)
 	{
 		creat_token(line, data);
-		ast = build_ast(data->token, data);
+		ast = build_ast(data->token, NULL, data);
 		data->save_ast = ast;
 		lstclear_token(&data->token);
 		data->token = NULL;

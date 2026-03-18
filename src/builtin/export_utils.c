@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:17:34 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/17 16:33:26 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 09:34:30 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	make_home(char *home_val, char **val, char *key)
 			new_val = ft_strdup(home_val);
 		else
 			new_val = ft_strjoin(home_val, (*val) + 1);
-		free(val);
+		free(*val);
 		*val = new_val;
 		if (!val)
 		{
