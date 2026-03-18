@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 12:55:57 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/17 17:05:22 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 08:21:28 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,12 @@ void		ft_error(char *msg);
 void		free_node(t_ast *node);
 void		ft_freetab(char **tab);
 void		free_all(t_data *data, t_ast *node, char *path);
-void		free_child(t_data *data, char *path, int fd_in, int fd_out);
+void		free_child(t_data *data, char *path);
 int			is_builtin(char *cmd);
 int			execut_builtin(t_ast *node, t_data *data);
 void		free_redir(t_redir	*redir);
 char		*ft_strjoin_free_s1(char *s1, char *s2);
+void		close_pipe_fds(t_data *data, int fd_in, int fd_out);
 
 // Signaux
 void		signals(void);

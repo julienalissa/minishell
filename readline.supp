@@ -1,18 +1,42 @@
 {
-	ignore_libreadline_leaks
+	ignore_all_readline
 	Memcheck:Leak
+	match-leak-kinds: all
 	...
-	obj:*/libreadline.so.*
+	obj:*/libreadline*
+}
+{
+	ignore_all_libtinfo
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	obj:*/libtinfo*
 }
 {
 	ignore_readline_function
 	Memcheck:Leak
+	match-leak-kinds: all
 	...
 	fun:readline
 }
 {
 	ignore_add_history
 	Memcheck:Leak
+	match-leak-kinds: all
 	...
 	fun:add_history
+}
+{
+	ignore_rl_initialize
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	fun:rl_initialize
+}
+{
+	ignore_rl_clear_history
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	fun:rl_clear_history
 }

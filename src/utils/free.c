@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 17:20:05 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/17 16:59:51 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 07:07:28 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_all(t_data *data, t_ast *node, char *path)
 	}
 }
 
-void	free_child(t_data *data, char *path, int fd_in, int fd_out)
+void	free_child(t_data *data, char *path)
 {
 	if (path)
 		free(path);
@@ -76,8 +76,4 @@ void	free_child(t_data *data, char *path, int fd_in, int fd_out)
 			free(data->exec->pids);
 		free(data->exec);
 	}
-	if (fd_in > 2)
-		close(fd_in);
-	if (fd_out > 2)
-		close(fd_out);
 }

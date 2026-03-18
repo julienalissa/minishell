@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:13 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/17 17:07:19 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 07:08:00 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,19 @@ void	path_not_found(t_data *data, t_ast *node, char *path)
 		if_exist = access(node->args[0], F_OK);
 		ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": ", 2);
-		free_child(data, path, 0, 0);
+		free_child(data, path);
 		if (access(node->args[0], X_OK) < 0 && if_exist == 0)
 		{
 			ft_putendl_fd("Permission denied", 2);
 			exit (126);
 		}
 		perror("");
-		free_child(data, path, 0, 0);
+		free_child(data, path);
 		exit (127);
 	}
 	ft_putstr_fd(node->args[0], 2);
 	ft_putendl_fd(": command not found", 2);
-	free_child(data, path, 0, 0);
+	free_child(data, path);
 	exit (127);
 }
 

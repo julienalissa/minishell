@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:01:32 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/16 08:27:44 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/18 07:19:17 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_exec
 	int				ret_status;
 	int				is_piped;
 	int				fd_to_close;
+	int				pipe_fds[1024];
+	int				nb_pipe_fds;
 }					t_exec;
 
 typedef struct s_data

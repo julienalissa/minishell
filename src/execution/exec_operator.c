@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_operator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:20:00 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/17 17:21:00 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 07:20:58 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	exec_pipe(t_ast *node, t_data *data, int fd_in, int fd_out)
 
 	if ((pipe(pipefd)) == -1)
 		return ;
+	data->exec->pipe_fds[data->exec->nb_pipe_fds++] = pipefd[0];
+	data->exec->pipe_fds[data->exec->nb_pipe_fds++] = pipefd[1];
 	save = data->exec->is_piped;
 	data->exec->is_piped = 1;
 	data->exec->fd_to_close = pipefd[0];

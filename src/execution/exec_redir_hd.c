@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir_hd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 07:56:52 by lucasdebarn       #+#    #+#             */
-/*   Updated: 2026/03/17 17:07:28 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 07:08:07 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,6 @@ void	heredocs_child(t_data *data, t_redir *redir, int *fdpipe)
 	}
 	rl_clear_history();
 	close_and_free(line, write_line, fdpipe, 1);
-	free_child(data, NULL, 0, 0);
+	free_child(data, NULL);
 	exit(EXIT_SUCCESS);
 }

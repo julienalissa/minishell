@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebarn <ludebarn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:19:28 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/17 17:07:35 by ludebarn         ###   ########.fr       */
+/*   Updated: 2026/03/18 07:22:53 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	exec_cmd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	if (errno == ENOEXEC)
 		exec_script(data, node, path);
 	perror(node->args[0]);
-	free_child(data, path, 0, 0);
+	free_child(data, path);
 	if (errno == EACCES)
 		exit(126);
 	if (errno == ENOENT)
@@ -113,12 +113,12 @@ static void	setup_cmdd(t_ast *node, t_data *data, int fd_in, int fd_out)
 	if ((data->exec->pids[data->exec->nb_cmds]) == 0)
 	{
 		if (data->exec->fd_to_close != -1)
-			close(data->exec->fd_to_close);
+			close_pipe_fds(data, fd_in, fd_out);
 		if (is_builtin(node->args[0]) && (data->exec->is_piped == 1))
 		{
 			define_redir(node, fd_in, fd_out);
 			data->last_exit_code = execut_builtin(node, data);
-			free_child(data, NULL, fd_in, fd_out);
+			free_child(data, NULL);
 			exit(data->last_exit_code);
 		}
 		else
