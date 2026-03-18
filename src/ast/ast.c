@@ -6,7 +6,7 @@
 /*   By: lucasdebarnot <lucasdebarnot@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:12:15 by jualissa          #+#    #+#             */
-/*   Updated: 2026/03/18 09:24:09 by lucasdebarn      ###   ########.fr       */
+/*   Updated: 2026/03/18 09:40:30 by lucasdebarn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_token	*exec_trim(t_token *token, t_token *last)
 {
 	if (token->next == last)
 		return (NULL);
-	return (token->next);  // ← juste retourne start, sans récursion
+	return (token->next);
 }
 
 void	free_pivot(t_token *pivot)
